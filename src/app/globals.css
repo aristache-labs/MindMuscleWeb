@@ -9,13 +9,6 @@
   --foreground: #ededed;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: 'Inter', sans-serif;
-  --font-heading: 'Satoshi', sans-serif;
-}
-
 * {
   box-sizing: border-box;
   padding: 0;
