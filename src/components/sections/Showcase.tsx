@@ -1,23 +1,33 @@
 'use client';
 
+import Image from 'next/image';
+
 export default function Showcase() {
   const screenshots = [
     {
       title: "Dashboard Overview",
-      description: "Clean, intuitive interface showing your daily progress, upcoming workouts, and AI recommendations."
+      description:
+        "Clean, intuitive interface showing your daily progress, upcoming workouts, and AI recommendations.",
+      image: "/images/screenshot1.webp",
     },
     {
-      title: "Workout Generator", 
-      description: "AI-powered workout creation based on your goals, available time, and equipment preferences."
+      title: "Workout Generator",
+      description:
+        "AI-powered workout creation based on your goals, available time, and equipment preferences.",
+      image: "/images/screenshot2.webp",
     },
     {
       title: "Form Analysis",
-      description: "Real-time computer vision feedback helping you maintain perfect form and prevent injuries."
+      description:
+        "Real-time computer vision feedback helping you maintain perfect form and prevent injuries.",
+      image: "/images/screenshot3.webp",
     },
     {
       title: "Progress Tracking",
-      description: "Comprehensive analytics and insights to monitor your fitness journey and celebrate milestones."
-    }
+      description:
+        "Comprehensive analytics and insights to monitor your fitness journey and celebrate milestones.",
+      image: "/images/screenshot4.webp",
+    },
   ];
 
   return (
@@ -95,14 +105,13 @@ export default function Showcase() {
                 </p>
               </div>
 
-              {/* Screenshot Placeholder */}
-              <div className="aspect-video bg-dark-surface/50 rounded-2xl border border-white/10 p-8 backdrop-blur-sm">
-                <div className="w-full h-full bg-gradient-to-br from-primary-purple/10 to-neon-cyan/10 rounded-xl flex items-center justify-center">
-                  <div className="text-center space-y-2">
-                    <div className="w-16 h-16 bg-white/10 rounded-full mx-auto"></div>
-                    <p className="text-white/40 text-sm">Screenshot {index + 1} Placeholder</p>
-                  </div>
-                </div>
+              <div className="relative aspect-video bg-dark-surface/50 rounded-2xl border border-white/10 p-4 backdrop-blur-sm">
+                <Image
+                  src={screenshot.image}
+                  alt={screenshot.title}
+                  fill
+                  className="object-cover rounded-xl"
+                />
               </div>
             </div>
           ))}

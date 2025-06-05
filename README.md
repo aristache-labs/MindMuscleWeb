@@ -347,6 +347,7 @@ Build MindMuscleWeb from the source and intsall dependencies:
 
 ```sh
 ❯ npm install
+❯ npm run fetch-images
 ```
 
 ### 💻 Usage
