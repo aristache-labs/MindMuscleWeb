@@ -4,7 +4,7 @@ const seoConfig = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://localhost",
+    url: "https://mindmuscle.app",
     siteName: "MindMuscle.AI",
     images: [{ url: "/images/og-image.png", width: 1200, height: 630 }],
   },

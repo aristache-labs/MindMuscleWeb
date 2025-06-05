@@ -28,7 +28,7 @@ export default function Navbar() {
           {/* Logo */}
           <div className="flex items-center min-w-0 flex-shrink-0">
             <div className="text-lg sm:text-2xl font-heading font-bold bg-gradient-to-r from-primary-purple to-neon-cyan bg-clip-text text-transparent truncate">
-              YourAppName
+              MindMuscle.AI
             </div>
           </div>
 

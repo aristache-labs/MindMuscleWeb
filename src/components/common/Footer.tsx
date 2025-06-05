@@ -25,7 +25,7 @@ export default function Footer() {
 
           {/* Copyright */}
           <div className="text-xs text-white/50 text-center">
-            © 2025 YourAppName. All rights reserved.
+            © 2025 MindMuscle.AI. All rights reserved.
           </div>
         </div>
       </div>
