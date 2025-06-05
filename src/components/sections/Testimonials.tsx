@@ -44,7 +44,7 @@ export default function Testimonials() {
             >
               {/* Quote */}
               <div className="mb-6">
-                <div className="text-4xl text-neon-cyan/30 mb-4">"</div>
+                <div className="text-4xl text-neon-cyan/30 mb-4">&ldquo;</div>
                 <p className="text-white/80 leading-relaxed text-lg">
                   {testimonial.content}
                 </p>

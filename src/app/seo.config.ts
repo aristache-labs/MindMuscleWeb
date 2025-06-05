@@ -1,4 +1,4 @@
-export default {
+const seoConfig = {
   title: "YourAppName | AI-Powered Fitness",
   description: "AI-driven workout generator and progress tracker—launching Summer 2025.",
   openGraph: {
@@ -9,4 +9,6 @@ export default {
     images: [{ url: "/images/og-image.png", width: 1200, height: 630 }],
   },
   twitter: { cardType: "summary_large_image" },
-}; 
+};
+
+export default seoConfig; 
