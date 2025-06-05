@@ -16,8 +16,8 @@ module.exports = {
         'dark-surface': '#1A1A23',
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        heading: ['Satoshi', 'sans-serif'],
+        sans: ['var(--font-inter)', 'sans-serif'],
+        heading: ['var(--font-satoshi)', 'sans-serif'],
       },
     },
   },
