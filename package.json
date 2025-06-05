@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
+    "export": "next export",
+    "export:all": "npm run build && npm run export", 
     "postbuild": "node scripts/generate-sitemap.js",
     "start": "next start",
     "lint": "next lint",
