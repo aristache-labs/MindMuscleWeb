@@ -91,6 +91,7 @@ This project aims to provide users with personalized fitness plans, nutrition gu
 ```sh
 └── MindMuscleWeb/
     ├── LICENSE
+    ├── MindMuscleWeb.png
     ├── README.md
     ├── eslint.config.mjs
     ├── jest.config.js
@@ -99,25 +100,44 @@ This project aims to provide users with personalized fitness plans, nutrition gu
     ├── package-lock.json
     ├── package.json
     ├── postcss.config.mjs
-    ├── public
-    │   ├── file.svg
-    │   ├── globe.svg
-    │   ├── images
-    │   ├── next.svg
-    │   ├── robots.txt
-    │   ├── sitemap.xml
-    │   ├── vercel.svg
-    │   └── window.svg
-    ├── scripts
+    ├── public/
+    │   ├── fonts/
+    │   └── images/
+    ├── scripts/
     │   ├── .eslintrc.js
     │   ├── download-fonts.mjs
     │   ├── fetch-images.js
     │   └── generate-sitemap.js
-    ├── src
-    │   ├── app
-    │   └── components
+    ├── src/
+    │   ├── app/
+    │   │   ├── privacy/
+    │   │   │   └── page.tsx
+    │   │   ├── terms/
+    │   │   │   └── page.tsx
+    │   │   ├── layout.tsx
+    │   │   ├── page.tsx
+    │   │   └── seo.config.ts
+    │   ├── components/
+    │   │   ├── common/
+    │   │   │   ├── __tests__/
+    │   │   │   │   └── Navbar.test.tsx
+    │   │   │   ├── ClientOnly.tsx
+    │   │   │   ├── Footer.tsx
+    │   │   │   ├── Navbar.tsx
+    │   │   │   └── NoSSR.tsx
+    │   │   └── sections/
+    │   │       ├── __tests__/
+    │   │       ├── Features.tsx
+    │   │       ├── FinalCTA.tsx
+    │   │       ├── Hero.tsx
+    │   │       ├── HowItWorks.tsx
+    │   │       ├── Showcase.tsx
+    │   │       └── Testimonials.tsx
+    │   ├── hooks/
+    │   └── lib/
     ├── tailwind.config.js
-    └── tsconfig.json
+    ├── tsconfig.json
+    └── wrangler.toml
 ```
 
 ---
