@@ -11,5 +11,15 @@
   "css.validate": false,
   "tailwindCSS.includeLanguages": {
     "plaintext": "html"
-  }
+  },
+  "eslint.validate": [
+    "javascript",
+    "typescript",
+    "javascriptreact",
+    "typescriptreact"
+  ],
+  "eslint.options": {
+    "overrideConfigFile": "./eslint.config.mjs"
+  },
+  "eslint.experimental.useFlatConfig": true
 } 

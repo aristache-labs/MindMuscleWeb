@@ -116,13 +116,7 @@ export default function Showcase() {
                 </p>
               </div>
 
-              <div className="relative aspect-video bg-dark-surface/50 rounded-2xl border border-white/10 p-4 backdrop-blur-sm">
-                <Image
-                  src={screenshot.image}
-                  alt={screenshot.title}
-                  fill
-                  className="object-cover rounded-xl"
-              <div className="aspect-video bg-dark-surface/50 rounded-2xl border border-white/10 overflow-hidden backdrop-blur-sm">
+              <div className="relative aspect-video bg-dark-surface/50 rounded-2xl border border-white/10 overflow-hidden backdrop-blur-sm">
                 <Image
                   src={`/images/screenshot${index + 1}.webp`}
                   alt={screenshot.title}
