@@ -8,6 +8,7 @@
     "postbuild": "node scripts/generate-sitemap.js",
     "start": "next start",
     "lint": "next lint",
+    "postinstall": "node scripts/download-fonts.mjs",
     "fetch-images": "node scripts/fetch-images.js"
     "test": "jest"
   },

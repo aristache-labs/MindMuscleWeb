@@ -1,13 +1,36 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/common/Footer";
 
-const inter = Inter({ 
+const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   weight: ["400", "500", "600", "700"]
+});
+
+const satoshi = localFont({
+  src: [
+    {
+      path: "../../public/fonts/Satoshi-400.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/Satoshi-500.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/Satoshi-700.woff2",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-satoshi",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -45,7 +68,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <body className={`${inter.className} bg-dark-bg text-white antialiased`} suppressHydrationWarning={true}>
+      <body
+        className={`${inter.className} ${satoshi.variable} bg-dark-bg text-white antialiased`}
+        suppressHydrationWarning={true}
+      >
         <Navbar />
         {children}
         <Footer />
