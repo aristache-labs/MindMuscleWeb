@@ -7,8 +7,8 @@ import FinalCTA from "@/components/sections/FinalCTA";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-dark-bg">
-      <div className="container mx-auto px-4 max-w-7xl">
+    <main className="relative min-h-screen bg-dark-bg">
+      <div className="relative container mx-auto px-4 max-w-7xl">
         <Hero />
         <HowItWorks />
         <Features />

@@ -52,11 +52,13 @@ export default function Hero() {
             transition={{ duration: 0.6 }}
             className="relative"
           >
-            <div className="w-80 h-96 bg-gradient-to-br from-dark-surface to-dark-bg rounded-3xl border border-white/10 shadow-2xl overflow-hidden">
+            <div className="relative w-80 h-96 bg-gradient-to-br from-dark-surface to-dark-bg rounded-3xl border border-white/10 shadow-2xl overflow-hidden">
               <Image
                 src="/images/screenshot1.webp"
                 alt="App preview"
                 fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 320px"
+                priority
                 className="object-cover rounded-3xl"
               />
             </div>

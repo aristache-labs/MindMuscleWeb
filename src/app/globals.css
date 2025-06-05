@@ -35,3 +35,89 @@ body {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+/* Keen Slider Custom Styles */
+.keen-slider {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+}
+
+.keen-slider__slide {
+  min-height: 0;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+}
+
+.keen-slider__slide:not(.keen-slider__slide--loaded) {
+  visibility: hidden;
+}
+
+.keen-slider[data-keen-slider-v] {
+  flex-wrap: wrap;
+}
+
+.keen-slider[data-keen-slider-v] .keen-slider__slide {
+  width: 100%;
+}
+
+.keen-slider[data-keen-slider-moves] * {
+  pointer-events: none;
+}
+
+/* Custom keen-slider overrides for dark theme */
+.keen-slider .keen-slider__slide {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.keen-slider .keen-slider__slide > div {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Add subtle animation when slides change */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.keen-slider__slide--active > div {
+  animation: slideIn 0.5s ease-out;
+}
+
+/* Enhanced focus styles for accessibility */
+.keen-slider:focus-visible {
+  outline: 2px solid rgba(124, 58, 237, 0.8);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* Ensure proper spacing and prevent layout shift */
+.keen-slider .keen-slider__slide {
+  flex-shrink: 0;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 640px) {
+  .keen-slider .keen-slider__slide {
+    padding: 0 16px;
+  }
+  
+  .keen-slider .keen-slider__slide:first-child {
+    padding-left: 0;
+  }
+  
+  .keen-slider .keen-slider__slide:last-child {
+    padding-right: 0;
+  }
+}

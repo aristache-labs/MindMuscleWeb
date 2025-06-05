@@ -32,15 +32,16 @@ export default function Navbar() {
           </div>
 
           {/* Download Buttons */}
-          <div className="flex items-center space-x-3">
-            {/* TODO: Add scroll detection to toggle background opacity */}
-            <button className="flex items-center space-x-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors duration-200 text-sm">
-              <CloudArrowDownIcon className="w-5 h-5" />
-              <span>App Store</span>
+          <div className="flex items-center space-x-2 sm:space-x-3">
+            <button className="flex items-center space-x-1 sm:space-x-2 px-2 sm:px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors duration-200 text-xs sm:text-sm">
+              <CloudArrowDownIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span className="hidden sm:inline">App Store</span>
+              <span className="sm:hidden">iOS</span>
             </button>
-            <button className="flex items-center space-x-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors duration-200 text-sm">
-              <CloudArrowDownIcon className="w-5 h-5" />
-              <span>Play Store</span>
+            <button className="flex items-center space-x-1 sm:space-x-2 px-2 sm:px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors duration-200 text-xs sm:text-sm">
+              <CloudArrowDownIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span className="hidden sm:inline">Play Store</span>
+              <span className="sm:hidden">Android</span>
             </button>
           </div>
         </div>
