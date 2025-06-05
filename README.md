@@ -361,13 +361,8 @@ npm start
 
 ### 🧪 Testing
 
-Mindmuscleweb uses the {__test_framework__} test framework. Run the test suite with:
+MindMuscleWeb currently does not include automated tests.
 
-**Using [npm](https://www.npmjs.com/):**
-
-```sh
-npm test
-```
 
 ---
 
@@ -424,7 +419,7 @@ npm test
 
 ## 📜 License
 
-Mindmuscleweb is protected under the [LICENSE](https://choosealicense.com/licenses) License. For more details, refer to the [LICENSE](https://choosealicense.com/licenses/) file.
+MindMuscleWeb is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ---
 
