@@ -9,6 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "fetch-images": "node scripts/fetch-images.js",
+    "postinstall": "node scripts/download-fonts.mjs",
     "test": "jest"
   },
   "dependencies": {
