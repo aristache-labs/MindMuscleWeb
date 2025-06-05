@@ -7,20 +7,28 @@ export default function Showcase() {
   const screenshots = [
     {
       title: "Dashboard Overview",
-      description: "Clean, intuitive interface showing your daily progress, upcoming workouts, and AI recommendations."
+      description:
+        "Clean, intuitive interface showing your daily progress, upcoming workouts, and AI recommendations.",
+      image: "/images/screenshot1.webp",
     },
     {
-      title: "Workout Generator", 
-      description: "AI-powered workout creation based on your goals, available time, and equipment preferences."
+      title: "Workout Generator",
+      description:
+        "AI-powered workout creation based on your goals, available time, and equipment preferences.",
+      image: "/images/screenshot2.webp",
     },
     {
       title: "Form Analysis",
-      description: "Real-time computer vision feedback helping you maintain perfect form and prevent injuries."
+      description:
+        "Real-time computer vision feedback helping you maintain perfect form and prevent injuries.",
+      image: "/images/screenshot3.webp",
     },
     {
       title: "Progress Tracking",
-      description: "Comprehensive analytics and insights to monitor your fitness journey and celebrate milestones."
-    }
+      description:
+        "Comprehensive analytics and insights to monitor your fitness journey and celebrate milestones.",
+      image: "/images/screenshot4.webp",
+    },
   ];
 
   return (
@@ -108,6 +116,12 @@ export default function Showcase() {
                 </p>
               </div>
 
+              <div className="relative aspect-video bg-dark-surface/50 rounded-2xl border border-white/10 p-4 backdrop-blur-sm">
+                <Image
+                  src={screenshot.image}
+                  alt={screenshot.title}
+                  fill
+                  className="object-cover rounded-xl"
               <div className="aspect-video bg-dark-surface/50 rounded-2xl border border-white/10 overflow-hidden backdrop-blur-sm">
                 <Image
                   src={`/images/screenshot${index + 1}.webp`}

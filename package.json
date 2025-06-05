@@ -8,6 +8,7 @@
     "postbuild": "node scripts/generate-sitemap.js",
     "start": "next start",
     "lint": "next lint",
+    "fetch-images": "node scripts/fetch-images.js"
     "test": "jest"
   },
   "dependencies": {
