@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useForm, ValidationError } from '@formspree/react';
+import { trackFormSubmit, trackConversion } from '@/lib/analytics';
 
 export default function FinalCTA() {
   const [email, setEmail] = useState('');
@@ -11,6 +12,12 @@ export default function FinalCTA() {
     await handleSubmit(e);
     if (state.succeeded) {
       setEmail('');
+      // Track successful form submission and conversion
+      trackFormSubmit('Beta Waitlist', true);
+      trackConversion('Beta Signup');
+    } else if (state.errors && Object.keys(state.errors).length > 0) {
+      // Track failed form submission
+      trackFormSubmit('Beta Waitlist', false);
     }
   };
 

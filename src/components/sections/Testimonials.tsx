@@ -3,6 +3,7 @@
 import { useMemo, useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
+import { trackFeatureInteraction } from '@/lib/analytics';
 
 export default function Testimonials() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -59,14 +60,17 @@ export default function Testimonials() {
 
   const nextTestimonial = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+    trackFeatureInteraction('Testimonials Carousel', 'next');
   }, [testimonials.length]);
 
   const previousTestimonial = useCallback(() => {
     setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+    trackFeatureInteraction('Testimonials Carousel', 'previous');
   }, [testimonials.length]);
 
   const goToSlide = useCallback((index: number) => {
     setCurrentIndex(index);
+    trackFeatureInteraction('Testimonials Carousel', `dot-${index + 1}`);
   }, []);
 
   // Pause auto-play on hover

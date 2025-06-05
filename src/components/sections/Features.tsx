@@ -2,8 +2,11 @@
 
 import { motion } from 'framer-motion';
 import { BoltIcon, EyeIcon, ChartBarIcon } from '@heroicons/react/24/outline';
+import { useScrollTracking } from '@/hooks/useScrollTracking';
 
 export default function Features() {
+  const sectionRef = useScrollTracking({ sectionName: 'Features' });
+
   const features = [
     {
       title: "AI Workout Generation",
@@ -23,7 +26,7 @@ export default function Features() {
   ];
 
   return (
-    <section className="py-16 lg:py-24">
+    <section ref={sectionRef} className="py-16 lg:py-24">
       <div className="text-center mb-16">
         <h2 className="text-3xl lg:text-5xl font-heading font-bold mb-6">
           Powerful <span className="bg-gradient-to-r from-primary-purple to-neon-cyan bg-clip-text text-transparent">Features</span>

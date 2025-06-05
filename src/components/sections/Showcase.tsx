@@ -183,7 +183,8 @@ export default function Showcase() {
                             alt={screenshot.title}
                             fill
                             sizes="320px"
-                            priority={index === 0}
+                            priority={index === 0 && currentImageIndex === 0}
+                            loading={index === 0 ? "eager" : "lazy"}
                             className="object-cover"
                             style={{
                               filter: 'brightness(0.95) contrast(1.05)',
@@ -296,7 +297,7 @@ export default function Showcase() {
                   alt={screenshot.title}
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
-                  priority={index === 0}
+                  loading="lazy"
                   className="object-cover"
                 />
                 

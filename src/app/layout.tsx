@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/common/Footer";
+import PlausibleAnalytics from "@/components/common/PlausibleAnalytics";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -72,6 +73,10 @@ export default function RootLayout({
         className={`${inter.className} ${satoshi.variable} bg-dark-bg text-white antialiased`}
         suppressHydrationWarning={true}
       >
+        <PlausibleAnalytics 
+          domain="mindmuscle.ai" 
+          enabled={true}
+        />
         <Navbar />
         {children}
         <Footer />

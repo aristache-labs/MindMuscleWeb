@@ -67,7 +67,7 @@ export default function HowItWorks() {
 
             {/* Connector Line (except last item) */}
             {index < steps.length - 1 && (
-              <div className="hidden md:block absolute top-10 left-1/2 w-full h-0.5 bg-gradient-to-r from-primary-purple/30 to-transparent transform translate-x-10"></div>
+              <div className="hidden md:block absolute top-10 left-1/2 w-1/2 h-0.5 bg-gradient-to-r from-primary-purple/30 to-transparent transform translate-x-2"></div>
             )}
           </motion.div>
         ))}

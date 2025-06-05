@@ -2,10 +2,14 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { trackCTAClick } from '@/lib/analytics';
+import { useScrollTracking } from '@/hooks/useScrollTracking';
 
 export default function Hero() {
+  const sectionRef = useScrollTracking({ sectionName: 'Hero' });
+
   return (
-    <section className="pt-20 pb-16 lg:pt-28 lg:pb-24">
+    <section ref={sectionRef} className="pt-20 pb-16 lg:pt-28 lg:pb-24">
       <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         {/* Left Column - Content */}
         <div className="space-y-8">
@@ -32,10 +36,16 @@ export default function Hero() {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4">
-            <button className="px-8 py-4 bg-gradient-to-r from-primary-purple to-secondary-purple text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-primary-purple/25 transition-all duration-300 transform hover:-translate-y-1">
+            <button 
+              onClick={() => trackCTAClick('Join Beta Waitlist', 'Hero Section')}
+              className="px-8 py-4 bg-gradient-to-r from-primary-purple to-secondary-purple text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-primary-purple/25 transition-all duration-300 transform hover:-translate-y-1"
+            >
               Join Beta Waitlist
             </button>
-            <button className="px-8 py-4 border border-white/20 text-white font-semibold rounded-lg hover:bg-white/10 transition-all duration-300">
+            <button 
+              onClick={() => trackCTAClick('Watch Demo', 'Hero Section')}
+              className="px-8 py-4 border border-white/20 text-white font-semibold rounded-lg hover:bg-white/10 transition-all duration-300"
+            >
               Watch Demo
             </button>
           </div>
