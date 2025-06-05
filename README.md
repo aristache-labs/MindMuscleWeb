@@ -361,13 +361,17 @@ npm start
 
 ### 🧪 Testing
 
-Mindmuscleweb uses the {__test_framework__} test framework. Run the test suite with:
+Mindmuscleweb uses **Jest** and **React Testing Library** for unit and component testing.
+Run the test suite with:
 
 **Using [npm](https://www.npmjs.com/):**
 
 ```sh
 npm test
 ```
+
+This command executes Jest, which will automatically find test files inside the
+`src` directory that end with `.test.ts` or `.test.tsx`.
 
 ---
 
