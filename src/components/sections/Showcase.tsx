@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 export default function Showcase() {
   const screenshots = [
@@ -44,8 +45,12 @@ export default function Showcase() {
       <div className="grid lg:grid-cols-2 gap-16 items-start">
         {/* Sticky Phone Mockup */}
         <div className="lg:sticky lg:top-24">
-          {/* TODO: Add pin-and-scrub logic using Framer Motion or GSAP ScrollTrigger */}
-          <div className="relative mx-auto max-w-sm">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="relative mx-auto max-w-sm"
+          >
             <div className="w-80 h-96 bg-gradient-to-br from-dark-surface to-dark-bg rounded-3xl border border-white/20 shadow-2xl overflow-hidden">
               {/* Phone Screen */}
               <div className="p-6 h-full">
@@ -78,18 +83,24 @@ export default function Showcase() {
                 </div>
               </div>
             </div>
-            
+
             {/* Decorative Elements */}
             <div className="absolute -top-8 -left-8 w-16 h-16 bg-primary-purple/10 rounded-full blur-xl"></div>
             <div className="absolute -bottom-8 -right-8 w-20 h-20 bg-neon-cyan/10 rounded-full blur-xl"></div>
-          </div>
+          </motion.div>
         </div>
 
         {/* Scroll Area with Screenshots */}
         <div className="space-y-16">
-          {/* TODO: Add pin-and-scrub logic for coordinated scrolling */}
           {screenshots.map((screenshot, index) => (
-            <div key={index} className="space-y-6">
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              className="space-y-6"
+            >
               <div className="space-y-4">
                 <div className="flex items-center gap-4">
                   <div className="w-8 h-8 bg-gradient-to-r from-primary-purple to-neon-cyan rounded-full flex items-center justify-center text-sm font-bold text-dark-bg">
@@ -99,7 +110,7 @@ export default function Showcase() {
                     {screenshot.title}
                   </h3>
                 </div>
-                
+
                 <p className="text-white/70 leading-relaxed text-lg">
                   {screenshot.description}
                 </p>
@@ -111,9 +122,15 @@ export default function Showcase() {
                   alt={screenshot.title}
                   fill
                   className="object-cover rounded-xl"
+              <div className="aspect-video bg-dark-surface/50 rounded-2xl border border-white/10 overflow-hidden backdrop-blur-sm">
+                <Image
+                  src={`/images/screenshot${index + 1}.webp`}
+                  alt={screenshot.title}
+                  fill
+                  className="object-cover"
                 />
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

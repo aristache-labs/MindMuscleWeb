@@ -1,13 +1,21 @@
 'use client';
 
+import Image from 'next/image';
+import { motion } from 'framer-motion';
+
 export default function Hero() {
   return (
     <section className="pt-20 pb-16 lg:pt-28 lg:pb-24">
       <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         {/* Left Column - Content */}
         <div className="space-y-8">
-          {/* TODO: Add Framer Motion animations for staggered entrance */}
-          <div className="space-y-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ staggerChildren: 0.1 }}
+            className="space-y-6"
+          >
             <h1 className="text-4xl lg:text-6xl font-heading font-bold leading-tight">
               <span className="bg-gradient-to-r from-primary-purple to-neon-cyan bg-clip-text text-transparent">
                 AI-Powered
@@ -20,7 +28,7 @@ export default function Hero() {
               Transform your fitness journey with personalized AI workouts, real-time form analysis, 
               and intelligent progress tracking. Coming Summer 2025.
             </p>
-          </div>
+          </motion.div>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4">
@@ -37,24 +45,28 @@ export default function Hero() {
 
         {/* Right Column - Phone Mockup */}
         <div className="flex justify-center lg:justify-end">
-          {/* TODO: Replace with actual phone mockup and integrate animations */}
-          <div className="relative">
-            <div className="w-80 h-96 bg-gradient-to-br from-dark-surface to-dark-bg rounded-3xl border border-white/10 shadow-2xl">
-              <div className="p-6 h-full flex items-center justify-center">
-                <div className="text-center space-y-4">
-                  <div className="w-16 h-16 bg-gradient-to-r from-primary-purple to-neon-cyan rounded-full mx-auto"></div>
-                  <p className="text-white/60">Phone Mockup Placeholder</p>
-                  <p className="text-sm text-white/40">App Interface Preview</p>
-                </div>
-              </div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="relative"
+          >
+            <div className="w-80 h-96 bg-gradient-to-br from-dark-surface to-dark-bg rounded-3xl border border-white/10 shadow-2xl overflow-hidden">
+              <Image
+                src="/images/screenshot1.webp"
+                alt="App preview"
+                fill
+                className="object-cover rounded-3xl"
+              />
             </div>
-            
+
             {/* Decorative elements */}
             <div className="absolute -top-4 -right-4 w-8 h-8 bg-neon-cyan/20 rounded-full blur-sm"></div>
             <div className="absolute -bottom-4 -left-4 w-12 h-12 bg-primary-purple/20 rounded-full blur-sm"></div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
   );
-} 
+}

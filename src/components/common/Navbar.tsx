@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { CloudArrowDownIcon } from '@heroicons/react/24/outline';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -34,11 +35,11 @@ export default function Navbar() {
           <div className="flex items-center space-x-3">
             {/* TODO: Add scroll detection to toggle background opacity */}
             <button className="flex items-center space-x-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors duration-200 text-sm">
-              <div className="w-5 h-5 bg-white/20 rounded"></div>
+              <CloudArrowDownIcon className="w-5 h-5" />
               <span>App Store</span>
             </button>
             <button className="flex items-center space-x-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors duration-200 text-sm">
-              <div className="w-5 h-5 bg-white/20 rounded"></div>
+              <CloudArrowDownIcon className="w-5 h-5" />
               <span>Play Store</span>
             </button>
           </div>
