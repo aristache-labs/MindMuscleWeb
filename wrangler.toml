@@ -1,4 +1,4 @@
-name = "mindmuscle"               # any unique name for your Worker site
+name = "mindmuscle.app-worker"               # any unique name for your Worker site
 compatibility_date = "2025-06-05"         # today's date or later, in YYYY-MM-DD
 account_id = "6faa7a4ea7f0c681b53850f846a3624c"          # your Cloudflare account ID
 
