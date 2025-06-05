@@ -1,20 +1,17 @@
 'use client';
 
 import { useState } from 'react';
+import { useForm, ValidationError } from '@formspree/react';
 
 export default function FinalCTA() {
   const [email, setEmail] = useState('');
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [state, handleSubmit] = useForm('YOUR_FORMSPREE_ID');
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // TODO: Integrate with Formspree and add input validation
-    console.log('Email submitted:', email);
-    setIsSubmitted(true);
-    setEmail('');
-    
-    // Reset after 3 seconds
-    setTimeout(() => setIsSubmitted(false), 3000);
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    await handleSubmit(e);
+    if (state.succeeded) {
+      setEmail('');
+    }
   };
 
   return (
@@ -43,23 +40,25 @@ export default function FinalCTA() {
 
             {/* Email Form */}
             <div className="max-w-md mx-auto">
-              {/* TODO: Add form integration via Formspree and input validation */}
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form onSubmit={onSubmit} className="space-y-4" noValidate>
                 <div className="flex gap-3">
                   <input
                     type="email"
+                    name="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your email address"
                     required
+                    pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
                     className="flex-1 px-6 py-4 bg-dark-bg/50 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:border-primary-purple transition-colors duration-200"
                   />
+                  <ValidationError prefix="Email" field="email" errors={state.errors} />
                   <button
                     type="submit"
-                    disabled={isSubmitted}
+                    disabled={state.submitting}
                     className="px-8 py-4 bg-gradient-to-r from-primary-purple to-secondary-purple text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-primary-purple/25 transition-all duration-300 transform hover:-translate-y-1 disabled:opacity-50 disabled:transform-none"
                   >
-                    {isSubmitted ? 'Joined!' : 'Join Beta'}
+                    {state.succeeded ? 'Joined!' : 'Join Beta'}
                   </button>
                 </div>
                 
