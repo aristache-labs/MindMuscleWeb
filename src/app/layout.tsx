@@ -74,7 +74,7 @@ export default function RootLayout({
         suppressHydrationWarning={true}
       >
         <PlausibleAnalytics 
-          domain="mindmuscle.ai" 
+          domain="mindmuscle.app" 
           enabled={true}
         />
         <Navbar />
