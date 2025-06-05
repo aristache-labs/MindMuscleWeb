@@ -1,5 +1,8 @@
 'use client';
 
+import { motion } from 'framer-motion';
+import { BoltIcon, EyeIcon, ChartBarIcon } from '@heroicons/react/24/outline';
+
 export default function Features() {
   const features = [
     {
@@ -30,17 +33,20 @@ export default function Features() {
         </p>
       </div>
 
-      {/* TODO: Add hover effects and entrance animations */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {features.map((feature, index) => (
-          <div 
-            key={index} 
-            className="group bg-dark-surface/50 backdrop-blur-sm border border-white/10 rounded-2xl p-8 hover:border-primary-purple/50 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary-purple/10"
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: index * 0.1 }}
+            className="group relative bg-dark-surface/50 backdrop-blur-sm border border-white/10 rounded-2xl p-8 hover:border-primary-purple/50 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary-purple/10"
           >
-            {/* Icon Placeholder */}
             <div className="w-16 h-16 bg-gradient-to-r from-primary-purple to-neon-cyan rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-              {/* TODO: Replace with actual icons */}
-              <div className="w-8 h-8 bg-white/20 rounded"></div>
+              {index === 0 && <BoltIcon className="w-8 h-8 text-white" />}
+              {index === 1 && <EyeIcon className="w-8 h-8 text-white" />}
+              {index === 2 && <ChartBarIcon className="w-8 h-8 text-white" />}
             </div>
 
             {/* Content */}
@@ -61,7 +67,7 @@ export default function Features() {
 
             {/* Decorative Gradient */}
             <div className="absolute inset-0 bg-gradient-to-br from-primary-purple/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </section>

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { GlobeAltIcon, EnvelopeIcon, PhoneIcon } from '@heroicons/react/24/outline';
 
 export default function Footer() {
   return (
@@ -16,11 +17,10 @@ export default function Footer() {
             </Link>
           </div>
 
-          {/* Social Icons Placeholders */}
           <div className="flex items-center space-x-4">
-            <div className="w-8 h-8 bg-white/10 rounded-full hover:bg-white/20 transition-colors duration-200 cursor-pointer"></div>
-            <div className="w-8 h-8 bg-white/10 rounded-full hover:bg-white/20 transition-colors duration-200 cursor-pointer"></div>
-            <div className="w-8 h-8 bg-white/10 rounded-full hover:bg-white/20 transition-colors duration-200 cursor-pointer"></div>
+            <GlobeAltIcon className="w-8 h-8 text-white/70 hover:text-white transition-colors duration-200 cursor-pointer" />
+            <EnvelopeIcon className="w-8 h-8 text-white/70 hover:text-white transition-colors duration-200 cursor-pointer" />
+            <PhoneIcon className="w-8 h-8 text-white/70 hover:text-white transition-colors duration-200 cursor-pointer" />
           </div>
 
           {/* Copyright */}

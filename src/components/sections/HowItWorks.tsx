@@ -1,5 +1,8 @@
 'use client';
 
+import { motion } from 'framer-motion';
+import { UserIcon, Cog6ToothIcon, ChartBarIcon } from '@heroicons/react/24/outline';
+
 export default function HowItWorks() {
   const steps = [
     {
@@ -30,15 +33,22 @@ export default function HowItWorks() {
         </p>
       </div>
 
-      {/* TODO: Add scroll-triggered entrance animations */}
       <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
         {steps.map((step, index) => (
-          <div key={index} className="text-center space-y-6">
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: index * 0.1 }}
+            className="text-center space-y-6"
+          >
             {/* Step Number & Icon */}
             <div className="relative">
               <div className="w-20 h-20 bg-gradient-to-r from-primary-purple to-secondary-purple rounded-full flex items-center justify-center mx-auto mb-4">
-                {/* TODO: Replace with actual icons */}
-                <div className="w-8 h-8 bg-white/20 rounded"></div>
+                {index === 0 && <UserIcon className="w-8 h-8 text-white" />}
+                {index === 1 && <Cog6ToothIcon className="w-8 h-8 text-white" />}
+                {index === 2 && <ChartBarIcon className="w-8 h-8 text-white" />}
               </div>
               <div className="absolute -top-2 -right-2 w-8 h-8 bg-neon-cyan rounded-full flex items-center justify-center text-xs font-bold text-dark-bg">
                 {step.step}
@@ -59,7 +69,7 @@ export default function HowItWorks() {
             {index < steps.length - 1 && (
               <div className="hidden md:block absolute top-10 left-1/2 w-full h-0.5 bg-gradient-to-r from-primary-purple/30 to-transparent transform translate-x-10"></div>
             )}
-          </div>
+          </motion.div>
         ))}
       </div>
     </section>
