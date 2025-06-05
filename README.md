@@ -361,8 +361,9 @@ npm start
 
 ### 🧪 Testing
 
-MindMuscleWeb currently does not include automated tests.
-
+            
+This command executes Jest, which will automatically find test files inside the
+`src` directory that end with `.test.ts` or `.test.tsx`.
 
 ---
 
