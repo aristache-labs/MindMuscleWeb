@@ -361,15 +361,7 @@ npm start
 
 ### 🧪 Testing
 
-Mindmuscleweb uses **Jest** and **React Testing Library** for unit and component testing.
-Run the test suite with:
-
-**Using [npm](https://www.npmjs.com/):**
-
-```sh
-npm test
-```
-
+            
 This command executes Jest, which will automatically find test files inside the
 `src` directory that end with `.test.ts` or `.test.tsx`.
 
@@ -428,7 +420,7 @@ This command executes Jest, which will automatically find test files inside the
 
 ## 📜 License
 
-Mindmuscleweb is protected under the [LICENSE](https://choosealicense.com/licenses) License. For more details, refer to the [LICENSE](https://choosealicense.com/licenses/) file.
+MindMuscleWeb is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ---
 
