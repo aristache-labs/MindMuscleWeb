@@ -170,7 +170,7 @@ export function TestimonialsSection() {
                 &ldquo;{currentTestimonial.content}&rdquo;
               </motion.blockquote>
 
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0">
                 <motion.div
                   className="flex items-center gap-4"
                   key={`author-${currentTestimonial.id}`}
@@ -185,6 +185,7 @@ export function TestimonialsSection() {
                       width={48}
                       height={48}
                       className="w-12 h-12 rounded-full"
+                      unoptimized={currentTestimonial.avatar.startsWith('data:')}
                     />
                     <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary-500/20 to-transparent" />
                   </div>
@@ -196,7 +197,7 @@ export function TestimonialsSection() {
                 </motion.div>
 
                 {/* Navigation */}
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 self-end sm:self-auto">
                   <motion.button
                     className="w-10 h-10 bg-dark-700/50 border border-gray-700 rounded-full flex items-center justify-center text-gray-400 hover:text-white hover:border-primary-500 transition-all duration-300"
                     onClick={prevTestimonial}
@@ -280,6 +281,7 @@ export function TestimonialsSection() {
                       width={40}
                       height={40}
                       className="w-10 h-10 rounded-full"
+                      unoptimized={testimonial.avatar.startsWith('data:')}
                     />
                     <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary-500/20 to-transparent" />
                   </div>

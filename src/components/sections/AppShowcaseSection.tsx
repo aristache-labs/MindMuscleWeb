@@ -147,7 +147,7 @@ export function AppShowcaseSection() {
         </motion.div>
 
         {/* Showcase Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           
           {/* Phone Mockup */}
           <motion.div
@@ -162,7 +162,7 @@ export function AppShowcaseSection() {
             {/* Phone Frame */}
             <div className="relative">
               {/* Outer Frame */}
-              <div className="relative w-80 h-[640px] mx-auto bg-gradient-to-b from-gray-800 via-gray-900 to-black rounded-[3rem] p-2 shadow-2xl">
+              <div className="relative w-72 sm:w-80 h-[576px] sm:h-[640px] mx-auto bg-gradient-to-b from-gray-800 via-gray-900 to-black rounded-[3rem] p-2 shadow-2xl">
                 {/* Inner Frame */}
                 <div className="w-full h-full bg-black rounded-[2.5rem] p-1">
                   {/* Screen */}
@@ -187,6 +187,8 @@ export function AppShowcaseSection() {
                             fill
                             sizes="(max-width: 768px) 100vw, 320px"
                             className="object-cover rounded-[2rem]"
+                            priority={currentIndex === 0}
+                            unoptimized={currentScreenshot.image.startsWith('data:')}
                           />
                           
                           {/* Overlay with app-like elements */}
@@ -268,11 +270,11 @@ export function AppShowcaseSection() {
             {/* Screenshot Navigation */}
             <div className="space-y-6">
               {/* Thumbnail Grid */}
-              <div className="grid grid-cols-4 gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
                 {APP_SCREENSHOTS.map((screenshot, index) => (
                   <motion.button
                     key={screenshot.id}
-                    className={`relative aspect-[9/16] rounded-xl overflow-hidden border-2 transition-all duration-300 ${
+                    className={`relative aspect-[9/16] rounded-lg sm:rounded-xl overflow-hidden border-2 transition-all duration-300 ${
                       index === currentIndex
                         ? 'border-primary-500 shadow-lg shadow-primary-500/25'
                         : 'border-gray-700 hover:border-gray-600'
@@ -285,8 +287,10 @@ export function AppShowcaseSection() {
                       src={screenshot.image}
                       alt={screenshot.alt}
                       fill
-                      sizes="(max-width: 768px) 100vw, 80px"
+                      sizes="(max-width: 640px) 50vw, (max-width: 768px) 25vw, 80px"
                       className="object-cover"
+                      priority={index === 0}
+                      unoptimized={screenshot.image.startsWith('data:')}
                     />
                     <div className="absolute inset-0 bg-black/20" />
                   </motion.button>
