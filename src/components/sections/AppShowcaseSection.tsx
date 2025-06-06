@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 import { ChevronLeft, ChevronRight, Smartphone, Play, Download } from 'lucide-react';
 import { APP_SCREENSHOTS, ANIMATION_TIMING } from '@/lib/constants';
 import { useScrollAnimation, SCROLL_VARIANTS } from '@/hooks/useScrollAnimation';
@@ -67,10 +68,7 @@ export function AppShowcaseSection() {
     delay: 0.3,
   });
 
-  const { ref: featuresRef, controls: featuresControls } = useScrollAnimation({
-    threshold: 0.2,
-    delay: 0.5,
-  });
+  // Removed unused featuresRef and featuresControls
 
   // Auto-advance carousel
   useEffect(() => {
@@ -183,10 +181,12 @@ export function AppShowcaseSection() {
                           animate="center"
                           exit="exit"
                         >
-                          <img
+                          <Image
                             src={currentScreenshot.image}
                             alt={currentScreenshot.alt}
-                            className="w-full h-full object-cover rounded-[2rem]"
+                            fill
+                            sizes="(max-width: 768px) 100vw, 320px"
+                            className="object-cover rounded-[2rem]"
                           />
                           
                           {/* Overlay with app-like elements */}
@@ -281,10 +281,12 @@ export function AppShowcaseSection() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <img
+                    <Image
                       src={screenshot.image}
                       alt={screenshot.alt}
-                      className="w-full h-full object-cover"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 80px"
+                      className="object-cover"
                     />
                     <div className="absolute inset-0 bg-black/20" />
                   </motion.button>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState, useCallback } from 'react';
+import React, { useRef, useCallback } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
@@ -40,7 +40,6 @@ export function MagneticElement({
   onMagnetLeave,
 }: MagneticElementProps) {
   const ref = useRef<HTMLElement>(null);
-  const [isHovered, setIsHovered] = useState(false);
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -82,12 +81,10 @@ export function MagneticElement({
 
   const handleMouseEnter = useCallback(() => {
     if (disabled) return;
-    setIsHovered(true);
     onMagnetEnter?.();
   }, [disabled, onMagnetEnter]);
 
   const handleMouseLeave = useCallback(() => {
-    setIsHovered(false);
     x.set(0);
     y.set(0);
     onMagnetLeave?.();
@@ -111,7 +108,7 @@ export function MagneticElement({
     },
   };
 
-  const MotionComponent = motion[as as keyof typeof motion] as any;
+  const MotionComponent = motion[as as keyof typeof motion] as React.ComponentType<Record<string, unknown>>;
 
   if (as === 'a' && href) {
     return (

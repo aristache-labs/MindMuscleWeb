@@ -5,8 +5,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Play, 
   Pause, 
-  SkipForward, 
-  Heart, 
   Star, 
   Target, 
   TrendingUp, 
@@ -15,7 +13,6 @@ import {
   Users,
   Settings,
   Home,
-  Activity,
   User,
   ChevronRight,
   Timer,
@@ -80,7 +77,7 @@ export function InteractiveAppPreview({ className }: InteractiveAppPreviewProps)
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-xl font-bold text-white">Good morning, Alex!</h1>
-          <p className="text-gray-400 text-sm">Ready for today's challenge?</p>
+          <p className="text-gray-400 text-sm">Ready for today&apos;s challenge?</p>
         </div>
         <div className="w-10 h-10 rounded-full bg-gradient-to-r from-primary-500 to-primary-600" />
       </div>
@@ -134,7 +131,7 @@ export function InteractiveAppPreview({ className }: InteractiveAppPreviewProps)
         >
           <div className="flex items-center justify-between">
             <div className="text-left">
-              <h3 className="text-white font-bold">Today's Workout</h3>
+              <h3 className="text-white font-bold">Today&apos;s Workout</h3>
               <p className="text-primary-100 text-sm">Chest & Triceps • 45 min</p>
             </div>
             <Play className="w-6 h-6 text-white" />

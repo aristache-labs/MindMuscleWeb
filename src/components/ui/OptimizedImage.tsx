@@ -35,7 +35,7 @@ const OptimizedImage = forwardRef<HTMLImageElement, OptimizedImageProps>(({
   const shouldAnimate = !prefersReducedMotion && loadingAnimation !== 'none';
   
   // Preload critical images
-  const { isLoading: isPreloading } = useImagePreload(
+  useImagePreload(
     typeof src === 'string' ? src : '',
     { priority: preload }
   );

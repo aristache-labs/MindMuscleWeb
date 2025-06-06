@@ -14,7 +14,6 @@ import {
   Info
 } from 'lucide-react';
 import { MagneticElement, MagneticButton, MagneticArea } from './MagneticElement';
-import { cn } from '@/lib/utils';
 
 export function MagneticShowcase() {
   const [selectedDemo, setSelectedDemo] = useState<string | null>(null);

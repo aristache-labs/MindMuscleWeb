@@ -1,7 +1,6 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useEffect } from 'react';
 import { WaitlistForm } from '@/components/ui/WaitlistForm';
 import { trackEvent } from '@/lib/utils';
 import { Sparkles, Users, Trophy } from 'lucide-react';

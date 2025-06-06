@@ -4,7 +4,7 @@ declare global {
     gtag?: (
       command: 'config' | 'set' | 'event',
       targetId: string,
-      config?: Record<string, any>
+      config?: Record<string, unknown>
     ) => void;
   }
 }
@@ -74,7 +74,7 @@ export const performanceMonitor = {
 // Lazy loading utilities
 export const lazyLoadHelpers = {
   // Check if element is in viewport
-  isInViewport: (element: Element, rootMargin = '0px'): boolean => {
+  isInViewport: (element: Element): boolean => {
     const rect = element.getBoundingClientRect();
     return (
       rect.top >= 0 &&
@@ -147,7 +147,7 @@ export const bundleHelpers = {
   },
 
   // Preload module for faster subsequent imports
-  preloadModule: async (importFn: () => Promise<any>): Promise<void> => {
+  preloadModule: async (importFn: () => Promise<unknown>): Promise<void> => {
     try {
       await importFn();
     } catch (error) {
@@ -172,7 +172,7 @@ export const memoryHelpers = {
   },
 
   // Debounce function calls
-  debounce: <T extends (...args: any[]) => any>(
+  debounce: <T extends (...args: unknown[]) => unknown>(
     func: T,
     wait: number
   ): ((...args: Parameters<T>) => void) => {
@@ -185,7 +185,7 @@ export const memoryHelpers = {
   },
 
   // Throttle function calls
-  throttle: <T extends (...args: any[]) => any>(
+  throttle: <T extends (...args: unknown[]) => unknown>(
     func: T,
     limit: number
   ): ((...args: Parameters<T>) => void) => {

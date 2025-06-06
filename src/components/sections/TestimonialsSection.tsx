@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { Star, Quote, ArrowLeft, ArrowRight } from 'lucide-react';
 import { useState } from 'react';
+import Image from 'next/image';
 import { TESTIMONIALS } from '@/lib/constants';
 import { useScrollAnimation, useStaggerAnimation, SCROLL_VARIANTS } from '@/hooks/useScrollAnimation';
 
@@ -178,9 +179,11 @@ export function TestimonialsSection() {
                   transition={{ duration: 0.5, delay: 0.2 }}
                 >
                   <div className="relative">
-                    <img
+                    <Image
                       src={currentTestimonial.avatar}
                       alt={currentTestimonial.name}
+                      width={48}
+                      height={48}
                       className="w-12 h-12 rounded-full"
                     />
                     <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary-500/20 to-transparent" />
@@ -271,9 +274,11 @@ export function TestimonialsSection() {
                 {/* Author */}
                 <div className="flex items-center gap-3">
                   <div className="relative">
-                    <img
+                    <Image
                       src={testimonial.avatar}
                       alt={testimonial.name}
+                      width={40}
+                      height={40}
                       className="w-10 h-10 rounded-full"
                     />
                     <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary-500/20 to-transparent" />

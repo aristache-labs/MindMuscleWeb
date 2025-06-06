@@ -16,8 +16,6 @@ export function useScrollAnimation(options: UseScrollAnimationOptions = {}) {
     threshold = 0.1,
     triggerOnce = true,
     delay = 0,
-    duration = 0.6,
-    ease = 'easeOut',
   } = options;
 
   const ref = useRef(null);
