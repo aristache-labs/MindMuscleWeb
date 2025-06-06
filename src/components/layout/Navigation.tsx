@@ -2,15 +2,17 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Image from 'next/image';
 import { Menu, X, ChevronRight } from 'lucide-react';
+import { usePathname, useRouter } from 'next/navigation';
 
-import { APP_INFO, NAVIGATION_ITEMS } from '@/lib/constants';
+import { NAVIGATION_ITEMS } from '@/lib/constants';
 import { cn, scrollToElement, trackEvent } from '@/lib/utils';
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,7 +24,7 @@ export function Navigation() {
   }, []);
 
   const handleNavClick = (href: string, label: string) => {
-    console.log('Navigation clicked:', { href, label });
+    console.log('Navigation clicked:', { href, label, currentPath: pathname });
     
     trackEvent('navigation_click', {
       section: 'header',
@@ -31,8 +33,15 @@ export function Navigation() {
     
     if (href.startsWith('#')) {
       const elementId = href.substring(1);
-      console.log('Scrolling to element:', elementId);
-      scrollToElement(elementId, 80);
+      
+      // If we're not on the homepage, navigate to homepage first
+      if (pathname !== '/') {
+        console.log('Navigating to homepage and then scrolling to:', elementId);
+        router.push(`/${href}`);
+      } else {
+        console.log('Scrolling to element on current page:', elementId);
+        scrollToElement(elementId, 80);
+      }
     } else {
       console.log('Opening external link:', href);
       window.open(href, '_blank');
@@ -42,14 +51,21 @@ export function Navigation() {
   };
 
   const handleWaitlistClick = () => {
-    console.log('Waitlist button clicked');
+    console.log('Waitlist button clicked', { currentPath: pathname });
     
     trackEvent('navigation_waitlist_click', {
       section: 'header',
       button_type: 'waitlist',
     });
     
-    scrollToElement('waitlist', 80);
+    // If we're not on the homepage, navigate to homepage first
+    if (pathname !== '/') {
+      console.log('Navigating to homepage and then scrolling to waitlist');
+      router.push('/#waitlist');
+    } else {
+      console.log('Scrolling to waitlist on current page');
+      scrollToElement('waitlist', 80);
+    }
   };
 
   return (
@@ -69,25 +85,33 @@ export function Navigation() {
           <div className="flex h-16 items-center justify-between">
             
             {/* Logo */}
-            <motion.div
-              className="flex items-center gap-3"
+            <motion.button
+              onClick={() => router.push('/')}
+              className="flex items-center gap-2 cursor-pointer group"
               whileHover={{ scale: 1.05 }}
               transition={{ type: 'spring', stiffness: 400, damping: 25 }}
             >
-              <div className="relative h-8 w-8">
-                <Image
-                  src="/MindMuscleWeb.png"
-                  alt={`${APP_INFO.name} Logo`}
-                  fill
-                  sizes="32px"
-                  className="object-contain"
-                  priority
-                />
+              <div className="flex items-center">
+                <span className="text-2xl font-black bg-gradient-to-r from-primary-400 via-primary-500 to-accent-cyan bg-clip-text text-transparent">
+                  Mind
+                </span>
+                <span className="text-2xl font-black text-white group-hover:text-gray-200 transition-colors">
+                  Muscle
+                </span>
               </div>
-              <span className="text-xl font-bold text-white">
-                {APP_INFO.name}
-              </span>
-            </motion.div>
+              <motion.div
+                className="w-2 h-2 rounded-full bg-gradient-to-r from-primary-500 to-accent-cyan"
+                animate={{
+                  scale: [1, 1.2, 1],
+                  opacity: [0.7, 1, 0.7],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                }}
+              />
+            </motion.button>
 
             {/* Desktop Navigation */}
             <div className="hidden items-center gap-8 md:flex">

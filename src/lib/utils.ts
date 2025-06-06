@@ -49,40 +49,56 @@ export function generateId(): string {
   return Math.random().toString(36).substr(2, 9);
 }
 
-// Scroll to element with smooth behavior
+// Scroll to element with smooth behavior - enhanced for lazy-loaded content
 export function scrollToElement(elementId: string, offset = 0): void {
   console.log(`Attempting to scroll to: ${elementId}`);
   
-  const element = document.getElementById(elementId);
-  if (element) {
-    const elementPosition = element.offsetTop - offset;
+  const attemptScroll = (attempt = 1, maxAttempts = 5) => {
+    const element = document.getElementById(elementId);
     
-    window.scrollTo({
-      top: elementPosition,
-      behavior: 'smooth',
-    });
+    if (element) {
+      const elementPosition = element.offsetTop - offset;
+      
+      window.scrollTo({
+        top: elementPosition,
+        behavior: 'smooth',
+      });
+      
+      console.log(`Successfully scrolled to element: ${elementId}`);
+      return;
+    }
     
-    console.log(`Successfully scrolled to element: ${elementId}`);
-  } else {
-    console.warn(`Element with id "${elementId}" not found`);
+    // If element not found and we haven't reached max attempts, try again
+    if (attempt < maxAttempts) {
+      console.log(`Element "${elementId}" not found, attempt ${attempt}/${maxAttempts}. Retrying...`);
+      setTimeout(() => attemptScroll(attempt + 1, maxAttempts), 200 * attempt);
+      return;
+    }
     
-    // Fallback: try with querySelector and scrollIntoView
-    setTimeout(() => {
-      const fallbackElement = document.querySelector(`#${elementId}`);
-      if (fallbackElement) {
-        fallbackElement.scrollIntoView({ 
-          behavior: 'smooth', 
-          block: 'start',
-          inline: 'nearest'
-        });
-        console.log(`Fallback scroll successful for: ${elementId}`);
-      } else {
-        console.error(`Element "${elementId}" not found with any method`);
+    // Final fallback after all attempts
+    console.warn(`Element with id "${elementId}" not found after ${maxAttempts} attempts`);
+    
+    // Try scrollIntoView as last resort
+    const fallbackElement = document.querySelector(`#${elementId}`);
+    if (fallbackElement) {
+      fallbackElement.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start',
+        inline: 'nearest'
+      });
+      console.log(`Fallback scroll successful for: ${elementId}`);
+    } else {
+      // Don't log error to console to avoid UI errors - just log as warning
+      console.warn(`Unable to scroll to "${elementId}" - element may not exist or be loaded yet`);
+      
+      if (process.env.NODE_ENV === 'development') {
         const allIds = Array.from(document.querySelectorAll('[id]')).map(el => el.id);
         console.log('Available element IDs:', allIds);
       }
-    }, 100);
-  }
+    }
+  };
+  
+  attemptScroll();
 }
 
 // Check if element is in viewport
