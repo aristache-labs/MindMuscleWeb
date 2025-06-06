@@ -389,15 +389,15 @@ export function InteractiveAppPreview({ className }: InteractiveAppPreviewProps)
   return (
     <div className={`relative mx-auto max-w-sm ${className}`}>
       {/* Phone Frame */}
-      <div className="relative h-[500px] w-[250px] sm:h-[600px] sm:w-[300px] bg-gradient-to-br from-gray-800 via-gray-900 to-black rounded-[2rem] sm:rounded-[2.5rem] p-1.5 sm:p-2 shadow-2xl">
+      <div className="relative h-[520px] w-[260px] sm:h-[740px] sm:w-[320px] bg-gradient-to-br from-gray-800 via-gray-900 to-black rounded-[2rem] sm:rounded-[2.5rem] p-1.5 sm:p-2 shadow-2xl">
         {/* Inner Frame */}
         <div className="w-full h-full bg-black rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden">
           {/* Dynamic Island */}
-          <div className="absolute top-3 sm:top-4 left-1/2 transform -translate-x-1/2 w-16 h-5 sm:w-20 sm:h-6 bg-black rounded-full z-20" />
+          <div className="absolute top-1 sm:top-2 left-1/2 transform -translate-x-1/2 w-12 h-4 sm:w-16 sm:h-5 bg-black rounded-full z-20" />
           
           {/* Status Bar */}
-          <div className="absolute top-1.5 sm:top-2 left-3 sm:left-4 right-3 sm:right-4 flex justify-between items-center text-white text-xs z-10">
-            <span>9:41</span>
+          <div className="absolute top-4 sm:top-5 left-3 sm:left-4 right-3 sm:right-4 flex justify-between items-center text-white text-xs z-10">
+            <span>9:01</span>
             <div className="flex items-center gap-1">
               <div className="w-1 h-1 bg-white rounded-full" />
               <div className="w-1 h-1 bg-white rounded-full" />
@@ -407,7 +407,7 @@ export function InteractiveAppPreview({ className }: InteractiveAppPreviewProps)
           </div>
 
           {/* Screen Content */}
-          <div className="pt-10 sm:pt-12 pb-16 sm:pb-20 h-full">
+          <div className="pt-6 sm:pt-8 pb-12 sm:pb-16 h-full">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentScreen}

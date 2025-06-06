@@ -116,7 +116,7 @@ export function InteractiveShowcaseSection() {
             <div className="relative">
               {/* Floating Labels */}
               <motion.div
-                className="absolute -top-6 sm:-top-8 -left-4 sm:-left-8 bg-primary-500/20 border border-primary-500/30 rounded-xl px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm text-primary-300 backdrop-blur-sm"
+                className="absolute -top-1 sm:-top-8 -left-4 sm:-left-8 bg-primary-500/20 border border-primary-500/30 rounded-xl px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm text-primary-300 backdrop-blur-sm"
                 animate={{
                   y: [0, -10, 0],
                   opacity: [0.7, 1, 0.7],

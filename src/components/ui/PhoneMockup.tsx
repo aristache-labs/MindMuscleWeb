@@ -97,7 +97,7 @@ export function PhoneMockup({
       }}
     >
       {/* Phone Frame */}
-      <div className="relative h-[600px] w-[300px] transform-gpu">
+      <div className="relative h-[680px] w-[320px] transform-gpu">
         {/* Phone Shadow */}
         <motion.div
           className="absolute -inset-4 rounded-[3rem] bg-gradient-to-br from-primary-500/20 to-accent-cyan/20 blur-xl"
@@ -114,7 +114,7 @@ export function PhoneMockup({
           <div className="relative h-full w-full overflow-hidden rounded-[2rem] bg-black">
             
             {/* Dynamic Island */}
-            <div className="absolute left-1/2 top-4 z-20 h-6 w-20 -translate-x-1/2 rounded-full bg-black" />
+            <div className="absolute left-1/2 top-1 z-20 h-5 w-16 -translate-x-1/2 rounded-full bg-black" />
             
             {/* Screen Content */}
             <div className="relative h-full w-full">
@@ -138,7 +138,7 @@ export function PhoneMockup({
                         alt={currentScreenshotData.alt}
                         fill
                         className="object-cover"
-                        sizes="300px"
+                        sizes="320px"
                         priority={currentScreenshot === 0}
                       />
                     </div>

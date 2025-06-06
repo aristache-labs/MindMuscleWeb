@@ -162,14 +162,14 @@ export function AppShowcaseSection() {
           >
             {/* Phone Frame */}
             <div className="relative">
-              {/* Outer Frame */}
-              <div className="relative w-72 sm:w-80 h-[576px] sm:h-[640px] mx-auto bg-gradient-to-b from-gray-800 via-gray-900 to-black rounded-[3rem] p-2 shadow-2xl">
-                {/* Inner Frame */}
-                <div className="w-full h-full bg-black rounded-[2.5rem] p-1">
+              {/* Outer Frame - Modern iPhone Style */}
+              <div className="relative w-80 sm:w-80 h-[640px] sm:h-[680px] mx-auto bg-gradient-to-b from-slate-300 via-slate-400 to-slate-500 rounded-[3rem] p-1 shadow-2xl shadow-black/20">
+                {/* Screen Bezel */}
+                <div className="w-full h-full bg-black rounded-[2.8rem] p-1">
                   {/* Screen */}
-                  <div className="relative w-full h-full bg-dark-950 rounded-[2rem] overflow-hidden">
-                    {/* Notch */}
-                    <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-6 bg-black rounded-b-2xl z-20" />
+                  <div className="relative w-full h-full bg-black rounded-[2.6rem] overflow-hidden">
+                    {/* Dynamic Island (Modern iPhone Style) */}
+                    <div className="absolute top-3 left-1/2 transform -translate-x-1/2 w-32 h-7 bg-black rounded-full z-20 border border-gray-800" />
                     
                     {/* Screenshot Container */}
                     <div className="relative w-full h-full">
@@ -186,24 +186,29 @@ export function AppShowcaseSection() {
                             src={currentScreenshot.image}
                             alt={currentScreenshot.alt}
                             fill
-                            sizes="(max-width: 768px) 100vw, 320px"
-                            className="object-cover rounded-[2rem]"
+                            sizes="(max-width: 768px) 100vw, 420px"
+                            className="object-cover rounded-[2.6rem]"
                             priority={currentIndex === 0}
                             unoptimized={currentScreenshot.image.startsWith('data:')}
                           />
                           
                           {/* Overlay with app-like elements */}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-black/10 rounded-[2rem]" />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent rounded-[2.6rem]" />
                           
                           {/* Status bar */}
-                          <div className="absolute top-2 left-4 right-4 flex justify-between items-center text-white text-xs z-10">
-                            <span>9:41</span>
+                          <div className="absolute top-12 left-4 right-4 flex justify-between items-center text-white text-sm font-medium z-10">
+                            <span>9:35</span>
                             <div className="flex items-center gap-1">
-                              <div className="w-1 h-1 bg-white rounded-full" />
-                              <div className="w-1 h-1 bg-white rounded-full" />
-                              <div className="w-1 h-1 bg-white/50 rounded-full" />
-                              <div className="w-4 h-2 border border-white rounded-sm">
-                                <div className="w-3/4 h-full bg-green-500 rounded-sm" />
+                              <div className="flex gap-0.5">
+                                <div className="w-1 h-1 bg-white rounded-full" />
+                                <div className="w-1 h-1 bg-white rounded-full" />
+                                <div className="w-1 h-1 bg-white rounded-full" />
+                                <div className="w-1 h-1 bg-white/60 rounded-full" />
+                              </div>
+                              <span className="text-white font-bold ml-1">50%</span>
+                              <div className="w-6 h-3 border border-white/70 rounded-sm ml-1 relative">
+                                <div className="w-full h-full bg-green-500 rounded-sm" />
+                                <div className="absolute -right-0.5 top-0.5 w-0.5 h-1 bg-white/70 rounded-full" />
                               </div>
                             </div>
                           </div>
@@ -214,8 +219,11 @@ export function AppShowcaseSection() {
                 </div>
                 
                 {/* Home indicator */}
-                <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-white/30 rounded-full" />
+                <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-white/40 rounded-full" />
               </div>
+              
+              {/* Subtle glow effect */}
+              <div className="absolute inset-0 rounded-[3rem] bg-gradient-to-t from-primary-500/5 via-transparent to-transparent pointer-events-none" />
 
               {/* Floating Action Button */}
               <motion.button
