@@ -72,7 +72,7 @@ export function InteractiveAppPreview({ className }: InteractiveAppPreviewProps)
   ];
 
   const renderDashboard = () => (
-    <div className="p-4 sm:p-6 h-full bg-gradient-to-br from-gray-900 to-gray-800">
+    <div className="p-4 sm:p-8 min-h-full bg-gradient-to-br from-gray-900 to-gray-800">
       {/* Header */}
               <div className="flex items-center justify-between mb-4 sm:mb-6">
         <div>
@@ -154,7 +154,7 @@ export function InteractiveAppPreview({ className }: InteractiveAppPreviewProps)
   );
 
   const renderWorkoutPlan = () => (
-    <div className="p-4 sm:p-6 h-full bg-gradient-to-br from-gray-900 to-gray-800">
+    <div className="p-4 sm:p-6 min-h-full bg-gradient-to-br from-gray-900 to-gray-800">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
@@ -216,7 +216,7 @@ export function InteractiveAppPreview({ className }: InteractiveAppPreviewProps)
   );
 
   const renderActiveWorkout = () => (
-    <div className="p-4 sm:p-6 h-full bg-gradient-to-br from-red-900/30 to-gray-900">
+    <div className="p-4 sm:p-6 min-h-full bg-gradient-to-br from-red-900/30 to-gray-900">
       {/* Header */}
       <div className="text-center mb-6">
         <h1 className="text-2xl font-bold text-white mb-1">Bench Press</h1>
@@ -308,7 +308,7 @@ export function InteractiveAppPreview({ className }: InteractiveAppPreviewProps)
   );
 
   const renderProgress = () => (
-    <div className="p-4 sm:p-6 h-full bg-gradient-to-br from-gray-900 to-gray-800">
+    <div className="p-4 sm:p-6 min-h-full bg-gradient-to-br from-gray-900 to-gray-800">
       {/* Header */}
       <div className="text-center mb-6">
         <h1 className="text-xl font-bold text-white">Your Progress</h1>
@@ -407,7 +407,7 @@ export function InteractiveAppPreview({ className }: InteractiveAppPreviewProps)
           </div>
 
           {/* Screen Content */}
-          <div className="pt-6 sm:pt-8 pb-12 sm:pb-16 h-full">
+          <div className="pt-6 sm:pt-8 h-full">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentScreen}
@@ -416,7 +416,7 @@ export function InteractiveAppPreview({ className }: InteractiveAppPreviewProps)
                 animate="center"
                 exit="exit"
                 transition={{ duration: 0.3, ease: 'easeInOut' }}
-                className="h-full"
+                className="h-full overflow-y-auto pb-1"
               >
                 {renderScreen()}
               </motion.div>
@@ -424,28 +424,27 @@ export function InteractiveAppPreview({ className }: InteractiveAppPreviewProps)
           </div>
 
           {/* Bottom Navigation */}
-          <div className="absolute bottom-0 left-0 right-0 bg-gray-900/95 backdrop-blur-sm border-t border-gray-700/50">
-            <div className="flex justify-around items-center py-1.5 sm:py-2">
-              {navigationItems.map((item) => (
-                <div key={item.screen}>
-                  <motion.button
-                    className={`p-2.5 sm:p-3 rounded-xl transition-colors ${
-                      currentScreen === item.screen
-                        ? 'bg-primary-500/20 text-primary-400'
-                        : 'text-gray-500'
-                    }`}
-                    whileTap={{ scale: 0.9 }}
-                    onClick={() => setCurrentScreen(item.screen)}
-                  >
-                    <item.icon className="w-4 h-4 sm:w-5 sm:h-5" />
-                  </motion.button>
-                </div>
-              ))}
+          <div className="absolute bottom-2 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4">
+            <div className="bg-gray-900/80 backdrop-blur-lg border border-gray-700/60 rounded-full">
+              <div className="flex justify-around items-center py-1.5 sm:py-2 px-2">
+                {navigationItems.map((item) => (
+                  <div key={item.screen}>
+                    <motion.button
+                      className={`p-2 sm:p-1.5 rounded-full transition-colors duration-200 ${
+                        currentScreen === item.screen
+                          ? 'bg-primary-500 text-white'
+                          : 'text-gray-400 hover:bg-gray-800/50 hover:text-white'
+                      }`}
+                      whileTap={{ scale: 0.9 }}
+                      onClick={() => setCurrentScreen(item.screen)}
+                    >
+                      <item.icon className="w-4 h-4 sm:w-5 sm:h-5" />
+                    </motion.button>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-
-          {/* Home Indicator */}
-          <div className="absolute bottom-0.5 sm:bottom-1 left-1/2 transform -translate-x-1/2 w-24 sm:w-32 h-0.5 sm:h-1 bg-white/20 rounded-full" />
         </div>
       </div>
     </div>
