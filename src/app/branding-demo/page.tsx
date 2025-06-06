@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, Copy, Check } from 'lucide-react';
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { APP_SCREENSHOTS } from '@/lib/constants';
 import { 
   AIBrainIcon, 
@@ -327,10 +328,14 @@ export default function BrandingDemoPage() {
                 whileHover={{ scale: 1.02, y: -5 }}
               >
                 <div className="aspect-[9/16] bg-gradient-to-br from-primary-500/10 to-primary-600/10 rounded-xl overflow-hidden mb-4 relative">
-                  <img
+                  <Image
                     src={screenshot.image}
                     alt={screenshot.alt}
+                    width={300}
+                    height={533}
                     className="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-300"
+                    quality={85}
+                    priority={index < 4}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>

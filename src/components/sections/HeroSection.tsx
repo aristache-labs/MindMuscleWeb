@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 
 import { PhoneMockup } from '@/components/ui/PhoneMockup';
-import { STORE_LINKS, APP_SCREENSHOTS, ANIMATION_TIMING } from '@/lib/constants';
+import { APP_SCREENSHOTS, ANIMATION_TIMING } from '@/lib/constants';
 import { trackEvent } from '@/lib/utils';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { useTextReveal, useCounterAnimation } from '@/hooks/useScrollAnimation';
