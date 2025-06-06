@@ -1,21 +1,44 @@
-import Hero from "@/components/sections/Hero";
-import HowItWorks from "@/components/sections/HowItWorks";
-import Features from "@/components/sections/Features";
-import Showcase from "@/components/sections/Showcase";
-import Testimonials from "@/components/sections/Testimonials";
-import FinalCTA from "@/components/sections/FinalCTA";
+import { Suspense } from 'react';
+import { HeroSection } from '@/components/sections/HeroSection';
+import { HowItWorksSection } from '@/components/sections/HowItWorksSection';
+import { FeaturesSection } from '@/components/sections/FeaturesSection';
+import { AppShowcaseSection } from '@/components/sections/AppShowcaseSection';
+import { TestimonialsSection } from '@/components/sections/TestimonialsSection';
+import { WaitlistSection } from '@/components/sections/WaitlistSection';
+import { Footer } from '@/components/layout/Footer';
+import { Navigation } from '@/components/layout/Navigation';
+import { LoadingFallback } from '@/components/ui/LoadingFallback';
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <main className="relative min-h-screen bg-dark-bg overflow-x-hidden">
-      <div className="relative container mx-auto px-4 max-w-7xl">
-        <Hero />
-        <HowItWorks />
-        <Features />
-        <Showcase />
-        <Testimonials />
-        <FinalCTA />
-      </div>
+    <main className="min-h-screen bg-dark-950">
+      <Navigation />
+      
+      <Suspense fallback={<LoadingFallback />}>
+        <HeroSection />
+      </Suspense>
+
+      <Suspense fallback={<LoadingFallback />}>
+        <HowItWorksSection />
+      </Suspense>
+
+      <Suspense fallback={<LoadingFallback />}>
+        <FeaturesSection />
+      </Suspense>
+
+      <Suspense fallback={<LoadingFallback />}>
+        <AppShowcaseSection />
+      </Suspense>
+
+      <Suspense fallback={<LoadingFallback />}>
+        <TestimonialsSection />
+      </Suspense>
+
+      <Suspense fallback={<LoadingFallback />}>
+        <WaitlistSection />
+      </Suspense>
+
+      <Footer />
     </main>
   );
-}
+} 
