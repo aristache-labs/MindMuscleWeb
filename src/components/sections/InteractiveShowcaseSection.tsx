@@ -23,9 +23,9 @@ const features = [
     color: 'from-green-500 to-green-600',
   },
   {
-    id: 'progress-analytics',
+    id: 'progress-tracking',
     icon: BarChart3,
-    title: 'Progress Analytics',
+    title: 'Progress Tracking',
     description: 'Visualize your fitness journey with detailed progress charts.',
     color: 'from-blue-500 to-blue-600',
   },

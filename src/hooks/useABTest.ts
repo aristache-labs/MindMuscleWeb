@@ -1,35 +1,13 @@
-'use client';
+// This hook has been removed as part of analytics system cleanup
+// Consider using a third-party A/B testing service like PostHog, Optimizely, or Google Optimize instead
 
-import { useState, useEffect } from 'react';
-import { getABVariant, trackABConversion, ABTestConfig } from '@/lib/analytics';
-
-export function useABTest(testName: string, config: ABTestConfig) {
-  const [variant, setVariant] = useState<string>('');
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    // Get variant assignment
-    const assignedVariant = getABVariant(testName, config);
-    setVariant(assignedVariant);
-    setIsLoading(false);
-  }, [testName, config]);
-
-  const trackConversion = (goalName: string, value?: number) => {
-    if (variant) {
-      trackABConversion(testName, goalName, value);
-    }
-  };
-
-  const getVariantConfig = () => {
-    const variantData = config.variants.find(v => v.name === variant);
-    return variantData?.config || {};
-  };
-
+export function useABTest() {
+  console.warn('useABTest hook has been removed. Consider using a third-party A/B testing service.');
   return {
-    variant,
-    isLoading,
-    trackConversion,
-    getVariantConfig,
-    isVariant: (variantName: string) => variant === variantName,
+    variant: 'control',
+    isLoading: false,
+    trackConversion: () => {},
+    getVariantConfig: () => ({}),
+    isVariant: () => false,
   };
 } 

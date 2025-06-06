@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "build": "npm run optimize-images && next build",
     "start": "next start",
     "lint": "next lint",
     "type-check": "tsc --noEmit",

@@ -128,8 +128,9 @@ export const INTEREST_OPTIONS = [
   { id: 'strength-training', label: 'Strength Training', icon: '💪' },
   { id: 'cardio-fitness', label: 'Cardio & Fitness', icon: '❤️' },
   { id: 'nutrition-tracking', label: 'Nutrition Tracking', icon: '🥗' },
-  { id: 'progress-analytics', label: 'Progress Analytics', icon: '📊' },
-  { id: 'community-features', label: 'Community Features', icon: '👥' },
+  { id: 'mindful-workouts', label: 'Mindful Workouts', icon: '🧘' },
+  { id: 'community', label: 'Community Features', icon: '👥' },
+  { id: 'wearable-integration', label: 'Wearable Integration', icon: '⌚' },
   { id: 'personal-coaching', label: 'Personal Coaching', icon: '🎯' },
   { id: 'habit-building', label: 'Habit Building', icon: '⚡' },
 ] as const;

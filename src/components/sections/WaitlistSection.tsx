@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 import { useEffect } from 'react';
 import { WaitlistForm } from '@/components/ui/WaitlistForm';
 import { trackEvent } from '@/lib/utils';
-import { trackConversion, CONVERSION_FUNNEL } from '@/lib/analytics';
 import { Sparkles, Users, Trophy } from 'lucide-react';
 import { useScrollAnimation, useStaggerAnimation, SCROLL_VARIANTS } from '@/hooks/useScrollAnimation';
 
@@ -45,20 +44,11 @@ export function WaitlistSection() {
     }
   );
 
-  // Track when user views waitlist section
-  useEffect(() => {
-    trackConversion(CONVERSION_FUNNEL.WAITLIST_VIEW);
-  }, []);
-
   const handleWaitlistSuccess = (data: SuccessData) => {
     trackEvent('waitlist_section_success', {
       position: data.position,
       email: data.email,
       referral_code: data.referralCode,
-    });
-    trackConversion(CONVERSION_FUNNEL.WAITLIST_SUCCESS, {
-      position: data.position,
-      email: data.email,
     });
   };
 

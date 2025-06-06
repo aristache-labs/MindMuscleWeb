@@ -19,7 +19,6 @@ import {
   Sparkles
 } from 'lucide-react';
 import { cn, trackEvent } from '@/lib/utils';
-import { trackConversion, CONVERSION_FUNNEL } from '@/lib/analytics';
 import { 
   waitlistFormSchema, 
   WaitlistFormData, 
@@ -199,9 +198,6 @@ export function WaitlistForm({ className, onSuccess, referralCode }: WaitlistFor
   const onSubmit = async (data: WaitlistFormData) => {
     setFormState(prev => ({ ...prev, isSubmitting: true, isError: false }));
     
-    // Track form submission start
-    trackConversion(CONVERSION_FUNNEL.WAITLIST_FORM_SUBMIT);
-    
     trackEvent('waitlist_form_submit', {
       has_first_name: !!data.firstName,
       interests_count: data.interests?.length || 0,
@@ -364,7 +360,6 @@ export function WaitlistForm({ className, onSuccess, referralCode }: WaitlistFor
   const handleFormStart = () => {
     if (!hasStartedForm) {
       setHasStartedForm(true);
-      trackConversion(CONVERSION_FUNNEL.WAITLIST_FORM_START);
     }
   };
 

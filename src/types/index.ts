@@ -98,15 +98,6 @@ export interface SEOData {
   canonicalUrl?: string;
 }
 
-// Analytics events
-export interface AnalyticsEvent {
-  event: string;
-  category: string;
-  label?: string;
-  value?: number;
-  custom_parameters?: Record<string, unknown>;
-}
-
 // Device detection
 export interface DeviceInfo {
   isMobile: boolean;
@@ -129,4 +120,14 @@ export interface Theme {
   spacing: Record<string, string>;
   borderRadius: Record<string, string>;
   shadows: Record<string, string>;
-} 
+}
+
+// Demographics
+export interface Demographics {
+  age?: number;
+  gender?: string;
+  location?: string;
+  fitnessLevel?: 'beginner' | 'intermediate' | 'advanced';
+}
+
+export type { DemoItem } from './demo'; 

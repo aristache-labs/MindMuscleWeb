@@ -41,8 +41,8 @@ const features = [
   {
     id: 4,
     icon: BarChart3,
-    title: 'Progress Analytics',
-    description: 'Comprehensive insights into your fitness journey with detailed analytics, trends, and predictive modeling.',
+    title: 'Progress Tracking',
+    description: 'Comprehensive insights into your fitness journey with detailed metrics, trends, and progress visualization.',
     benefits: ['Performance metrics', 'Trend analysis', 'Goal predictions'],
     gradient: 'from-green-500 to-emerald-500'
   },

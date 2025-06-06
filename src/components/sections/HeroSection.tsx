@@ -9,8 +9,6 @@ import { STORE_LINKS, APP_SCREENSHOTS, ANIMATION_TIMING } from '@/lib/constants'
 import { trackEvent } from '@/lib/utils';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { useTextReveal, useCounterAnimation } from '@/hooks/useScrollAnimation';
-import { useABTest } from '@/hooks/useABTest';
-import { trackConversion, AB_TESTS, CONVERSION_FUNNEL } from '@/lib/analytics';
 import { Download, PlayCircle, ChevronRight, Sparkles } from 'lucide-react';
 
 const heroVariants = {
@@ -69,9 +67,6 @@ export function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const prefersReducedMotion = useReducedMotion();
 
-  // A/B Test for CTA button
-  const heroCTATest = useABTest('hero_cta_button', AB_TESTS.HERO_CTA_BUTTON);
-
   // Text reveal animations
   const mainHeadline = useTextReveal('The Future of AI-Powered Fitness is Here', {
     threshold: 0.3,
@@ -92,11 +87,6 @@ export function HeroSection() {
     delay: 0.8,
   });
 
-  // Track hero section view
-  useEffect(() => {
-    trackConversion(CONVERSION_FUNNEL.HERO_INTERACTION);
-  }, []);
-
   // Auto-advance carousel logic
   useEffect(() => {
     if (isCarouselPaused) return;
@@ -114,9 +104,7 @@ export function HeroSection() {
     trackEvent('hero_appstore_click', {
       section: 'hero',
       button_type: 'primary',
-      ab_variant: heroCTATest.variant,
     });
-    heroCTATest.trackConversion('app_store_click');
     window.open(STORE_LINKS.appStore, '_blank');
   };
 
@@ -124,9 +112,7 @@ export function HeroSection() {
     trackEvent('hero_playstore_click', {
       section: 'hero',
       button_type: 'secondary',
-      ab_variant: heroCTATest.variant,
     });
-    heroCTATest.trackConversion('play_store_click');
     window.open(STORE_LINKS.playStore, '_blank');
   };
 
@@ -134,10 +120,7 @@ export function HeroSection() {
     trackEvent('hero_waitlist_click', {
       section: 'hero',
       button_type: 'waitlist',
-      ab_variant: heroCTATest.variant,
     });
-    heroCTATest.trackConversion('waitlist_click');
-    trackConversion(CONVERSION_FUNNEL.WAITLIST_VIEW);
     document.getElementById('waitlist')?.scrollIntoView({ behavior: 'smooth' });
   };
 
@@ -311,7 +294,7 @@ export function HeroSection() {
                 </MagneticButton>
               </motion.div>
 
-              {/* Waitlist Link - A/B Test Variants */}
+              {/* Waitlist Link */}
               <MagneticElement
                 as="button"
                 onClick={handleWaitlistClick}
@@ -327,9 +310,7 @@ export function HeroSection() {
                   transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                   className="flex items-center gap-2"
                 >
-                  {heroCTATest.isVariant('control') && 'Join the waitlist for early access'}
-                  {heroCTATest.isVariant('variant_a') && 'Get early access now'}
-                  {heroCTATest.isVariant('variant_b') && 'Reserve your spot today'}
+                  Join the waitlist for early access
                   <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </motion.span>
               </MagneticElement>

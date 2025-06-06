@@ -31,7 +31,7 @@ const steps = [
     icon: TrendingUp,
     title: 'Track & Evolve',
     description: 'Monitor your progress as the AI continuously learns and evolves your fitness program.',
-    details: ['Progress analytics', 'Performance insights', 'Adaptive programming']
+            details: ['Progress tracking', 'Performance insights', 'Adaptive programming']
   }
 ];
 

@@ -142,18 +142,18 @@ export const storage = {
   },
 };
 
-// Analytics helper
+// Event tracking helper (placeholder for future analytics integration)
 export function trackEvent(eventName: string, properties?: Record<string, unknown>) {
   if (typeof window === 'undefined') return;
   
-  // Track with analytics service (e.g., Plausible, Google Analytics)
-  if (typeof window.plausible === 'function') {
-    window.plausible(eventName, { props: properties });
-  }
+  // Future: Integrate with analytics service (PostHog, Plausible, etc.)
+  // if (typeof window.plausible === 'function') {
+  //   window.plausible(eventName, { props: properties });
+  // }
   
-  // Also log in development
+  // Log in development for debugging
   if (process.env.NODE_ENV === 'development') {
-    console.log('Analytics Event:', eventName, properties);
+    console.log('Event:', eventName, properties);
   }
 }
 
