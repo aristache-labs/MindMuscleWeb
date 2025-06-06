@@ -13,6 +13,12 @@
       "static/chunks/main-app.js",
       "static/chunks/app/page.js"
     ],
+    "/api/waitlist/route": [
+      "static/chunks/webpack.js",
+      "static/chunks/vendors.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/api/waitlist/route.js"
+    ],
     "/_not-found/page": [
       "static/chunks/webpack.js",
       "static/chunks/vendors.js",

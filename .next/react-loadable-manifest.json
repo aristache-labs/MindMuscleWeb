@@ -5,6 +5,18 @@
       "static/chunks/vendors.js"
     ]
   },
+  "..\\node_modules\\next\\dist\\client\\index.js -> ../pages/_app": {
+    "id": "..\\node_modules\\next\\dist\\client\\index.js -> ../pages/_app",
+    "files": [
+      "static/chunks/vendors.js"
+    ]
+  },
+  "..\\node_modules\\next\\dist\\client\\index.js -> ../pages/_error": {
+    "id": "..\\node_modules\\next\\dist\\client\\index.js -> ../pages/_error",
+    "files": [
+      "static/chunks/vendors.js"
+    ]
+  },
   "components\\ui\\PerformanceMonitor.tsx -> web-vitals": {
     "id": "components\\ui\\PerformanceMonitor.tsx -> web-vitals",
     "files": [
