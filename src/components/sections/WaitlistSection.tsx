@@ -5,8 +5,14 @@ import { WaitlistForm } from '@/components/ui/WaitlistForm';
 import { trackEvent } from '@/lib/utils';
 import { Sparkles, Users, Trophy } from 'lucide-react';
 
+interface SuccessData {
+  position?: number;
+  email?: string;
+  referralCode?: string;
+}
+
 export function WaitlistSection() {
-  const handleWaitlistSuccess = (data: any) => {
+  const handleWaitlistSuccess = (data: SuccessData) => {
     trackEvent('waitlist_section_success', {
       position: data.position,
       email: data.email,

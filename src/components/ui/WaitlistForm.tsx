@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import Confetti from 'react-confetti';
 import { 
   Mail, 
   User, 
@@ -21,13 +22,17 @@ import { cn, trackEvent } from '@/lib/utils';
 import { 
   waitlistFormSchema, 
   WaitlistFormData, 
-  INTEREST_OPTIONS,
-  extractUTMParams
+  INTEREST_OPTIONS
 } from '@/lib/validations';
+
+interface SuccessData {
+  position?: number;
+  referralCode?: string;
+}
 
 interface WaitlistFormProps {
   className?: string;
-  onSuccess?: (data: any) => void;
+  onSuccess?: (data: SuccessData) => void;
   referralCode?: string;
 }
 
@@ -36,7 +41,7 @@ interface FormState {
   isSuccess: boolean;
   isError: boolean;
   errorMessage: string;
-  successData: any;
+  successData: SuccessData | null;
 }
 
 interface ReferralValidation {
@@ -64,6 +69,11 @@ export function WaitlistForm({ className, onSuccess, referralCode }: WaitlistFor
 
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [copiedReferral, setCopiedReferral] = useState(false);
+  const [clipboardSupported, setClipboardSupported] = useState(true);
+  const [windowDimensions, setWindowDimensions] = useState({ width: 0, height: 0 });
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [showSecondBurst, setShowSecondBurst] = useState(false);
+  const [showFlash, setShowFlash] = useState(false);
 
   const {
     control,
@@ -104,6 +114,63 @@ export function WaitlistForm({ className, onSuccess, referralCode }: WaitlistFor
     }
   }, [referralCode, setValue]);
 
+  // Check clipboard support and window dimensions on component mount
+  useEffect(() => {
+    const checkClipboardSupport = () => {
+      const hasClipboard = !!(navigator.clipboard && navigator.clipboard.writeText);
+      const hasLegacySupport = !!document.execCommand;
+      setClipboardSupported(hasClipboard || hasLegacySupport);
+    };
+
+    const updateWindowDimensions = () => {
+      setWindowDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    checkClipboardSupport();
+    updateWindowDimensions();
+
+    window.addEventListener('resize', updateWindowDimensions);
+    return () => window.removeEventListener('resize', updateWindowDimensions);
+  }, []);
+
+  // Trigger confetti when form is successfully submitted
+  useEffect(() => {
+    if (formState.isSuccess && !showConfetti) {
+      setShowConfetti(true);
+      
+      // Flash effect at the beginning
+      setShowFlash(true);
+      const flashTimer = setTimeout(() => {
+        setShowFlash(false);
+      }, 200);
+      
+      // Trigger second burst after 1.5 seconds
+      const secondBurstTimer = setTimeout(() => {
+        setShowSecondBurst(true);
+      }, 1500);
+      
+      // Stop first confetti after 3 seconds
+      const firstBurstTimer = setTimeout(() => {
+        setShowConfetti(false);
+      }, 3000);
+      
+      // Stop second confetti after 2 seconds (total 3.5s)
+      const secondBurstEndTimer = setTimeout(() => {
+        setShowSecondBurst(false);
+      }, 3500);
+      
+      return () => {
+        clearTimeout(flashTimer);
+        clearTimeout(secondBurstTimer);
+        clearTimeout(firstBurstTimer);
+        clearTimeout(secondBurstEndTimer);
+      };
+    }
+  }, [formState.isSuccess, showConfetti]);
+
   const validateReferralCode = async (code: string) => {
     setReferralValidation(prev => ({ ...prev, isValidating: true, error: '' }));
     
@@ -117,7 +184,7 @@ export function WaitlistForm({ className, onSuccess, referralCode }: WaitlistFor
         referrerName: data.referrer || '',
         error: data.valid ? '' : 'Invalid referral code',
       });
-    } catch (error) {
+    } catch {
       setReferralValidation({
         isValidating: false,
         isValid: false,
@@ -188,15 +255,83 @@ export function WaitlistForm({ className, onSuccess, referralCode }: WaitlistFor
     const referralUrl = `${window.location.origin}?ref=${formState.successData.referralCode}`;
     
     try {
-      await navigator.clipboard.writeText(referralUrl);
-      setCopiedReferral(true);
-      setTimeout(() => setCopiedReferral(false), 2000);
+      // Try modern clipboard API first
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(referralUrl);
+        setCopiedReferral(true);
+        setTimeout(() => setCopiedReferral(false), 2000);
+        
+        trackEvent('referral_link_copied', {
+          referral_code: formState.successData.referralCode,
+          method: 'clipboard_api',
+        });
+        return;
+      }
       
-      trackEvent('referral_link_copied', {
-        referral_code: formState.successData.referralCode,
-      });
+      // Fallback to legacy method
+      const textArea = document.createElement('textarea');
+      textArea.value = referralUrl;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-999999px';
+      textArea.style.top = '-999999px';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      
+      const successful = document.execCommand('copy');
+      document.body.removeChild(textArea);
+      
+      if (successful) {
+        setCopiedReferral(true);
+        setTimeout(() => setCopiedReferral(false), 2000);
+        
+        trackEvent('referral_link_copied', {
+          referral_code: formState.successData.referralCode,
+          method: 'legacy_execCommand',
+        });
+      } else {
+        throw new Error('Copy command failed');
+      }
+      
     } catch (error) {
       console.error('Failed to copy referral link:', error);
+      
+      // Ultimate fallback - show an alert with the URL
+      const shouldOpenPrompt = window.confirm(
+        `Unable to copy automatically. Would you like to see the referral link to copy manually?\n\nLink: ${referralUrl}`
+      );
+      
+      if (shouldOpenPrompt) {
+        // Create a temporary input for easy selection on mobile
+        const input = document.createElement('input');
+        input.value = referralUrl;
+        input.style.position = 'fixed';
+        input.style.left = '50%';
+        input.style.top = '50%';
+        input.style.transform = 'translate(-50%, -50%)';
+        input.style.zIndex = '9999';
+        input.style.padding = '10px';
+        input.style.border = '2px solid #8B5CF6';
+        input.style.borderRadius = '8px';
+        input.style.background = '#1F2937';
+        input.style.color = 'white';
+        input.style.fontSize = '14px';
+        document.body.appendChild(input);
+        input.focus();
+        input.select();
+        
+        // Remove after 5 seconds
+        setTimeout(() => {
+          if (document.body.contains(input)) {
+            document.body.removeChild(input);
+          }
+        }, 5000);
+      }
+      
+      trackEvent('referral_link_copy_failed', {
+        referral_code: formState.successData.referralCode,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      });
     }
   };
 
@@ -234,14 +369,115 @@ export function WaitlistForm({ className, onSuccess, referralCode }: WaitlistFor
 
   if (formState.isSuccess) {
     return (
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className={cn(
-          'max-w-md mx-auto bg-dark-800/50 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-8 text-center',
-          className
+      <>
+        {/* Success Flash Effect */}
+        {showFlash && (
+          <div 
+            className="fixed inset-0 bg-gradient-to-br from-primary-400/20 via-transparent to-primary-600/20 pointer-events-none"
+            style={{ zIndex: 10000 }}
+          />
         )}
-      >
+        
+        {/* Primary Confetti Effect */}
+        {showConfetti && windowDimensions.width > 0 && (
+          <Confetti
+            width={windowDimensions.width}
+            height={windowDimensions.height}
+            recycle={false}
+            numberOfPieces={300}
+            gravity={0.08}
+            initialVelocityY={25}
+            initialVelocityX={5}
+            wind={0.02}
+            friction={0.99}
+            opacity={0.9}
+            colors={[
+              '#8B5CF6', // Purple (primary)
+              '#06B6D4', // Cyan 
+              '#10B981', // Green
+              '#F59E0B', // Yellow
+              '#EF4444', // Red
+              '#EC4899', // Pink
+              '#8B5CF6', // More purple for prominence
+              '#A855F7', // Light purple
+              '#3B82F6', // Blue
+            ]}
+            drawShape={ctx => {
+              // Custom star shapes mixed with default rectangles
+              if (Math.random() > 0.7) {
+                const size = Math.random() * 3 + 2;
+                ctx.beginPath();
+                for (let i = 0; i < 5; i++) {
+                  const angle = (i * 4 * Math.PI) / 5;
+                  const x = Math.cos(angle) * size;
+                  const y = Math.sin(angle) * size;
+                  if (i === 0) ctx.moveTo(x, y);
+                  else ctx.lineTo(x, y);
+                }
+                ctx.closePath();
+                ctx.fill();
+              } else {
+                // Default rectangle
+                ctx.beginPath();
+                ctx.rect(-2, -2, 4, 4);
+                ctx.fill();
+              }
+            }}
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              zIndex: 9999,
+              pointerEvents: 'none',
+            }}
+          />
+        )}
+        
+        {/* Secondary Burst Effect */}
+        {showSecondBurst && windowDimensions.width > 0 && (
+          <Confetti
+            width={windowDimensions.width}
+            height={windowDimensions.height}
+            recycle={false}
+            numberOfPieces={150}
+            gravity={0.12}
+            initialVelocityY={20}
+            initialVelocityX={8}
+            wind={-0.01}
+            friction={0.98}
+            opacity={0.8}
+            colors={[
+              '#8B5CF6', // Purple (primary) 
+              '#A855F7', // Light purple
+              '#C084FC', // Lighter purple
+              '#DDD6FE', // Very light purple
+              '#F3F4F6', // White-ish
+              '#FBBF24', // Gold
+            ]}
+            confettiSource={{
+              x: windowDimensions.width / 2,
+              y: windowDimensions.height * 0.3,
+              w: 50,
+              h: 50,
+            }}
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              zIndex: 9998,
+              pointerEvents: 'none',
+            }}
+          />
+        )}
+        
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className={cn(
+            'max-w-md mx-auto bg-dark-800/50 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-8 text-center relative z-10',
+            className
+          )}
+        >
         {/* Success Animation */}
         <motion.div
           initial={{ scale: 0 }}
@@ -257,12 +493,27 @@ export function WaitlistForm({ className, onSuccess, referralCode }: WaitlistFor
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
         >
-          <h3 className="text-2xl font-bold text-white mb-2">
-            Welcome to the Future! 🚀
-          </h3>
-          <p className="text-gray-300 mb-6">
-            You're {formState.successData?.position ? `#${formState.successData.position}` : 'now'} on the MindMuscle waitlist!
-          </p>
+          <motion.h3 
+            className="text-2xl font-bold text-white mb-2"
+            animate={{ 
+              scale: [1, 1.05, 1],
+              textShadow: [
+                '0 0 0px rgba(139, 92, 246, 0)',
+                '0 0 20px rgba(139, 92, 246, 0.3)',
+                '0 0 0px rgba(139, 92, 246, 0)'
+              ]
+            }}
+            transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+          >
+            🎉 Welcome to the Future! 🚀
+          </motion.h3>
+          <motion.p 
+            className="text-gray-300 mb-6"
+            animate={{ opacity: [0.7, 1, 0.7] }}
+            transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
+          >
+            🎯 You&apos;re {formState.successData?.position ? `#${formState.successData.position}` : 'now'} on the MindMuscle waitlist!
+          </motion.p>
         </motion.div>
 
         {/* Referral Section */}
@@ -294,16 +545,22 @@ export function WaitlistForm({ className, onSuccess, referralCode }: WaitlistFor
               className="flex-1 bg-primary-500/20 hover:bg-primary-500/30 text-primary-300 font-medium py-2 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
+              title={!clipboardSupported ? "Manual copy - click to view link" : "Copy referral link to clipboard"}
             >
               {copiedReferral ? (
                 <>
                   <Check className="h-4 w-4" />
                   Copied!
                 </>
-              ) : (
+              ) : clipboardSupported ? (
                 <>
                   <Copy className="h-4 w-4" />
                   Copy Link
+                </>
+              ) : (
+                <>
+                  <Copy className="h-4 w-4" />
+                  Get Link
                 </>
               )}
             </motion.button>
@@ -351,6 +608,7 @@ export function WaitlistForm({ className, onSuccess, referralCode }: WaitlistFor
           Join another email →
         </motion.button>
       </motion.div>
+      </>
     );
   }
 
