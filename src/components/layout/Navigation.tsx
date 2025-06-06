@@ -72,6 +72,7 @@ export function Navigation() {
                   src="/MindMuscleWeb.png"
                   alt={`${APP_INFO.name} Logo`}
                   fill
+                  sizes="32px"
                   className="object-contain"
                   priority
                 />
