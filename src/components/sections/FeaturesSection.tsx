@@ -75,19 +75,6 @@ const containerVariants = {
   },
 };
 
-const featureVariants = {
-  initial: { opacity: 0, y: 50, scale: 0.9 },
-  animate: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      duration: 0.8,
-      ease: 'backOut',
-    },
-  },
-};
-
 const iconVariants = {
   initial: { scale: 0, rotate: -180 },
   animate: {
@@ -153,7 +140,7 @@ export function FeaturesSection() {
     }
   );
   return (
-    <section id="features" className="py-24 bg-dark-950 relative overflow-hidden">
+    <section className="py-24 bg-dark-950 relative overflow-hidden">
       {/* Background Effects */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-t from-dark-900/50 to-transparent" />

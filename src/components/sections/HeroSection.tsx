@@ -2,7 +2,8 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { MagneticButton } from '@/components/ui/MagneticButton';
+import { MagneticButton } from '@/components/ui/MagneticElement';
+import { MagneticElement } from '@/components/ui/MagneticElement';
 import { PhoneMockup } from '@/components/ui/PhoneMockup';
 import { STORE_LINKS, APP_SCREENSHOTS, ANIMATION_TIMING } from '@/lib/constants';
 import { trackEvent } from '@/lib/utils';
@@ -204,28 +205,37 @@ export function HeroSection() {
               </motion.div>
 
               {/* Main Headline */}
-              <motion.div
-                ref={mainHeadline.ref}
-                className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl xl:text-7xl"
-                variants={mainHeadline.containerVariants}
-                initial="initial"
-                animate={mainHeadline.controls}
+              <MagneticElement
+                as="div"
+                strength={0.1}
+                distance={200}
+                label="Main Title"
+                color="#8b5cf6"
+                className="inline-block"
               >
-                {mainHeadline.words.map((word, index) => (
-                  <motion.span
-                    key={index}
-                    className={`inline-block mr-3 ${
-                      word === 'AI-Powered' 
-                        ? 'bg-gradient-to-r from-primary-400 via-primary-500 to-primary-600 bg-clip-text text-transparent' 
-                        : ''
-                    }`}
-                    variants={mainHeadline.wordVariants}
-                  >
-                    {word}
-                    {index === 2 && <br />} {/* Line break after "of" */}
-                  </motion.span>
-                ))}
-              </motion.div>
+                <motion.div
+                  ref={mainHeadline.ref}
+                  className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl xl:text-7xl"
+                  variants={mainHeadline.containerVariants}
+                  initial="initial"
+                  animate={mainHeadline.controls}
+                >
+                  {mainHeadline.words.map((word, index) => (
+                    <motion.span
+                      key={index}
+                      className={`inline-block mr-3 ${
+                        word === 'AI-Powered' 
+                          ? 'bg-gradient-to-r from-primary-400 via-primary-500 to-primary-600 bg-clip-text text-transparent' 
+                          : ''
+                      }`}
+                      variants={mainHeadline.wordVariants}
+                    >
+                      {word}
+                      {index === 2 && <br />} {/* Line break after "of" */}
+                    </motion.span>
+                  ))}
+                </motion.div>
+              </MagneticElement>
 
               {/* Subheadline */}
               <motion.div
@@ -258,18 +268,26 @@ export function HeroSection() {
                 variants={buttonVariants}
               >
                 <MagneticButton
+                  variant="primary"
+                  size="large"
                   onClick={handleAppStoreClick}
-                  className="group inline-flex items-center gap-3 rounded-xl bg-primary-500 px-8 py-4 text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:bg-primary-600 hover:shadow-2xl hover:shadow-primary-500/25"
-                  strength={0.3}
+                  strength={0.4}
+                  label="App Store"
+                  color="#3b82f6"
+                  className="group"
                 >
                   <Download className="h-5 w-5 transition-transform group-hover:scale-110" />
                   Download on App Store
                 </MagneticButton>
 
                 <MagneticButton
+                  variant="outline"
+                  size="large"
                   onClick={handlePlayStoreClick}
-                  className="group inline-flex items-center gap-3 rounded-xl border-2 border-primary-500 bg-transparent px-8 py-4 text-lg font-semibold text-primary-400 transition-all duration-300 hover:bg-primary-500/10 hover:text-primary-300"
-                  strength={0.2}
+                  strength={0.3}
+                  label="Google Play"
+                  color="#06b6d4"
+                  className="group"
                 >
                   <PlayCircle className="h-5 w-5 transition-transform group-hover:scale-110" />
                   Get on Google Play
@@ -277,16 +295,25 @@ export function HeroSection() {
               </motion.div>
 
               {/* Waitlist Link */}
-              <motion.button
+              <MagneticElement
+                as="button"
                 onClick={handleWaitlistClick}
+                strength={0.2}
+                distance={100}
+                label="Join Waitlist"
+                color="#8b5cf6"
                 className="group inline-flex items-center gap-2 text-sm font-medium text-gray-400 transition-colors hover:text-primary-400"
-                variants={textVariants}
-                whileHover={{ x: 5 }}
-                transition={{ type: 'spring', stiffness: 300, damping: 30 }}
               >
-                Join the waitlist for early access
-                <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </motion.button>
+                <motion.span
+                  variants={textVariants}
+                  whileHover={{ x: 5 }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                  className="flex items-center gap-2"
+                >
+                  Join the waitlist for early access
+                  <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </motion.span>
+              </MagneticElement>
             </motion.div>
 
             {/* Right Content - Phone Mockup */}

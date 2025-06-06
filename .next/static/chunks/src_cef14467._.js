@@ -206,7 +206,7 @@ var _s = __turbopack_context__.k.signature();
 ;
 ;
 ;
-function MagneticButton({ children, className, onClick, strength = 0.4, disabled = false }) {
+function MagneticButton({ children, className, onClick, strength = 0.4, disabled = false, label, color }) {
     _s();
     const ref = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
     const [isHovered, setIsHovered] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
@@ -248,6 +248,10 @@ function MagneticButton({ children, className, onClick, strength = 0.4, disabled
             x: springX,
             y: springY
         },
+        "data-magnetic": !disabled,
+        "data-magnetic-strength": strength.toString(),
+        "data-magnetic-label": label,
+        "data-magnetic-color": color,
         onMouseMove: handleMouseMove,
         onMouseLeave: handleMouseLeave,
         onMouseEnter: handleMouseEnter,
@@ -283,7 +287,7 @@ function MagneticButton({ children, className, onClick, strength = 0.4, disabled
                 }
             }, void 0, false, {
                 fileName: "[project]/src/components/ui/MagneticButton.tsx",
-                lineNumber: 81,
+                lineNumber: 89,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
@@ -299,7 +303,7 @@ function MagneticButton({ children, className, onClick, strength = 0.4, disabled
                 }
             }, void 0, false, {
                 fileName: "[project]/src/components/ui/MagneticButton.tsx",
-                lineNumber: 92,
+                lineNumber: 100,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -307,13 +311,13 @@ function MagneticButton({ children, className, onClick, strength = 0.4, disabled
                 children: children
             }, void 0, false, {
                 fileName: "[project]/src/components/ui/MagneticButton.tsx",
-                lineNumber: 102,
+                lineNumber: 110,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/ui/MagneticButton.tsx",
-        lineNumber: 57,
+        lineNumber: 61,
         columnNumber: 5
     }, this);
 }

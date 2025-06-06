@@ -140,7 +140,7 @@ export function HowItWorksSection() {
     }
   );
   return (
-    <section id="how-it-works" className="py-24 bg-dark-900 relative overflow-hidden">
+    <section className="py-24 bg-dark-900 relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-b from-dark-800/50 to-dark-950/50" />

@@ -112,8 +112,15 @@ export function Navigation() {
               ))}
             </div>
 
-            {/* CTA Button (Desktop) */}
-            <div className="hidden md:block">
+            {/* CTA Buttons (Desktop) */}
+            <div className="hidden md:flex items-center gap-3">
+              <MagneticButton
+                onClick={() => window.open('/interactive-demo', '_self')}
+                className="inline-flex items-center gap-2 rounded-lg bg-accent-cyan/10 border border-accent-cyan/30 px-4 py-2 text-sm font-semibold text-accent-cyan transition-all duration-300 hover:bg-accent-cyan/20"
+                strength={0.2}
+              >
+                Try Demo
+              </MagneticButton>
               <MagneticButton
                 onClick={handleWaitlistClick}
                 className="inline-flex items-center gap-2 rounded-lg bg-primary-500 px-4 py-2 text-sm font-semibold text-white transition-all duration-300 hover:bg-primary-600"
@@ -205,13 +212,23 @@ export function Navigation() {
                   ))}
                 </div>
 
-                {/* CTA Button */}
+                {/* CTA Buttons */}
                 <motion.div
-                  className="mt-8"
+                  className="mt-8 space-y-3"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: NAVIGATION_ITEMS.length * 0.1 + 0.2 }}
                 >
+                  <MagneticButton
+                    onClick={() => {
+                      window.open('/interactive-demo', '_self');
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="w-full rounded-lg bg-accent-cyan/10 border border-accent-cyan/30 px-6 py-3 text-center font-semibold text-accent-cyan transition-all duration-300 hover:bg-accent-cyan/20"
+                    strength={0.1}
+                  >
+                    Try Demo
+                  </MagneticButton>
                   <MagneticButton
                     onClick={handleWaitlistClick}
                     className="w-full rounded-lg bg-primary-500 px-6 py-3 text-center font-semibold text-white transition-all duration-300 hover:bg-primary-600"

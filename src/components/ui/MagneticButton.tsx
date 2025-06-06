@@ -10,6 +10,8 @@ interface MagneticButtonProps {
   onClick?: () => void;
   strength?: number;
   disabled?: boolean;
+  label?: string;
+  color?: string;
 }
 
 export function MagneticButton({
@@ -18,6 +20,8 @@ export function MagneticButton({
   onClick,
   strength = 0.4,
   disabled = false,
+  label,
+  color,
 }: MagneticButtonProps) {
   const ref = useRef<HTMLButtonElement>(null);
   const [isHovered, setIsHovered] = useState(false);
@@ -65,6 +69,10 @@ export function MagneticButton({
         x: springX,
         y: springY,
       }}
+      data-magnetic={!disabled}
+      data-magnetic-strength={strength.toString()}
+      data-magnetic-label={label}
+      data-magnetic-color={color}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onMouseEnter={handleMouseEnter}
