@@ -3,7 +3,6 @@
 import { motion } from 'framer-motion';
 import { 
   Bot, 
-  Moon, 
   ArrowRight
 } from 'lucide-react';
 import { 
@@ -12,7 +11,8 @@ import {
   AIPowerIcon, 
   AIAnalyticsIcon, 
   AICommunityIcon, 
-  AISparklesIcon 
+  AISparklesIcon,
+  AISleepIcon 
 } from '@/components/ui/CustomIcons';
 import { useScrollAnimation, useStaggerAnimation, SCROLL_VARIANTS } from '@/hooks/useScrollAnimation';
 
@@ -51,7 +51,7 @@ const features = [
   },
   {
     id: 5,
-    icon: Moon,
+    icon: AISleepIcon,
     title: 'Smart Recovery',
     description: 'AI-powered recovery optimization that monitors your rest, sleep, and stress levels to maximize your training effectiveness.',
     benefits: ['Recovery tracking', 'Sleep optimization', 'Stress monitoring'],

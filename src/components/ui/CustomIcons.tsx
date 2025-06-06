@@ -372,6 +372,65 @@ export const AIDownloadIcon: React.FC<IconProps> = ({
   </svg>
 );
 
+// AI Sleep/Recovery Icon - Smart rest and recovery monitoring
+export const AISleepIcon: React.FC<IconProps> = ({ 
+  className = '', 
+  size = 24, 
+  color = 'currentColor',
+  strokeWidth = 1.5 
+}) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+  >
+    {/* Moon shape */}
+    <path
+      d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"
+      stroke={color}
+      strokeWidth={strokeWidth}
+      fill="none"
+    />
+    
+    {/* AI monitoring sensors */}
+    <circle cx="9" cy="8" r="1" fill={color} opacity="0.8" />
+    <circle cx="12" cy="10" r="1" fill={color} opacity="0.8" />
+    <circle cx="8" cy="12" r="1" fill={color} opacity="0.6" />
+    
+    {/* Sleep monitoring waves */}
+    <path
+      d="M5 16C6 15 7 15 8 16C9 17 10 17 11 16"
+      stroke={color}
+      strokeWidth={strokeWidth * 0.8}
+      opacity="0.6"
+      fill="none"
+    />
+    <path
+      d="M4 18C5 17 6 17 7 18C8 19 9 19 10 18"
+      stroke={color}
+      strokeWidth={strokeWidth * 0.8}
+      opacity="0.4"
+      fill="none"
+    />
+    
+    {/* Stars representing rest quality */}
+    <circle cx="16" cy="6" r="0.5" fill={color} opacity="0.8" />
+    <circle cx="18" cy="4" r="0.5" fill={color} opacity="0.6" />
+    <circle cx="19" cy="8" r="0.5" fill={color} opacity="0.7" />
+    
+    {/* AI circuit pattern */}
+    <path
+      d="M14 14H15M16 15V16"
+      stroke={color}
+      strokeWidth={strokeWidth * 0.8}
+      opacity="0.5"
+    />
+  </svg>
+);
+
 // Export all icons for easy import
 export const CustomIcons = {
   AIBrain: AIBrainIcon,
@@ -382,6 +441,7 @@ export const CustomIcons = {
   AICommunity: AICommunityIcon,
   AIPower: AIPowerIcon,
   AIDownload: AIDownloadIcon,
+  AISleep: AISleepIcon,
 };
 
 export default CustomIcons; 

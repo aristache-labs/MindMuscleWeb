@@ -134,35 +134,63 @@ export const FEATURES: Feature[] = [
   },
 ];
 
-// App Screenshots for Showcase - Using placeholder gradients for now
+// App Screenshots for Showcase - Real app screenshots from development
 export const APP_SCREENSHOTS: AppScreenshot[] = [
   {
-    id: 'dashboard',
-    title: 'AI Dashboard',
-    description: 'Your personalized fitness command center powered by AI insights.',
-    image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjYwMCIgdmlld0JveD0iMCAwIDMwMCA2MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWRpZW50MSIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgo8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjOEI1Q0Y2Ii8+CjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzIyRDNFRSIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iNjAwIiBmaWxsPSJ1cmwoI2dyYWRpZW50MSkiLz4KPHJlY3QgeD0iNTAiIHk9IjEwMCIgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9IiMwMDAiIG9wYWNpdHk9IjAuMSIgcng9IjIwIi8+CjxyZWN0IHg9IjUwIiB5PSIzNTAiIHdpZHRoPSIyMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjMDAwIiBvcGFjaXR5PSIwLjEiIHJ4PSIyMCIvPgo8L3N2Zz4=',
-    alt: 'MindMuscle AI Dashboard Screenshot',
+    id: 'workout-plans',
+    title: 'Workout Plans',
+    description: 'AI-curated workout plans designed to optimize your fitness journey.',
+    image: '/screenshots/plans.jpeg',
+    alt: 'MindMuscle Workout Plans Screenshot',
   },
   {
-    id: 'workout-plan',
-    title: 'Custom Workouts',
-    description: 'AI-generated workout plans that adapt to your progress and preferences.',
-    image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjYwMCIgdmlld0JveD0iMCAwIDMwMCA2MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWRpZW50MiIgeDE9IjAuNSIgeTE9IjAiIHgyPSIwLjUiIHkyPSIxIj4KPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzIyRDNFRSIvPgo8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNFMTFENDgiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjYwMCIgZmlsbD0idXJsKCNncmFkaWVudDIpIi8+CjxyZWN0IHg9IjMwIiB5PSI4MCIgd2lkdGg9IjI0MCIgaGVpZ2h0PSI4MCIgZmlsbD0iIzAwMCIgb3BhY2l0eT0iMC4xIiByeD0iMTUiLz4KPHJlY3QgeD0iMzAiIHk9IjIwMCIgd2lkdGg9IjI0MCIgaGVpZ2h0PSIyMDAiIGZpbGw9IiMwMDAiIG9wYWNpdHk9IjAuMSIgcng9IjE1Ii8+Cjwvc3ZnPg==',
-    alt: 'MindMuscle Workout Plan Screenshot',
+    id: 'workout-session',
+    title: 'Active Workout',
+    description: 'Real-time workout tracking with form guidance and performance metrics.',
+    image: '/screenshots/workoutsession.jpeg',
+    alt: 'MindMuscle Workout Session Screenshot',
+  },
+  {
+    id: 'exercise-library',
+    title: 'Exercise Library',
+    description: 'Comprehensive exercise database with detailed instructions and variations.',
+    image: '/screenshots/ExerciseList.jpeg',
+    alt: 'MindMuscle Exercise Library Screenshot',
+  },
+  {
+    id: 'exercise-details',
+    title: 'Exercise Details',
+    description: 'In-depth exercise breakdown with form tips and muscle targeting.',
+    image: '/screenshots/ExerciseDetailsModal.jpeg',
+    alt: 'MindMuscle Exercise Details Screenshot',
+  },
+  {
+    id: 'body-model',
+    title: '3D Body Model',
+    description: 'Interactive muscle group visualization for targeted training.',
+    image: '/screenshots/BodyModelWithMouscleGroup.jpeg',
+    alt: 'MindMuscle Body Model Screenshot',
+  },
+  {
+    id: 'muscle-targeting',
+    title: 'Muscle Targeting',
+    description: 'Detailed muscle group breakdown for precise training focus.',
+    image: '/screenshots/bodymodalforbackmouscles.jpeg',
+    alt: 'MindMuscle Muscle Targeting Screenshot',
   },
   {
     id: 'progress-tracking',
     title: 'Progress Tracking',
-    description: 'Visual progress insights and detailed metrics to keep you motivated.',
-    image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjYwMCIgdmlld0JveD0iMCAwIDMwMCA2MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxkZWZzPgo8cmFkaWFsR3JhZGllbnQgaWQ9ImdyYWRpZW50MyIgY3g9IjAuNSIgY3k9IjAuNSI+CjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiM4QjVDRjYiLz4KPHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNFMTFENDgiLz4KPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMjJEM0VFIi8+CjwvcmFkaWFsR3JhZGllbnQ+CjwvZGVmcz4KPHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZ3JhZGllbnQzKSIvPgo8Y2lyY2xlIGN4PSIxNTAiIGN5PSIyMDAiIHI9IjgwIiBmaWxsPSIjMDAwIiBvcGFjaXR5PSIwLjEiLz4KPHJlY3QgeD0iNTAiIHk9IjM1MCIgd2lkdGg9IjIwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9IiMwMDAiIG9wYWNpdHk9IjAuMSIgcng9IjIwIi8+Cjwvc3ZnPg==',
+    description: 'Advanced metrics and measurements to monitor your transformation.',
+    image: '/screenshots/measurements.jpeg',
     alt: 'MindMuscle Progress Tracking Screenshot',
   },
   {
-    id: 'community',
-    title: 'Community Hub',
-    description: 'Connect with fellow fitness enthusiasts and join exciting challenges.',
-    image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjYwMCIgdmlld0JveD0iMCAwIDMwMCA2MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWRpZW50NCIgeDE9IjAiIHkxPSIwLjUiIHgyPSIxIiB5Mj0iMC41Ij4KPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI0UxMUQ0OCIvPgo8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiM4QjVDRjYiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjYwMCIgZmlsbD0idXJsKCNncmFkaWVudDQpIi8+CjxjaXJjbGUgY3g9IjYwIiBjeT0iMTQwIiByPSI0MCIgZmlsbD0iIzAwMCIgb3BhY2l0eT0iMC4xIi8+CjxjaXJjbGUgY3g9IjI0MCIgY3k9IjE0MCIgcj0iNDAiIGZpbGw9IiMwMDAiIG9wYWNpdHk9IjAuMSIvPgo8cmVjdCB4PSI1MCIgeT0iMzAwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzAwMCIgb3BhY2l0eT0iMC4xIiByeD0iMjAiLz4KPC9zdmc+',
-    alt: 'MindMuscle Community Screenshot',
+    id: 'rest-timer',
+    title: 'Smart Rest Timer',
+    description: 'AI-optimized rest periods for maximum performance recovery.',
+    image: '/screenshots/pausetimer.jpeg',
+    alt: 'MindMuscle Rest Timer Screenshot',
   },
 ];
 

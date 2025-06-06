@@ -1,34 +1,40 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Download, Brain, Dumbbell, TrendingUp, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import { 
+  AIDownloadIcon, 
+  AIBrainIcon, 
+  SmartDumbbellIcon, 
+  AIAnalyticsIcon 
+} from '@/components/ui/CustomIcons';
 import { useScrollAnimation, useStaggerAnimation, SCROLL_VARIANTS } from '@/hooks/useScrollAnimation';
 
 const steps = [
   {
     id: 1,
-    icon: Download,
+    icon: AIDownloadIcon,
     title: 'Download & Set Goals',
     description: 'Install MindMuscle and tell us your fitness goals, experience level, and preferences.',
     details: ['Quick 2-minute setup', 'Personalized goal setting', 'Equipment preferences']
   },
   {
     id: 2,
-    icon: Brain,
+    icon: AIBrainIcon,
     title: 'AI Assessment',
     description: 'Our AI analyzes your fitness level through a smart assessment and movement screening.',
     details: ['Movement analysis', 'Strength evaluation', 'Flexibility assessment']
   },
   {
     id: 3,
-    icon: Dumbbell,
+    icon: SmartDumbbellIcon,
     title: 'Personalized Workouts',
     description: 'Get AI-crafted workouts that adapt in real-time based on your performance and feedback.',
     details: ['Dynamic difficulty adjustment', 'Exercise substitutions', 'Real-time form coaching']
   },
   {
     id: 4,
-    icon: TrendingUp,
+    icon: AIAnalyticsIcon,
     title: 'Track & Evolve',
     description: 'Monitor your progress as the AI continuously learns and evolves your fitness program.',
             details: ['Progress tracking', 'Performance insights', 'Adaptive programming']
@@ -280,7 +286,7 @@ export function HowItWorksSection() {
             whileTap={{ scale: 0.95 }}
             onClick={() => document.getElementById('waitlist')?.scrollIntoView({ behavior: 'smooth' })}
           >
-            <Download className="w-5 h-5" />
+            <AIDownloadIcon className="w-5 h-5" />
             Join the Waitlist
           </motion.button>
         </motion.div>

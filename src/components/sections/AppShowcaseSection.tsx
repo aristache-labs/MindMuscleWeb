@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import { ChevronLeft, ChevronRight, Smartphone, Play, Download } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Smartphone, Play } from 'lucide-react';
+import { AIDownloadIcon } from '@/components/ui/CustomIcons';
 import { APP_SCREENSHOTS, ANIMATION_TIMING } from '@/lib/constants';
 import { useScrollAnimation, SCROLL_VARIANTS } from '@/hooks/useScrollAnimation';
 
@@ -349,7 +350,7 @@ export function AppShowcaseSection() {
                 whileTap={{ scale: 0.95 }}
                 onClick={() => document.getElementById('waitlist')?.scrollIntoView({ behavior: 'smooth' })}
               >
-                <Download className="w-5 h-5" />
+                <AIDownloadIcon className="w-5 h-5" />
                 Get Early Access
               </motion.button>
             </motion.div>

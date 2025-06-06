@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, Copy, Check } from 'lucide-react';
 import { useState } from 'react';
 import Link from 'next/link';
+import { APP_SCREENSHOTS } from '@/lib/constants';
 import { 
   AIBrainIcon, 
   SmartDumbbellIcon, 
@@ -12,7 +13,8 @@ import {
   AISparklesIcon, 
   AICommunityIcon, 
   AIPowerIcon, 
-  AIDownloadIcon 
+  AIDownloadIcon,
+  AISleepIcon 
 } from '@/components/ui/CustomIcons';
 import { 
   AIBrainAnimation, 
@@ -33,6 +35,7 @@ const customIcons = [
   { name: 'AI Community', component: AICommunityIcon, description: 'Connected users with AI networking' },
   { name: 'AI Power', component: AIPowerIcon, description: 'Enhanced energy and power representation' },
   { name: 'AI Download', component: AIDownloadIcon, description: 'Smart download with AI processing' },
+  { name: 'AI Sleep', component: AISleepIcon, description: 'Smart recovery and sleep monitoring with AI' },
 ];
 
 
@@ -291,6 +294,51 @@ export default function BrandingDemoPage() {
               </div>
             ))}
           </StaggerContainer>
+        </div>
+      </section>
+
+      {/* App Screenshots Section */}
+      <section className="py-16 sm:py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+              Real App Screenshots
+            </h2>
+            <p className="text-gray-300 max-w-2xl mx-auto">
+              Actual screenshots from the MindMuscle mobile application showcasing the AI-powered features and premium user interface
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {APP_SCREENSHOTS.slice(0, 8).map((screenshot, index: number) => (
+              <motion.div
+                key={screenshot.id}
+                className="bg-dark-800/50 border border-gray-800/50 rounded-2xl p-4 hover:border-gray-700/50 transition-all duration-300 group"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                whileHover={{ scale: 1.02, y: -5 }}
+              >
+                <div className="aspect-[9/16] bg-gradient-to-br from-primary-500/10 to-primary-600/10 rounded-xl overflow-hidden mb-4 relative">
+                  <img
+                    src={screenshot.image}
+                    alt={screenshot.alt}
+                    className="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+                <h3 className="font-semibold text-white mb-2 text-sm">{screenshot.title}</h3>
+                <p className="text-xs text-gray-400 leading-relaxed">{screenshot.description}</p>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
