@@ -143,4 +143,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   optimizeAllImages().catch(console.error);
 }
 
+// Also run directly when executed
+optimizeAllImages().catch(console.error);
+
 export { optimizeAllImages, optimizeImage }; 

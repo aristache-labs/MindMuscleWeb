@@ -19,6 +19,7 @@ import {
   Sparkles
 } from 'lucide-react';
 import { cn, trackEvent } from '@/lib/utils';
+import { trackConversion, CONVERSION_FUNNEL } from '@/lib/analytics';
 import { 
   waitlistFormSchema, 
   WaitlistFormData, 
@@ -74,6 +75,7 @@ export function WaitlistForm({ className, onSuccess, referralCode }: WaitlistFor
   const [showConfetti, setShowConfetti] = useState(false);
   const [showSecondBurst, setShowSecondBurst] = useState(false);
   const [showFlash, setShowFlash] = useState(false);
+  const [hasStartedForm, setHasStartedForm] = useState(false);
 
   const {
     control,
@@ -196,6 +198,9 @@ export function WaitlistForm({ className, onSuccess, referralCode }: WaitlistFor
 
   const onSubmit = async (data: WaitlistFormData) => {
     setFormState(prev => ({ ...prev, isSubmitting: true, isError: false }));
+    
+    // Track form submission start
+    trackConversion(CONVERSION_FUNNEL.WAITLIST_FORM_SUBMIT);
     
     trackEvent('waitlist_form_submit', {
       has_first_name: !!data.firstName,
@@ -356,6 +361,13 @@ export function WaitlistForm({ className, onSuccess, referralCode }: WaitlistFor
     });
   };
 
+  const handleFormStart = () => {
+    if (!hasStartedForm) {
+      setHasStartedForm(true);
+      trackConversion(CONVERSION_FUNNEL.WAITLIST_FORM_START);
+    }
+  };
+
   const resetForm = () => {
     setFormState({
       isSubmitting: false,
@@ -365,6 +377,7 @@ export function WaitlistForm({ className, onSuccess, referralCode }: WaitlistFor
       successData: null,
     });
     reset();
+    setHasStartedForm(false);
   };
 
   if (formState.isSuccess) {
@@ -650,6 +663,7 @@ export function WaitlistForm({ className, onSuccess, referralCode }: WaitlistFor
                   {...field}
                   type="email"
                   placeholder="Enter your email address"
+                  onFocus={handleFormStart}
                   className={cn(
                     'w-full pl-10 pr-4 py-3 bg-dark-800/50 border rounded-lg text-white placeholder-gray-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500/50',
                     errors.email 

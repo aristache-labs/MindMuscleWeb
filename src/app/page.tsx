@@ -1,8 +1,12 @@
+'use client';
+
 import { lazy } from 'react';
+import { useEffect } from 'react';
 import { HeroSection } from '@/components/sections/HeroSection';
 import { Footer } from '@/components/layout/Footer';
 import { Navigation } from '@/components/layout/Navigation';
 import { LazySection } from '@/components/ui/LazySection';
+import { trackConversion, CONVERSION_FUNNEL } from '@/lib/analytics';
 
 // Lazy load non-critical sections
 const HowItWorksSection = lazy(() => import('@/components/sections/HowItWorksSection').then(m => ({ default: m.HowItWorksSection })));
@@ -12,6 +16,11 @@ const TestimonialsSection = lazy(() => import('@/components/sections/Testimonial
 const WaitlistSection = lazy(() => import('@/components/sections/WaitlistSection').then(m => ({ default: m.WaitlistSection })));
 
 export default function HomePage() {
+  // Track landing page view
+  useEffect(() => {
+    trackConversion(CONVERSION_FUNNEL.LANDING);
+  }, []);
+
   return (
     <main className="min-h-screen bg-dark-950">
       <Navigation />
