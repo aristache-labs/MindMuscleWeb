@@ -2,36 +2,37 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Smartphone, Play, Zap, Target, BarChart3, Users } from 'lucide-react';
+import { Smartphone, Play } from 'lucide-react';
+import { AIPowerIcon, AITargetIcon, AIAnalyticsIcon, AICommunityIcon } from '@/components/ui/CustomIcons';
 import { InteractiveAppPreview } from '@/components/ui/InteractiveAppPreview';
-import { MagneticElement } from '@/components/ui/MagneticElement';
+
 import { useScrollAnimation, SCROLL_VARIANTS } from '@/hooks/useScrollAnimation';
 
 const features = [
   {
     id: 'ai-insights',
-    icon: Zap,
+    icon: AIPowerIcon,
     title: 'AI-Powered Insights',
     description: 'Get personalized recommendations based on your performance and goals.',
     color: 'from-primary-500 to-primary-600',
   },
   {
     id: 'workout-tracking',
-    icon: Target,
+    icon: AITargetIcon,
     title: 'Smart Workout Tracking',
     description: 'Track every rep, set, and exercise with intuitive controls.',
     color: 'from-green-500 to-green-600',
   },
   {
     id: 'progress-tracking',
-    icon: BarChart3,
+    icon: AIAnalyticsIcon,
     title: 'Progress Tracking',
     description: 'Visualize your fitness journey with detailed progress charts.',
     color: 'from-blue-500 to-blue-600',
   },
   {
     id: 'community',
-    icon: Users,
+    icon: AICommunityIcon,
     title: 'Social Features',
     description: 'Connect with friends and join challenges to stay motivated.',
     color: 'from-purple-500 to-purple-600',
@@ -170,12 +171,8 @@ export function InteractiveShowcaseSection() {
 
             <div className="space-y-3 sm:space-y-4">
               {features.map((feature, index) => (
-                <MagneticElement 
-                  key={feature.id} 
-                  strength={0.2} 
-                  distance={30}
-                >
-                  <motion.div
+                <motion.div
+                  key={feature.id}
                     className={`relative bg-gray-800/30 border border-gray-700/50 rounded-2xl p-4 sm:p-6 cursor-pointer transition-all duration-300 ${
                       selectedFeature === index 
                         ? 'bg-gray-800/50 border-primary-500/30' 
@@ -196,7 +193,7 @@ export function InteractiveShowcaseSection() {
 
                     <div className="relative flex items-start gap-3 sm:gap-4">
                       <div className={`p-2.5 sm:p-3 rounded-xl bg-gradient-to-r ${feature.color} bg-opacity-20 flex-shrink-0`}>
-                        <feature.icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                        <feature.icon size={24} className="text-white" strokeWidth={1.5} />
                       </div>
                       <div className="flex-1 min-w-0">
                         <h4 className="text-base sm:text-lg font-semibold text-white mb-1.5 sm:mb-2">
@@ -217,7 +214,6 @@ export function InteractiveShowcaseSection() {
                       />
                     )}
                   </motion.div>
-                </MagneticElement>
               ))}
             </div>
 
@@ -228,32 +224,25 @@ export function InteractiveShowcaseSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.6 }}
             >
-              <MagneticElement 
-                strength={0.4} 
-                distance={50}
-                data-magnetic-label="Join waitlist"
-                data-magnetic-color="primary"
+              <motion.button
+                className="bg-gradient-to-r from-primary-500 to-primary-600 rounded-2xl px-6 sm:px-8 py-3 sm:py-4 text-white font-semibold transition-all duration-300 hover:from-primary-600 hover:to-primary-700"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => {
+                  const waitlistElement = document.getElementById('waitlist');
+                  if (waitlistElement) {
+                    waitlistElement.scrollIntoView({ 
+                      behavior: 'smooth',
+                      block: 'start'
+                    });
+                  }
+                }}
               >
-                <motion.button
-                  className="bg-gradient-to-r from-primary-500 to-primary-600 rounded-2xl px-6 sm:px-8 py-3 sm:py-4 text-white font-semibold transition-all duration-300 hover:from-primary-600 hover:to-primary-700"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => {
-                    const waitlistElement = document.getElementById('waitlist');
-                    if (waitlistElement) {
-                      waitlistElement.scrollIntoView({ 
-                        behavior: 'smooth',
-                        block: 'start'
-                      });
-                    }
-                  }}
-                >
-                  <div className="flex items-center justify-center gap-2 sm:gap-3">
-                    <Play className="w-4 h-4 sm:w-5 sm:h-5" />
-                    <span className="text-sm items-center justify-center sm:text-base">Join the Revolution</span>
-                  </div>
-                </motion.button>
-              </MagneticElement>
+                <div className="flex items-center justify-center gap-2 sm:gap-3">
+                  <Play className="w-4 h-4 sm:w-5 sm:h-5" />
+                  <span className="text-sm items-center justify-center sm:text-base">Join the Revolution</span>
+                </div>
+              </motion.button>
               
               <p className="text-center text-gray-400 text-xs sm:text-sm mt-3 sm:mt-4">
                 Be among the first to experience the future of fitness
@@ -274,7 +263,7 @@ export function InteractiveShowcaseSection() {
             { value: '95%', label: 'Satisfaction Rate', color: 'text-green-400' },
             { value: '2x', label: 'Faster Results', color: 'text-accent-cyan' },
           ].map((stat, index) => (
-            <MagneticElement key={index} strength={0.2}>
+            <div key={index}>
               <div className="text-center bg-gray-800/30 border border-gray-700/50 rounded-2xl p-4 sm:p-6">
                 <div className={`text-2xl sm:text-3xl font-bold mb-1 sm:mb-2 ${stat.color}`}>
                   {stat.value}
@@ -283,7 +272,7 @@ export function InteractiveShowcaseSection() {
                   {stat.label}
                 </div>
               </div>
-            </MagneticElement>
+            </div>
           ))}
         </motion.div>
       </div>

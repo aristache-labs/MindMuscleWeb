@@ -2,14 +2,15 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { MagneticButton } from '@/components/ui/MagneticElement';
-import { MagneticElement } from '@/components/ui/MagneticElement';
+
 import { PhoneMockup } from '@/components/ui/PhoneMockup';
 import { STORE_LINKS, APP_SCREENSHOTS, ANIMATION_TIMING } from '@/lib/constants';
 import { trackEvent } from '@/lib/utils';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { useTextReveal, useCounterAnimation } from '@/hooks/useScrollAnimation';
-import { Download, PlayCircle, ChevronRight, Sparkles } from 'lucide-react';
+import { PlayCircle, ChevronRight } from 'lucide-react';
+import { AISparklesIcon, AIDownloadIcon } from '@/components/ui/CustomIcons';
+import { AIBrainAnimation, FloatingElementsAnimation } from '@/components/ui/LottieAnimations';
 
 const heroVariants = {
   initial: { opacity: 0 },
@@ -170,11 +171,20 @@ export function HeroSection() {
                 delay: 2,
               }}
             />
+            {/* AI Brain Animation */}
+            <div className="absolute right-1/4 top-1/2 -translate-y-1/2">
+              <AIBrainAnimation size="md" className="opacity-20" />
+            </div>
+            {/* Floating Elements Animation */}
+            <FloatingElementsAnimation />
           </>
         ) : (
           <>
             <div className="absolute left-1/4 top-1/4 h-64 w-64 rounded-full bg-primary-500/10 blur-3xl opacity-30" />
             <div className="absolute right-1/3 top-1/3 h-48 w-48 rounded-full bg-accent-cyan/10 blur-3xl opacity-20" />
+            <div className="absolute right-1/4 top-1/2 -translate-y-1/2">
+              <AIBrainAnimation size="md" className="opacity-20" />
+            </div>
           </>
         )}
       </div>
@@ -194,7 +204,7 @@ export function HeroSection() {
                 className="inline-flex items-center gap-2 rounded-full border border-primary-500/30 bg-primary-500/10 px-4 py-2 text-sm font-medium text-primary-300 backdrop-blur-sm"
                 variants={textVariants}
               >
-                <Sparkles className="h-4 w-4" />
+                <AISparklesIcon size={16} className="text-primary-400" />
                 <span>Coming Summer </span>
                 <motion.span
                   ref={counterRef}
@@ -205,37 +215,28 @@ export function HeroSection() {
               </motion.div>
 
               {/* Main Headline */}
-              <MagneticElement
-                as="div"
-                strength={0.1}
-                distance={200}
-                label="Main Title"
-                color="#8b5cf6"
-                className="inline-block"
+              <motion.div
+                ref={mainHeadline.ref}
+                className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl xl:text-7xl"
+                variants={mainHeadline.containerVariants}
+                initial="initial"
+                animate={mainHeadline.controls}
               >
-                <motion.div
-                  ref={mainHeadline.ref}
-                  className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl xl:text-7xl"
-                  variants={mainHeadline.containerVariants}
-                  initial="initial"
-                  animate={mainHeadline.controls}
-                >
-                  {mainHeadline.words.map((word, index) => (
-                    <motion.span
-                      key={index}
-                      className={`inline-block mr-3 ${
-                        word === 'AI-Powered' 
-                          ? 'bg-gradient-to-r from-primary-400 via-primary-500 to-primary-600 bg-clip-text text-transparent' 
-                          : ''
-                      }`}
-                      variants={mainHeadline.wordVariants}
-                    >
-                      {word}
-                      {index === 2 && <br />} {/* Line break after "of" */}
-                    </motion.span>
-                  ))}
-                </motion.div>
-              </MagneticElement>
+                {mainHeadline.words.map((word, index) => (
+                  <motion.span
+                    key={index}
+                    className={`inline-block mr-3 ${
+                      word === 'AI-Powered' 
+                        ? 'bg-gradient-to-r from-primary-400 via-primary-500 to-primary-600 bg-clip-text text-transparent' 
+                        : ''
+                    }`}
+                    variants={mainHeadline.wordVariants}
+                  >
+                    {word}
+                    {index === 2 && <br />} {/* Line break after "of" */}
+                  </motion.span>
+                ))}
+              </motion.div>
 
               {/* Subheadline */}
               <motion.div
@@ -267,53 +268,39 @@ export function HeroSection() {
                 className="flex flex-col gap-4 sm:flex-row sm:justify-center lg:justify-start"
                 variants={buttonVariants}
               >
-                <MagneticButton
-                  variant="primary"
-                  size="large"
+                <motion.button
                   onClick={handleAppStoreClick}
-                  strength={0.4}
-                  label="App Store"
-                  color="#3b82f6"
-                  className="group"
+                  className="group inline-flex items-center justify-center gap-3 rounded-lg bg-primary-600 px-8 py-4 text-base font-semibold text-white shadow-lg transition-all duration-200 hover:bg-primary-500 hover:shadow-xl hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-dark-900"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  <Download className="h-5 w-5 transition-transform group-hover:scale-110" />
+                  <AIDownloadIcon size={20} className="transition-transform group-hover:scale-110" />
                   Download on App Store
-                </MagneticButton>
+                </motion.button>
 
-                <MagneticButton
-                  variant="outline"
-                  size="large"
+                <motion.button
                   onClick={handlePlayStoreClick}
-                  strength={0.3}
-                  label="Google Play"
-                  color="#06b6d4"
-                  className="group"
+                  className="group inline-flex items-center justify-center gap-3 rounded-lg border-2 border-gray-600 px-8 py-4 text-base font-semibold text-white transition-all duration-200 hover:border-primary-500 hover:bg-primary-500/10 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-dark-900"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                 >
                   <PlayCircle className="h-5 w-5 transition-transform group-hover:scale-110" />
                   Get on Google Play
-                </MagneticButton>
+                </motion.button>
               </motion.div>
 
               {/* Waitlist Link */}
-              <MagneticElement
-                as="button"
+              <motion.button
                 onClick={handleWaitlistClick}
-                strength={0.2}
-                distance={100}
-                label="Join Waitlist"
-                color="#8b5cf6"
                 className="group inline-flex items-center gap-2 text-sm font-medium text-gray-400 transition-colors hover:text-primary-400"
+                whileHover={{ x: 5 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 30 }}
               >
-                <motion.span
-                  variants={textVariants}
-                  whileHover={{ x: 5 }}
-                  transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                  className="flex items-center gap-2"
-                >
+                <span className="flex items-center gap-2">
                   Join the waitlist for early access
                   <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </motion.span>
-              </MagneticElement>
+                </span>
+              </motion.button>
             </motion.div>
 
             {/* Right Content - Phone Mockup */}

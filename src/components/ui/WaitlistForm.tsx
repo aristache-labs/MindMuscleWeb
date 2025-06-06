@@ -274,7 +274,14 @@ export function WaitlistForm({ className, onSuccess, referralCode }: WaitlistFor
       if (navigator.clipboard && navigator.clipboard.writeText) {
         await navigator.clipboard.writeText(referralUrl);
         setCopiedReferral(true);
-        setTimeout(() => setCopiedReferral(false), 2000);
+        // Use requestIdleCallback or fallback to optimize performance
+        if (window.requestIdleCallback) {
+          window.requestIdleCallback(() => {
+            setTimeout(() => setCopiedReferral(false), 2000);
+          });
+        } else {
+          setTimeout(() => setCopiedReferral(false), 2000);
+        }
         
         trackEvent('referral_link_copied', {
           referral_code: formState.successData.referralCode,
@@ -298,7 +305,14 @@ export function WaitlistForm({ className, onSuccess, referralCode }: WaitlistFor
       
       if (successful) {
         setCopiedReferral(true);
-        setTimeout(() => setCopiedReferral(false), 2000);
+        // Use requestIdleCallback for better performance
+        if (window.requestIdleCallback) {
+          window.requestIdleCallback(() => {
+            setTimeout(() => setCopiedReferral(false), 2000);
+          });
+        } else {
+          setTimeout(() => setCopiedReferral(false), 2000);
+        }
         
         trackEvent('referral_link_copied', {
           referral_code: formState.successData.referralCode,
@@ -335,12 +349,22 @@ export function WaitlistForm({ className, onSuccess, referralCode }: WaitlistFor
         input.focus();
         input.select();
         
-        // Remove after 5 seconds
-        setTimeout(() => {
-          if (document.body.contains(input)) {
-            document.body.removeChild(input);
-          }
-        }, 5000);
+        // Remove after 5 seconds using idle callback for better performance
+        if (window.requestIdleCallback) {
+          window.requestIdleCallback(() => {
+            setTimeout(() => {
+              if (document.body.contains(input)) {
+                document.body.removeChild(input);
+              }
+            }, 5000);
+          });
+        } else {
+          setTimeout(() => {
+            if (document.body.contains(input)) {
+              document.body.removeChild(input);
+            }
+          }, 5000);
+        }
       }
       
       trackEvent('referral_link_copy_failed', {

@@ -5,53 +5,59 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Trophy, 
   Users, 
-  Star, 
   Gift, 
   Share2, 
   Copy, 
   ExternalLink,
-  TrendingUp,
   Target,
-  Award,
-  Crown,
-  Zap,
   ChevronRight,
   CheckCircle,
-  Circle,
   Twitter,
   Facebook,
   Linkedin,
   MessageCircle,
   Mail,
-  BarChart3,
-  Calendar
+  BarChart3
 } from 'lucide-react';
 import { cn, trackEvent } from '@/lib/utils';
 import { 
   EARLY_ACCESS_TIERS, 
-  SOCIAL_INCENTIVES, 
   calculateProgressToNextTier,
   getNextTier
 } from '@/lib/validations';
 import type { 
   WaitlistUser, 
-  WaitlistPosition, 
-  WaitlistProgress, 
-  EarlyAccessTier,
-  SocialIncentive,
   LeaderboardEntry
 } from '@/types';
 
+// Type definitions
+interface ShareData {
+  url: string;
+  message: string;
+  hashtags?: string[];
+  pointsAwarded?: number;
+  tierUpgraded?: boolean;
+}
+
+interface SocialIncentive {
+  platform: string;
+  available: boolean;
+  lastShared?: string;
+  pointsReward: number;
+  message: string;
+  url: string;
+}
+
 interface WaitlistDashboardProps {
   user: WaitlistUser;
-  onShare?: (platform: string, shareData: any) => void;
+  onShare?: (platform: string, shareData: ShareData) => void;
   className?: string;
 }
 
 interface TabType {
   id: string;
   label: string;
-  icon: any;
+  icon: React.ComponentType<{ className?: string }>;
 }
 
 const TABS: TabType[] = [
@@ -73,7 +79,7 @@ const PLATFORM_ICONS = {
 export function WaitlistDashboard({ user, onShare, className }: WaitlistDashboardProps) {
   const [activeTab, setActiveTab] = useState('overview');
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
-  const [socialIncentives, setSocialIncentives] = useState<any[]>([]);
+  const [socialIncentives, setSocialIncentives] = useState<SocialIncentive[]>([]);
   const [copiedReferral, setCopiedReferral] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -91,7 +97,7 @@ export function WaitlistDashboard({ user, onShare, className }: WaitlistDashboar
   useEffect(() => {
     fetchLeaderboard();
     fetchSocialIncentives();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchLeaderboard = async () => {
     try {
@@ -151,7 +157,7 @@ export function WaitlistDashboard({ user, onShare, className }: WaitlistDashboar
       }
     } catch (error) {
       console.error('Share failed:', error);
-      trackEvent('waitlist_share_error', { platform, error: error.message });
+      trackEvent('waitlist_share_error', { platform, error: error instanceof Error ? error.message : 'Unknown error' });
     } finally {
       setIsLoading(false);
     }

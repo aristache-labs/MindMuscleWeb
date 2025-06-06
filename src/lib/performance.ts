@@ -28,9 +28,9 @@ export const performanceMonitor = {
       });
     }
     
-    // Also log to console in development
-    if (process.env.NODE_ENV === 'development') {
-      console.log('Web Vital:', metric);
+    // Only log poor performance metrics in development to reduce console spam
+    if (process.env.NODE_ENV === 'development' && metric.rating === 'poor') {
+      console.warn('Poor Web Vital:', metric);
     }
   },
 

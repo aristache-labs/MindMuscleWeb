@@ -54,18 +54,7 @@ const featuredTestimonialVariants = {
   },
 };
 
-const quoteIconVariants = {
-  initial: { scale: 0, rotate: -180 },
-  animate: {
-    scale: 1,
-    rotate: 0,
-    transition: {
-      duration: 0.8,
-      ease: 'backOut',
-      delay: 0.5,
-    },
-  },
-};
+
 
 export function TestimonialsSection() {
   const [currentIndex, setCurrentIndex] = useState(0);

@@ -5,7 +5,6 @@ import {
   sanitizeFormData,
   calculateUserTier,
   POINTS_CONFIG,
-  EARLY_ACCESS_TIERS,
   maskEmail
 } from '@/lib/validations';
 
@@ -103,7 +102,8 @@ export async function POST(request: NextRequest) {
         { 
           success: false, 
           error: 'Database error occurred',
-          code: 'DATABASE_ERROR'
+          code: 'DATABASE_ERROR',
+          details: process.env.NODE_ENV === 'development' ? checkError.message : undefined
         },
         { status: 500 }
       );

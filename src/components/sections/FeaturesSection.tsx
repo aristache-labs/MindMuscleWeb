@@ -3,20 +3,23 @@
 import { motion } from 'framer-motion';
 import { 
   Bot, 
-  Eye, 
-  Zap, 
-  BarChart3, 
   Moon, 
-  Users, 
-  ArrowRight,
-  Sparkles
+  ArrowRight
 } from 'lucide-react';
+import { 
+  AIBrainIcon, 
+  AITargetIcon, 
+  AIPowerIcon, 
+  AIAnalyticsIcon, 
+  AICommunityIcon, 
+  AISparklesIcon 
+} from '@/components/ui/CustomIcons';
 import { useScrollAnimation, useStaggerAnimation, SCROLL_VARIANTS } from '@/hooks/useScrollAnimation';
 
 const features = [
   {
     id: 1,
-    icon: Bot,
+    icon: AIBrainIcon,
     title: 'AI Personal Trainer',
     description: 'Your dedicated AI coach that understands your goals, adapts to your progress, and motivates you every step of the way.',
     benefits: ['24/7 availability', 'Personalized coaching', 'Motivational support'],
@@ -24,7 +27,7 @@ const features = [
   },
   {
     id: 2,
-    icon: Eye,
+    icon: AITargetIcon,
     title: 'Real-time Form Correction',
     description: 'Advanced computer vision analyzes your movements and provides instant feedback to perfect your form and prevent injuries.',
     benefits: ['Movement analysis', 'Injury prevention', 'Technique optimization'],
@@ -32,7 +35,7 @@ const features = [
   },
   {
     id: 3,
-    icon: Zap,
+    icon: AIPowerIcon,
     title: 'Adaptive Workout Plans',
     description: 'Dynamic workout programs that evolve based on your performance, energy levels, and recovery state for optimal results.',
     benefits: ['Dynamic difficulty', 'Performance tracking', 'Auto-adjustments'],
@@ -40,7 +43,7 @@ const features = [
   },
   {
     id: 4,
-    icon: BarChart3,
+    icon: AIAnalyticsIcon,
     title: 'Progress Tracking',
     description: 'Comprehensive insights into your fitness journey with detailed metrics, trends, and progress visualization.',
     benefits: ['Performance metrics', 'Trend analysis', 'Goal predictions'],
@@ -56,7 +59,7 @@ const features = [
   },
   {
     id: 6,
-    icon: Users,
+    icon: AICommunityIcon,
     title: 'Community Challenges',
     description: 'Connect with like-minded fitness enthusiasts through AI-curated challenges and competitions tailored to your level.',
     benefits: ['Social motivation', 'Skill-matched challenges', 'Achievement rewards'],
@@ -168,7 +171,7 @@ export function FeaturesSection() {
           animate={headerControls}
         >
           <div className="inline-flex items-center gap-2 bg-primary-500/10 border border-primary-500/20 rounded-full px-4 py-2 text-sm font-medium text-primary-300 mb-6">
-            <Sparkles className="w-4 h-4" />
+            <AISparklesIcon size={16} className="text-primary-400" />
             AI-Powered Features
           </div>
           <h2 className="text-3xl font-bold text-white sm:text-4xl lg:text-5xl">
@@ -218,7 +221,7 @@ export function FeaturesSection() {
                         whileHover={{ scale: 1 }}
                         transition={{ duration: 0.3 }}
                       />
-                      <IconComponent className="w-6 h-6 sm:w-7 sm:h-7 text-white relative z-10" />
+                      <IconComponent size={28} className="text-white relative z-10" strokeWidth={1.5} />
                       
                       {/* Sparkle effect */}
                       <motion.div

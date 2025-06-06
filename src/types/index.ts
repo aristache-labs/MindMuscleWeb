@@ -155,7 +155,7 @@ export interface EarlyAccessTier {
   name: string;
   minReferrals: number;
   minPoints: number;
-  benefits: string[];
+  benefits: readonly string[];
   priority: number;
   color: string;
   icon: string;

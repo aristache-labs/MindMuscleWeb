@@ -18,26 +18,49 @@ import {
   TrendingUp
 } from 'lucide-react';
 import { cn, trackEvent } from '@/lib/utils';
-import { SOCIAL_INCENTIVES } from '@/lib/validations';
-import type { SocialIncentive } from '@/types';
+
+// Type definitions for sharing
+export interface ShareData {
+  url: string;
+  message: string;
+  hashtags?: string[];
+  pointsAwarded?: number;
+  tierUpgraded?: boolean;
+}
 
 interface SocialSharingPanelProps {
   userId: string;
   referralCode: string;
-  onShare?: (platform: string, shareData: any) => void;
+  onShare?: (platform: string, shareData: ShareData) => void;
   className?: string;
 }
 
 interface SharePlatform {
   id: string;
   name: string;
-  icon: any;
+  icon: React.ComponentType<{ className?: string }>;
   color: string;
   available: boolean;
   cooldownUntil?: string;
   pointsReward: number;
   shareUrl: string;
   shareText: string;
+}
+
+interface ShareHistory {
+  id: string;
+  platform: string;
+  created_at: string;
+  points_awarded: number;
+}
+
+interface SharingIncentive {
+  platform: string;
+  url: string;
+  message: string;
+  pointsReward: number;
+  available: boolean;
+  lastShared?: string;
 }
 
 const PLATFORM_CONFIG = {
@@ -88,7 +111,7 @@ export function SocialSharingPanel({
   const [platforms, setPlatforms] = useState<SharePlatform[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [copiedLink, setCopiedLink] = useState(false);
-  const [recentShares, setRecentShares] = useState<any[]>([]);
+  const [recentShares, setRecentShares] = useState<ShareHistory[]>([]);
 
   const fetchSharingData = useCallback(async () => {
     try {
@@ -98,7 +121,7 @@ export function SocialSharingPanel({
       if (data.success) {
         const { incentives, sharingHistory } = data.data;
         
-        const platformData = incentives.map((incentive: any) => {
+        const platformData = incentives.map((incentive: SharingIncentive) => {
           const config = PLATFORM_CONFIG[incentive.platform as keyof typeof PLATFORM_CONFIG];
           const referralUrl = `${incentive.url}?ref=${referralCode}`;
           
@@ -182,14 +205,14 @@ export function SocialSharingPanel({
       console.error('Share error:', error);
       trackEvent('social_share_error', { 
         platform: platform.id, 
-        error: error.message 
+        error: error instanceof Error ? error.message : 'Unknown error' 
       });
     } finally {
       setIsLoading(false);
     }
   };
 
-  const openShareWindow = (platform: SharePlatform, shareData: any) => {
+  const openShareWindow = (platform: SharePlatform, shareData: ShareData) => {
     const { url, message, hashtags } = shareData;
     let shareUrl = '';
 
@@ -346,7 +369,7 @@ export function SocialSharingPanel({
           </div>
           
           <div className="space-y-2">
-            {recentShares.slice(0, 3).map((share, index) => {
+            {recentShares.slice(0, 3).map((share) => {
               const platformConfig = PLATFORM_CONFIG[share.platform as keyof typeof PLATFORM_CONFIG];
               const IconComponent = platformConfig?.icon;
               

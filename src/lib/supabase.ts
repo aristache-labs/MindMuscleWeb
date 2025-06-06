@@ -12,6 +12,8 @@ export interface Database {
           interests: string[] | null;
           referral_code: string | null;
           referrer_id: string | null;
+          points_earned: number | null;
+          referral_count: number | null;
           utm_source: string | null;
           utm_medium: string | null;
           utm_campaign: string | null;
@@ -27,6 +29,8 @@ export interface Database {
           interests?: string[] | null;
           referral_code?: string | null;
           referrer_id?: string | null;
+          points_earned?: number | null;
+          referral_count?: number | null;
           utm_source?: string | null;
           utm_medium?: string | null;
           utm_campaign?: string | null;
@@ -42,6 +46,8 @@ export interface Database {
           interests?: string[] | null;
           referral_code?: string | null;
           referrer_id?: string | null;
+          points_earned?: number | null;
+          referral_count?: number | null;
           utm_source?: string | null;
           utm_medium?: string | null;
           utm_campaign?: string | null;

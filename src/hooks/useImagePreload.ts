@@ -14,27 +14,59 @@ export function useImagePreload(
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
-    const sources = Array.isArray(src) ? src : [src];
+    // Skip empty or invalid sources
+    if (!src || (Array.isArray(src) && src.length === 0)) {
+      setIsLoading(false);
+      return;
+    }
+
+    const sources = Array.isArray(src) ? src.filter(s => s && !s.startsWith('data:')) : [src].filter(s => s && !s.startsWith('data:'));
+    
+    if (sources.length === 0) {
+      setIsLoading(false);
+      return;
+    }
+
     let loadedCount = 0;
+    let isCancelled = false;
     setIsLoading(true);
     setHasError(false);
 
     const loadImage = (imageSrc: string): Promise<void> => {
       return new Promise((resolve, reject) => {
+        // Add priority preload link for critical images
+        if (options.priority && typeof document !== 'undefined') {
+          const existingLink = document.querySelector(`link[href="${imageSrc}"]`);
+          if (!existingLink) {
+            const link = document.createElement('link');
+            link.rel = 'preload';
+            link.as = 'image';
+            link.href = imageSrc;
+            if (options.sizes) {
+              link.setAttribute('imagesizes', options.sizes);
+            }
+            document.head.appendChild(link);
+          }
+        }
+
         const img = new Image();
         
         img.onload = () => {
-          setLoadedImages(prev => new Set(prev).add(imageSrc));
-          loadedCount++;
-          
-          if (loadedCount === sources.length) {
-            setIsLoading(false);
+          if (!isCancelled) {
+            setLoadedImages(prev => new Set(prev).add(imageSrc));
+            loadedCount++;
+            
+            if (loadedCount === sources.length) {
+              setIsLoading(false);
+            }
           }
           resolve();
         };
         
         img.onerror = () => {
-          setHasError(true);
+          if (!isCancelled) {
+            setHasError(true);
+          }
           reject(new Error(`Failed to load image: ${imageSrc}`));
         };
 
@@ -42,6 +74,8 @@ export function useImagePreload(
         if (options.priority) {
           img.loading = 'eager';
           img.fetchPriority = 'high';
+        } else {
+          img.loading = 'lazy';
         }
 
         img.src = imageSrc;
@@ -49,12 +83,22 @@ export function useImagePreload(
     };
 
     Promise.allSettled(sources.map(loadImage))
-      .then(() => setIsLoading(false))
+      .then(() => {
+        if (!isCancelled) {
+          setIsLoading(false);
+        }
+      })
       .catch(() => {
-        setIsLoading(false);
-        setHasError(true);
+        if (!isCancelled) {
+          setIsLoading(false);
+          setHasError(true);
+        }
       });
-  }, [src, options.priority]);
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [src, options.priority, options.sizes]);
 
   return {
     isLoading,

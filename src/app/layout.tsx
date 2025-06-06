@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import { PerformanceMonitor } from '@/components/ui/PerformanceMonitor';
-import { MagneticCursor } from '@/components/ui/MagneticCursor';
+import { ScrollProgressAnimation } from '@/components/ui/LottieAnimations';
 import './globals.css';
 
 const inter = Inter({
@@ -126,9 +126,8 @@ export default function RootLayout({
           enableResourceTiming={process.env.NODE_ENV === 'development'}
           enableNavigationTiming={process.env.NODE_ENV === 'development'}
         />
-        <MagneticCursor>
-          {children}
-        </MagneticCursor>
+        <ScrollProgressAnimation />
+        {children}
       </body>
     </html>
   );

@@ -3,7 +3,9 @@
 import { motion } from 'framer-motion';
 import { WaitlistForm } from '@/components/ui/WaitlistForm';
 import { trackEvent } from '@/lib/utils';
-import { Sparkles, Users, Trophy } from 'lucide-react';
+import { Trophy } from 'lucide-react';
+import { AISparklesIcon, AICommunityIcon } from '@/components/ui/CustomIcons';
+import { PulseAnimation } from '@/components/ui/LottieAnimations';
 import { useScrollAnimation, useStaggerAnimation, SCROLL_VARIANTS } from '@/hooks/useScrollAnimation';
 
 interface SuccessData {
@@ -75,7 +77,7 @@ export function WaitlistSection() {
             transition={{ duration: 0.5, delay: 0.1 }}
             viewport={{ once: true }}
           >
-            <Sparkles className="h-4 w-4 text-primary-400" />
+            <AISparklesIcon size={16} className="text-primary-400" />
             <span className="text-sm font-medium text-primary-300">Join the Revolution</span>
           </motion.div>
 
@@ -100,7 +102,7 @@ export function WaitlistSection() {
           >
             <div className="bg-dark-800/50 backdrop-blur-sm border border-gray-700/50 rounded-xl p-4">
               <div className="flex items-center justify-center gap-2 mb-2">
-                <Users className="h-5 w-5 text-primary-400" />
+                <AICommunityIcon size={20} className="text-primary-400" />
                 <span className="text-2xl font-bold text-white">10K+</span>
               </div>
               <p className="text-sm text-gray-400">Early Adopters</p>
@@ -116,7 +118,7 @@ export function WaitlistSection() {
             
             <div className="bg-dark-800/50 backdrop-blur-sm border border-gray-700/50 rounded-xl p-4">
               <div className="flex items-center justify-center gap-2 mb-2">
-                <Sparkles className="h-5 w-5 text-purple-400" />
+                <AISparklesIcon size={20} className="text-purple-400" />
                 <span className="text-2xl font-bold text-white">FREE</span>
               </div>
               <p className="text-sm text-gray-400">Beta Access</p>
@@ -131,7 +133,9 @@ export function WaitlistSection() {
           initial="initial"
           animate={formControls}
         >
-          <WaitlistForm onSuccess={handleWaitlistSuccess} />
+          <PulseAnimation intensity="subtle">
+            <WaitlistForm onSuccess={handleWaitlistSuccess} />
+          </PulseAnimation>
         </motion.div>
 
         {/* Benefits */}

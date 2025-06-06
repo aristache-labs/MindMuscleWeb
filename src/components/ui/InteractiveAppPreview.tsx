@@ -19,7 +19,7 @@ import {
   BarChart3,
   Zap
 } from 'lucide-react';
-import { MagneticElement } from './MagneticElement';
+
 
 type AppScreen = 
   | 'dashboard' 
@@ -83,7 +83,7 @@ export function InteractiveAppPreview({ className }: InteractiveAppPreviewProps)
       </div>
 
       {/* AI Insight Card */}
-      <MagneticElement strength={0.3} distance={40}>
+      <div>
         <motion.div
           className="bg-gradient-to-r from-primary-500/20 to-accent-cyan/20 border border-primary-500/30 rounded-2xl p-3 sm:p-4 mb-4 sm:mb-6"
           whileTap={{ scale: 0.98 }}
@@ -97,7 +97,7 @@ export function InteractiveAppPreview({ className }: InteractiveAppPreviewProps)
             Your strength has increased 12% this week!
           </p>
         </motion.div>
-      </MagneticElement>
+      </div>
 
       {/* Quick Stats */}
       <div className="grid grid-cols-2 gap-3 mb-6">
@@ -118,26 +118,19 @@ export function InteractiveAppPreview({ className }: InteractiveAppPreviewProps)
       </div>
 
       {/* Today's Workout */}
-      <MagneticElement 
-        strength={0.4} 
-        distance={50}
-        data-magnetic-label="Start workout"
-        data-magnetic-color="primary"
+      <motion.button
+        className="w-full bg-gradient-to-r from-primary-500 to-primary-600 rounded-2xl p-4 mb-4"
+        whileTap={{ scale: 0.98 }}
+        onClick={() => setCurrentScreen('workout-plan')}
       >
-        <motion.button
-          className="w-full bg-gradient-to-r from-primary-500 to-primary-600 rounded-2xl p-4 mb-4"
-          whileTap={{ scale: 0.98 }}
-          onClick={() => setCurrentScreen('workout-plan')}
-        >
-          <div className="flex items-center justify-between">
-            <div className="text-left">
-              <h3 className="text-white font-bold">Today&apos;s Workout</h3>
-              <p className="text-primary-100 text-sm">Chest & Triceps • 45 min</p>
-            </div>
-            <Play className="w-6 h-6 text-white" />
+        <div className="flex items-center justify-between">
+          <div className="text-left">
+            <h3 className="text-white font-bold">Today&apos;s Workout</h3>
+            <p className="text-primary-100 text-sm">Chest & Triceps • 45 min</p>
           </div>
-        </motion.button>
-      </MagneticElement>
+          <Play className="w-6 h-6 text-white" />
+        </div>
+      </motion.button>
 
       {/* Recent Activity */}
       <div className="space-y-3">
@@ -168,38 +161,31 @@ export function InteractiveAppPreview({ className }: InteractiveAppPreviewProps)
           <h1 className="text-xl font-bold text-white">Chest & Triceps</h1>
           <p className="text-gray-400 text-sm">6 exercises • 45 minutes</p>
         </div>
-        <MagneticElement strength={0.3}>
+        <div>
           <motion.button
             className="bg-primary-500/20 border border-primary-500/30 rounded-xl p-2"
             whileTap={{ scale: 0.95 }}
           >
             <Settings className="w-5 h-5 text-primary-400" />
           </motion.button>
-        </MagneticElement>
+        </div>
       </div>
 
       {/* Start Workout Button */}
-      <MagneticElement 
-        strength={0.5} 
-        distance={60}
-        data-magnetic-label="Start workout"
-        data-magnetic-color="success"
+      <motion.button
+        className="w-full bg-gradient-to-r from-green-500 to-green-600 rounded-2xl p-4 mb-6"
+        whileTap={{ scale: 0.98 }}
+        onClick={() => {
+          setCurrentScreen('active-workout');
+          setIsWorkoutActive(true);
+          setWorkoutTime(0);
+        }}
       >
-        <motion.button
-          className="w-full bg-gradient-to-r from-green-500 to-green-600 rounded-2xl p-4 mb-6"
-          whileTap={{ scale: 0.98 }}
-          onClick={() => {
-            setCurrentScreen('active-workout');
-            setIsWorkoutActive(true);
-            setWorkoutTime(0);
-          }}
-        >
-          <div className="flex items-center justify-center gap-3">
-            <Play className="w-6 h-6 text-white" />
-            <span className="text-white font-bold">START WORKOUT</span>
-          </div>
-        </motion.button>
-      </MagneticElement>
+        <div className="flex items-center justify-center gap-3">
+          <Play className="w-6 h-6 text-white" />
+          <span className="text-white font-bold">START WORKOUT</span>
+        </div>
+      </motion.button>
 
       {/* Exercise List */}
       <div className="space-y-3">
@@ -209,7 +195,7 @@ export function InteractiveAppPreview({ className }: InteractiveAppPreviewProps)
           { name: 'Tricep Dips', sets: '3 sets', reps: '12-15 reps', weight: 'Bodyweight' },
           { name: 'Close-Grip Bench Press', sets: '3 sets', reps: '8-10 reps', weight: '155 lbs' },
         ].map((exercise, index) => (
-          <MagneticElement key={index} strength={0.2} distance={30}>
+          <div key={index}>
             <motion.div
               className="bg-gray-800/50 rounded-xl p-4 border border-gray-700/50"
               whileTap={{ scale: 0.98 }}
@@ -223,7 +209,7 @@ export function InteractiveAppPreview({ className }: InteractiveAppPreviewProps)
                 <ChevronRight className="w-5 h-5 text-gray-500" />
               </div>
             </motion.div>
-          </MagneticElement>
+          </div>
         ))}
       </div>
     </div>
@@ -241,7 +227,7 @@ export function InteractiveAppPreview({ className }: InteractiveAppPreviewProps)
       <div className="text-center mb-8">
         <div className="text-4xl font-bold text-white mb-2">{formatTime(workoutTime)}</div>
         <div className="flex items-center justify-center gap-4">
-          <MagneticElement strength={0.4}>
+          <div>
             <motion.button
               className="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center"
               whileTap={{ scale: 0.9 }}
@@ -253,7 +239,7 @@ export function InteractiveAppPreview({ className }: InteractiveAppPreviewProps)
                 <Play className="w-6 h-6 text-white" />
               )}
             </motion.button>
-          </MagneticElement>
+          </div>
         </div>
       </div>
 
@@ -276,7 +262,7 @@ export function InteractiveAppPreview({ className }: InteractiveAppPreviewProps)
         <p className="text-gray-400 text-sm mb-2">Reps Completed</p>
         <p className="text-6xl font-bold text-primary-400 mb-4">{reps}</p>
         <div className="flex items-center justify-center gap-4">
-          <MagneticElement strength={0.4}>
+          <div>
             <motion.button
               className="w-16 h-16 bg-primary-500 rounded-full flex items-center justify-center"
               whileTap={{ scale: 0.9 }}
@@ -284,9 +270,9 @@ export function InteractiveAppPreview({ className }: InteractiveAppPreviewProps)
             >
               <span className="text-white text-2xl font-bold">-</span>
             </motion.button>
-          </MagneticElement>
+          </div>
           
-          <MagneticElement strength={0.5} data-magnetic-label="Add rep" data-magnetic-color="success">
+          <div>
             <motion.button
               className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center"
               whileTap={{ scale: 0.9 }}
@@ -294,12 +280,12 @@ export function InteractiveAppPreview({ className }: InteractiveAppPreviewProps)
             >
               <span className="text-white text-3xl font-bold">+</span>
             </motion.button>
-          </MagneticElement>
+          </div>
         </div>
       </div>
 
       {/* Next Set Button */}
-      <MagneticElement strength={0.4} data-magnetic-label="Complete set">
+      <div>
         <motion.button
           className="w-full bg-gradient-to-r from-primary-500 to-primary-600 rounded-2xl p-4"
           whileTap={{ scale: 0.98 }}
@@ -317,7 +303,7 @@ export function InteractiveAppPreview({ className }: InteractiveAppPreviewProps)
             {currentSet >= 4 ? 'FINISH WORKOUT' : 'NEXT SET'}
           </span>
         </motion.button>
-      </MagneticElement>
+      </div>
     </div>
   );
 
@@ -331,21 +317,21 @@ export function InteractiveAppPreview({ className }: InteractiveAppPreviewProps)
 
       {/* Stats Cards */}
       <div className="grid grid-cols-2 gap-3 mb-6">
-        <MagneticElement strength={0.2}>
+        <div>
           <div className="bg-gradient-to-br from-primary-500/20 to-primary-600/20 border border-primary-500/30 rounded-xl p-4">
             <TrendingUp className="w-6 h-6 text-primary-400 mb-2" />
             <p className="text-white font-bold text-lg">+12%</p>
             <p className="text-gray-400 text-sm">Strength Gain</p>
           </div>
-        </MagneticElement>
+        </div>
         
-        <MagneticElement strength={0.2}>
+        <div>
           <div className="bg-gradient-to-br from-green-500/20 to-green-600/20 border border-green-500/30 rounded-xl p-4">
             <Calendar className="w-6 h-6 text-green-400 mb-2" />
             <p className="text-white font-bold text-lg">24</p>
             <p className="text-gray-400 text-sm">Workouts</p>
           </div>
-        </MagneticElement>
+        </div>
       </div>
 
       {/* Chart Placeholder */}
@@ -373,12 +359,12 @@ export function InteractiveAppPreview({ className }: InteractiveAppPreviewProps)
             { icon: Trophy, title: '30-Day Streak', color: 'text-yellow-400' },
             { icon: Star, title: 'Personal Best', color: 'text-blue-400' },
           ].map((achievement, index) => (
-            <MagneticElement key={index} strength={0.2}>
+            <div key={index}>
               <div className="bg-gray-800/50 rounded-xl p-3 flex items-center gap-3">
                 <achievement.icon className={`w-5 h-5 ${achievement.color}`} />
                 <span className="text-white font-medium">{achievement.title}</span>
               </div>
-            </MagneticElement>
+            </div>
           ))}
         </div>
       </div>
@@ -441,7 +427,7 @@ export function InteractiveAppPreview({ className }: InteractiveAppPreviewProps)
           <div className="absolute bottom-0 left-0 right-0 bg-gray-900/95 backdrop-blur-sm border-t border-gray-700/50">
             <div className="flex justify-around items-center py-1.5 sm:py-2">
               {navigationItems.map((item) => (
-                <MagneticElement key={item.screen} strength={0.3} distance={25}>
+                <div key={item.screen}>
                   <motion.button
                     className={`p-2.5 sm:p-3 rounded-xl transition-colors ${
                       currentScreen === item.screen
@@ -453,7 +439,7 @@ export function InteractiveAppPreview({ className }: InteractiveAppPreviewProps)
                   >
                     <item.icon className="w-4 h-4 sm:w-5 sm:h-5" />
                   </motion.button>
-                </MagneticElement>
+                </div>
               ))}
             </div>
           </div>

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { Menu, X, ChevronRight } from 'lucide-react';
-import { MagneticButton } from '@/components/ui/MagneticButton';
+
 import { APP_INFO, NAVIGATION_ITEMS } from '@/lib/constants';
 import { cn, scrollToElement, trackEvent } from '@/lib/utils';
 
@@ -114,21 +114,23 @@ export function Navigation() {
 
             {/* CTA Buttons (Desktop) */}
             <div className="hidden md:flex items-center gap-3">
-              <MagneticButton
+              <motion.button
                 onClick={() => window.open('/interactive-demo', '_self')}
                 className="inline-flex items-center gap-2 rounded-lg bg-accent-cyan/10 border border-accent-cyan/30 px-4 py-2 text-sm font-semibold text-accent-cyan transition-all duration-300 hover:bg-accent-cyan/20"
-                strength={0.2}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 Try Demo
-              </MagneticButton>
-              <MagneticButton
+              </motion.button>
+              <motion.button
                 onClick={handleWaitlistClick}
                 className="inline-flex items-center gap-2 rounded-lg bg-primary-500 px-4 py-2 text-sm font-semibold text-white transition-all duration-300 hover:bg-primary-600"
-                strength={0.2}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 Join Waitlist
                 <ChevronRight className="h-4 w-4" />
-              </MagneticButton>
+              </motion.button>
             </div>
 
             {/* Mobile Menu Button */}
@@ -219,23 +221,25 @@ export function Navigation() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: NAVIGATION_ITEMS.length * 0.1 + 0.2 }}
                 >
-                  <MagneticButton
+                  <motion.button
                     onClick={() => {
                       window.open('/interactive-demo', '_self');
                       setIsMobileMenuOpen(false);
                     }}
                     className="w-full rounded-lg bg-accent-cyan/10 border border-accent-cyan/30 px-6 py-3 text-center font-semibold text-accent-cyan transition-all duration-300 hover:bg-accent-cyan/20"
-                    strength={0.1}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                   >
                     Try Demo
-                  </MagneticButton>
-                  <MagneticButton
+                  </motion.button>
+                  <motion.button
                     onClick={handleWaitlistClick}
                     className="w-full rounded-lg bg-primary-500 px-6 py-3 text-center font-semibold text-white transition-all duration-300 hover:bg-primary-600"
-                    strength={0.1}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                   >
                     Join Waitlist
-                  </MagneticButton>
+                  </motion.button>
                 </motion.div>
               </div>
             </motion.div>

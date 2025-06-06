@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, Smartphone, Play, Zap } from 'lucide-react';
 import Link from 'next/link';
 import { InteractiveAppPreview } from '@/components/ui/InteractiveAppPreview';
-import { MagneticElement } from '@/components/ui/MagneticElement';
+
 
 export default function InteractiveDemoPage() {
   return (
@@ -13,7 +13,7 @@ export default function InteractiveDemoPage() {
       <div className="relative z-50 border-b border-gray-800/50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between py-6">
-            <MagneticElement strength={0.3}>
+            <div>
               <Link
                 href="/"
                 className="flex items-center gap-3 text-gray-300 hover:text-white transition-colors"
@@ -21,7 +21,7 @@ export default function InteractiveDemoPage() {
                 <ArrowLeft className="w-5 h-5" />
                 <span>Back to Home</span>
               </Link>
-            </MagneticElement>
+            </div>
 
             <div className="flex items-center gap-2">
               <Smartphone className="w-6 h-6 text-primary-400" />
@@ -157,7 +157,7 @@ export default function InteractiveDemoPage() {
               </div>
 
               <div className="space-y-6">
-                <MagneticElement strength={0.2}>
+                <div>
                   <div className="bg-gray-800/30 border border-gray-700/50 rounded-2xl p-6">
                     <div className="flex items-start gap-4">
                       <div className="p-3 rounded-xl bg-gradient-to-r from-primary-500 to-primary-600 bg-opacity-20">
@@ -174,9 +174,9 @@ export default function InteractiveDemoPage() {
                       </div>
                     </div>
                   </div>
-                </MagneticElement>
+                </div>
 
-                <MagneticElement strength={0.2}>
+                <div>
                   <div className="bg-gray-800/30 border border-gray-700/50 rounded-2xl p-6">
                     <div className="flex items-start gap-4">
                       <div className="p-3 rounded-xl bg-gradient-to-r from-green-500 to-green-600 bg-opacity-20">
@@ -193,9 +193,9 @@ export default function InteractiveDemoPage() {
                       </div>
                     </div>
                   </div>
-                </MagneticElement>
+                </div>
 
-                <MagneticElement strength={0.2}>
+                <div>
                   <div className="bg-gray-800/30 border border-gray-700/50 rounded-2xl p-6">
                     <div className="flex items-start gap-4">
                       <div className="p-3 rounded-xl bg-gradient-to-r from-accent-cyan to-blue-600 bg-opacity-20">
@@ -212,7 +212,7 @@ export default function InteractiveDemoPage() {
                       </div>
                     </div>
                   </div>
-                </MagneticElement>
+                </div>
               </div>
 
               {/* Call to Action */}
@@ -222,27 +222,20 @@ export default function InteractiveDemoPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1, duration: 0.6 }}
               >
-                <MagneticElement 
-                  strength={0.4} 
-                  distance={50}
-                  data-magnetic-label="Join waitlist"
-                  data-magnetic-color="primary"
+                <motion.button
+                  className="w-full bg-gradient-to-r from-primary-500 to-primary-600 rounded-2xl px-8 py-4 text-white font-semibold transition-all duration-300 hover:from-primary-600 hover:to-primary-700"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => {
+                    // Navigate back to home page and scroll to waitlist
+                    window.location.href = '/#waitlist';
+                  }}
                 >
-                                     <motion.button
-                     className="w-full bg-gradient-to-r from-primary-500 to-primary-600 rounded-2xl px-8 py-4 text-white font-semibold transition-all duration-300 hover:from-primary-600 hover:to-primary-700"
-                     whileHover={{ scale: 1.02 }}
-                     whileTap={{ scale: 0.98 }}
-                     onClick={() => {
-                       // Navigate back to home page and scroll to waitlist
-                       window.location.href = '/#waitlist';
-                     }}
-                   >
-                     <div className="flex items-center justify-center gap-3">
-                       <Play className="w-5 h-5" />
-                       <span>Ready to Transform Your Fitness?</span>
-                     </div>
-                   </motion.button>
-                </MagneticElement>
+                  <div className="flex items-center justify-center gap-3">
+                    <Play className="w-5 h-5" />
+                    <span>Ready to Transform Your Fitness?</span>
+                  </div>
+                </motion.button>
                 
                 <p className="text-center text-gray-400 text-sm mt-4">
                   Join 10,000+ early adopters waiting for the full app launch
