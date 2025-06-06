@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
+import { PerformanceMonitor } from '@/components/ui/PerformanceMonitor';
 import './globals.css';
 
 const inter = Inter({
@@ -119,6 +120,11 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased" suppressHydrationWarning>
+        <PerformanceMonitor 
+          enableCWV={true}
+          enableResourceTiming={process.env.NODE_ENV === 'development'}
+          enableNavigationTiming={process.env.NODE_ENV === 'development'}
+        />
         {children}
       </body>
     </html>

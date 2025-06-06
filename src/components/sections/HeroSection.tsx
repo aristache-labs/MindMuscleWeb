@@ -6,6 +6,7 @@ import { MagneticButton } from '@/components/ui/MagneticButton';
 import { PhoneMockup } from '@/components/ui/PhoneMockup';
 import { STORE_LINKS, APP_SCREENSHOTS, ANIMATION_TIMING } from '@/lib/constants';
 import { trackEvent } from '@/lib/utils';
+import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { Download, PlayCircle, ChevronRight, Sparkles } from 'lucide-react';
 
 const heroVariants = {
@@ -62,6 +63,7 @@ export function HeroSection() {
   const [currentScreenshot, setCurrentScreenshot] = useState(0);
   const [isCarouselPaused, setIsCarouselPaused] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
+  const prefersReducedMotion = useReducedMotion();
 
   // Auto-advance carousel logic
   useEffect(() => {
@@ -118,32 +120,41 @@ export function HeroSection() {
           <div className="h-full w-full bg-[linear-gradient(rgba(139,92,246,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(139,92,246,0.1)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]" />
         </div>
 
-        {/* Floating Elements */}
-        <motion.div
-          className="absolute left-1/4 top-1/4 h-64 w-64 rounded-full bg-primary-500/10 blur-3xl"
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.5, 0.3],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-        />
-        <motion.div
-          className="absolute right-1/3 top-1/3 h-48 w-48 rounded-full bg-accent-cyan/10 blur-3xl"
-          animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.2, 0.4, 0.2],
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: 'easeInOut',
-            delay: 2,
-          }}
-        />
+        {/* Floating Elements - Only animate if motion is not reduced */}
+        {!prefersReducedMotion ? (
+          <>
+            <motion.div
+              className="absolute left-1/4 top-1/4 h-64 w-64 rounded-full bg-primary-500/10 blur-3xl"
+              animate={{
+                scale: [1, 1.1, 1],
+                opacity: [0.3, 0.4, 0.3],
+              }}
+              transition={{
+                duration: 8,
+                repeat: Infinity,
+                ease: 'easeInOut',
+              }}
+            />
+            <motion.div
+              className="absolute right-1/3 top-1/3 h-48 w-48 rounded-full bg-accent-cyan/10 blur-3xl"
+              animate={{
+                scale: [1.1, 1, 1.1],
+                opacity: [0.2, 0.3, 0.2],
+              }}
+              transition={{
+                duration: 10,
+                repeat: Infinity,
+                ease: 'easeInOut',
+                delay: 2,
+              }}
+            />
+          </>
+        ) : (
+          <>
+            <div className="absolute left-1/4 top-1/4 h-64 w-64 rounded-full bg-primary-500/10 blur-3xl opacity-30" />
+            <div className="absolute right-1/3 top-1/3 h-48 w-48 rounded-full bg-accent-cyan/10 blur-3xl opacity-20" />
+          </>
+        )}
       </div>
 
       {/* Content Container */}

@@ -5,7 +5,7 @@ import { waitlistFormSchema, sanitizeFormData } from '@/lib/validations';
 // Rate limiting (in production, use Redis or similar)
 const rateLimitMap = new Map();
 const RATE_LIMIT_WINDOW = 15 * 60 * 1000; // 15 minutes
-const RATE_LIMIT_REQUESTS = 4; // Max 3 submissions per 15 minutes per IP
+const RATE_LIMIT_REQUESTS = 3; // Max 3 submissions per 15 minutes per IP
 
 function isRateLimited(ip: string): boolean {
   const now = Date.now();
