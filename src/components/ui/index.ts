@@ -13,4 +13,18 @@ export { PhoneMockup } from './PhoneMockup';
 export { OptimizedImage } from './OptimizedImage';
 export { LazySection } from './LazySection';
 export { LoadingFallback } from './LoadingFallback';
-export { PerformanceMonitor } from './PerformanceMonitor'; 
+export { PerformanceMonitor } from './PerformanceMonitor';
+
+export { Button } from './Button';
+export { Input } from './Input';
+export { Textarea } from './Textarea';
+export { Select } from './Select';
+export { Modal } from './Modal';
+export { Toast } from './Toast';
+export { LoadingSpinner } from './LoadingSpinner';
+export { Badge } from './Badge';
+export { Card } from './Card';
+
+export { WaitlistDashboard } from './WaitlistDashboard';
+export { PositionIndicator } from './PositionIndicator';
+export { SocialSharingPanel } from './SocialSharingPanel'; 

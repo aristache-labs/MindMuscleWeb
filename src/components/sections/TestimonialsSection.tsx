@@ -149,15 +149,6 @@ export function TestimonialsSection() {
           animate={featuredControls}
         >
           <div className="relative max-w-4xl mx-auto">
-            {/* Quote Icon */}
-            <motion.div
-              className="absolute -top-4 -left-4 w-16 h-16 bg-primary-500/10 rounded-full flex items-center justify-center"
-              variants={quoteIconVariants}
-              animate={{ rotate: [0, 5, -5, 0] }}
-              transition={{ duration: 4, repeat: Infinity }}
-            >
-              <Quote className="w-8 h-8 text-primary-400" />
-            </motion.div>
 
             <div className="bg-dark-800/50 backdrop-blur-sm border border-gray-800/50 rounded-3xl p-8 md:p-12">
               <motion.blockquote
@@ -178,17 +169,6 @@ export function TestimonialsSection() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, delay: 0.2 }}
                 >
-                  <div className="relative">
-                    <Image
-                      src={currentTestimonial.avatar}
-                      alt={currentTestimonial.name}
-                      width={48}
-                      height={48}
-                      className="w-12 h-12 rounded-full"
-                      unoptimized={currentTestimonial.avatar.startsWith('data:')}
-                    />
-                    <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary-500/20 to-transparent" />
-                  </div>
                   <div>
                     <p className="font-semibold text-white">{currentTestimonial.name}</p>
                     <p className="text-sm text-gray-400">{currentTestimonial.role}</p>

@@ -159,4 +159,144 @@ export const extractUTMParams = (url: string) => {
     utmMedium: urlParams.get('utm_medium') || undefined,
     utmCampaign: urlParams.get('utm_campaign') || undefined,
   };
+};
+
+// Early Access Tiers Configuration
+export const EARLY_ACCESS_TIERS = [
+  {
+    id: 'standard',
+    name: 'Standard',
+    minReferrals: 0,
+    minPoints: 0,
+    benefits: ['Email updates', 'Launch announcement'],
+    priority: 1,
+    color: 'gray',
+    icon: '👤',
+  },
+  {
+    id: 'enthusiast',
+    name: 'Enthusiast',
+    minReferrals: 1,
+    minPoints: 100,
+    benefits: ['Standard benefits', '48h early access', 'Beta features preview'],
+    priority: 2,
+    color: 'blue',
+    icon: '⭐',
+  },
+  {
+    id: 'vip',
+    name: 'VIP',
+    minReferrals: 3,
+    minPoints: 300,
+    benefits: ['Enthusiast benefits', '1 week early access', 'Exclusive content', 'Priority support'],
+    priority: 3,
+    color: 'purple',
+    icon: '💎',
+  },
+  {
+    id: 'beta',
+    name: 'Beta Tester',
+    minReferrals: 5,
+    minPoints: 500,
+    benefits: ['VIP benefits', '2 weeks early access', 'Direct feedback channel', 'Beta testing rewards'],
+    priority: 4,
+    color: 'emerald',
+    icon: '🧪',
+  },
+  {
+    id: 'founder',
+    name: 'Founder',
+    minReferrals: 10,
+    minPoints: 1000,
+    benefits: ['Beta benefits', '1 month early access', 'Founder badge', 'Lifetime premium features', 'Advisory board invitation'],
+    priority: 5,
+    color: 'gold',
+    icon: '👑',
+  },
+] as const;
+
+// Social Sharing Incentives
+export const SOCIAL_INCENTIVES = [
+  {
+    platform: 'twitter',
+    message: '🚀 Just joined the @MindMuscleApp waitlist! Can\'t wait to experience AI-powered personalized fitness. Join me and let\'s revolutionize our fitness journey together!',
+    url: 'https://mindmuscle.app',
+    hashtags: ['#MindMuscle', '#AIFitness', '#PersonalizedWorkouts', '#FitnessRevolution'],
+    pointsReward: 50,
+    positionBoost: 5,
+  },
+  {
+    platform: 'facebook',
+    message: 'Excited to join the MindMuscle waitlist! 🎯 This AI-powered fitness app is going to change how we work out. Join me for early access!',
+    url: 'https://mindmuscle.app',
+    hashtags: ['MindMuscle', 'AIFitness', 'FitnessApp'],
+    pointsReward: 30,
+    positionBoost: 3,
+  },
+  {
+    platform: 'linkedin',
+    message: 'Thrilled to be on the MindMuscle waitlist! As someone passionate about fitness and technology, I\'m excited to see how AI can personalize our workout experiences. Check it out!',
+    url: 'https://mindmuscle.app',
+    hashtags: ['AIFitness', 'HealthTech', 'PersonalizedFitness'],
+    pointsReward: 40,
+    positionBoost: 4,
+  },
+  {
+    platform: 'whatsapp',
+    message: 'Hey! I just joined the MindMuscle waitlist for their new AI fitness app. Want to join me? Here\'s the link:',
+    url: 'https://mindmuscle.app',
+    hashtags: [],
+    pointsReward: 25,
+    positionBoost: 2,
+  },
+  {
+    platform: 'email',
+    message: 'I wanted to share something exciting with you - I just joined the MindMuscle waitlist for their revolutionary AI-powered fitness app. I thought you might be interested too!',
+    url: 'https://mindmuscle.app',
+    hashtags: [],
+    pointsReward: 35,
+    positionBoost: 3,
+  },
+] as const;
+
+// Points System Configuration
+export const POINTS_CONFIG = {
+  REFERRAL_SIGNUP: 100, // Points for each successful referral
+  SOCIAL_SHARE_BASE: 25, // Base points for sharing
+  FORM_COMPLETION: 50, // Bonus for completing full profile
+  DAILY_CHECK_IN: 5, // Points for checking waitlist status
+  MILESTONE_BONUS: 200, // Bonus points for reaching milestones
+  TIER_UPGRADE_BONUS: 500, // Bonus for tier upgrades
+} as const;
+
+// Utility functions for points and tiers
+export const calculateUserTier = (referrals: number, points: number) => {
+  return EARLY_ACCESS_TIERS
+    .slice()
+    .reverse()
+    .find(tier => referrals >= tier.minReferrals && points >= tier.minPoints) 
+    || EARLY_ACCESS_TIERS[0];
+};
+
+export const getNextTier = (currentTier: typeof EARLY_ACCESS_TIERS[number]) => {
+  const currentIndex = EARLY_ACCESS_TIERS.findIndex(tier => tier.id === currentTier.id);
+  return currentIndex < EARLY_ACCESS_TIERS.length - 1 ? EARLY_ACCESS_TIERS[currentIndex + 1] : null;
+};
+
+export const calculateProgressToNextTier = (referrals: number, points: number, currentTier: typeof EARLY_ACCESS_TIERS[number]) => {
+  const nextTier = getNextTier(currentTier);
+  if (!nextTier) return 100; // Already at max tier
+  
+  const referralProgress = Math.min((referrals / nextTier.minReferrals) * 100, 100);
+  const pointsProgress = Math.min((points / nextTier.minPoints) * 100, 100);
+  
+  return Math.min(referralProgress, pointsProgress);
+};
+
+export const maskEmail = (email: string): string => {
+  const [local, domain] = email.split('@');
+  if (local.length <= 2) return email;
+  
+  const maskedLocal = local[0] + '*'.repeat(local.length - 2) + local[local.length - 1];
+  return `${maskedLocal}@${domain}`;
 }; 

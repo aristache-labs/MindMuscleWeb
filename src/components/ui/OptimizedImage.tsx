@@ -13,6 +13,7 @@ interface OptimizedImageProps extends Omit<ImageProps, 'onLoad' | 'onError'> {
   lowQualityPlaceholder?: string;
   onLoadComplete?: () => void;
   onLoadError?: (error: Error) => void;
+  alt: string; // Make alt explicitly required
 }
 
 const OptimizedImage = forwardRef<HTMLImageElement, OptimizedImageProps>(({
@@ -110,7 +111,7 @@ const OptimizedImage = forwardRef<HTMLImageElement, OptimizedImageProps>(({
           animate={{ opacity: isLoaded ? 1 : 0 }}
           transition={{ duration: 0.3, ease: 'easeOut' }}
         >
-          <Image {...imageProps} />
+          <Image {...imageProps} alt={alt} />
         </motion.div>
       </motion.div>
     );
@@ -126,6 +127,7 @@ const OptimizedImage = forwardRef<HTMLImageElement, OptimizedImageProps>(({
       )}
       <Image
         {...imageProps}
+        alt={alt}
         className={`transition-all duration-300 ${getLoadingAnimationClass()} ${
           isLoaded ? getLoadedAnimationClass() : ''
         }`}

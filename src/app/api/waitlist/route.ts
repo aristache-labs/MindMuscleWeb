@@ -1,6 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase, generateReferralCode } from '@/lib/supabase';
-import { waitlistFormSchema, sanitizeFormData } from '@/lib/validations';
+import { 
+  waitlistFormSchema, 
+  sanitizeFormData,
+  calculateUserTier,
+  POINTS_CONFIG,
+  EARLY_ACCESS_TIERS,
+  maskEmail
+} from '@/lib/validations';
 
 // Rate limiting (in production, use Redis or similar)
 const rateLimitMap = new Map();
@@ -86,12 +93,11 @@ export async function POST(request: NextRequest) {
     // Check if email already exists
     const { data: existingUser, error: checkError } = await supabase
       .from('waitlist_signups')
-      .select('id, email')
+      .select('id, email, referral_code, points_earned, referral_count')
       .eq('email', formData.email)
       .single();
 
     if (checkError && checkError.code !== 'PGRST116') {
-      // PGRST116 is "not found" error, which is expected
       console.error('Database check error:', checkError);
       return NextResponse.json(
         { 
@@ -104,22 +110,35 @@ export async function POST(request: NextRequest) {
     }
 
     if (existingUser) {
-      return NextResponse.json(
-        { 
-          success: false, 
-          error: 'This email is already on the waitlist',
-          code: 'EMAIL_EXISTS'
+      // Return existing user data with updated position
+      const { count: currentPosition } = await supabase
+        .from('waitlist_signups')
+        .select('*', { count: 'exact', head: true })
+        .lte('created_at', new Date().toISOString());
+
+      const currentTier = calculateUserTier(existingUser.referral_count || 0, existingUser.points_earned || 0);
+
+      return NextResponse.json({
+        success: true,
+        message: 'You\'re already on the waitlist!',
+        data: {
+          id: existingUser.id,
+          email: existingUser.email,
+          referralCode: existingUser.referral_code,
+          position: currentPosition || null,
+          tier: currentTier,
+          isReturning: true,
         },
-        { status: 409 }
-      );
+      });
     }
 
     // Handle referral code validation
     let referrerId = null;
+    let referrerData = null;
     if (formData.referralCode) {
       const { data: referrer, error: referrerError } = await supabase
         .from('waitlist_signups')
-        .select('id')
+        .select('id, first_name, email')
         .eq('referral_code', formData.referralCode)
         .single();
 
@@ -136,6 +155,7 @@ export async function POST(request: NextRequest) {
         );
       } else {
         referrerId = referrer.id;
+        referrerData = referrer;
       }
     }
 
@@ -168,10 +188,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Calculate initial points
+    let initialPoints = 0;
+    if (formData.firstName && formData.interests?.length) {
+      initialPoints += POINTS_CONFIG.FORM_COMPLETION;
+    }
+
     // Get user agent
     const userAgent = request.headers.get('user-agent') || null;
 
-    // Insert new waitlist signup
+    // Insert new waitlist signup with enhanced data
     const { data: newUser, error: insertError } = await supabase
       .from('waitlist_signups')
       .insert({
@@ -180,6 +206,8 @@ export async function POST(request: NextRequest) {
         interests: formData.interests || null,
         referral_code: userReferralCode,
         referrer_id: referrerId,
+        points_earned: initialPoints,
+        referral_count: 0,
         utm_source: formData.utmSource || null,
         utm_medium: formData.utmMedium || null,
         utm_campaign: formData.utmCampaign || null,
@@ -203,17 +231,22 @@ export async function POST(request: NextRequest) {
 
     // Update referrer stats if applicable
     if (referrerId) {
-      await supabase.rpc('increment_referral_count', { 
-        user_id: referrerId 
+      // Award points to referrer and increment their referral count
+      await supabase.rpc('award_referral_points', { 
+        user_id: referrerId,
+        points: POINTS_CONFIG.REFERRAL_SIGNUP
       });
     }
 
-    // Get current waitlist position (approximate)
+    // Get current waitlist position
     const { count: waitlistPosition } = await supabase
       .from('waitlist_signups')
       .select('*', { count: 'exact', head: true });
 
-    // Return success response
+    // Calculate user tier
+    const userTier = calculateUserTier(0, initialPoints);
+
+    // Return enhanced success response
     return NextResponse.json({
       success: true,
       message: 'Successfully joined the waitlist!',
@@ -222,7 +255,13 @@ export async function POST(request: NextRequest) {
         email: newUser.email,
         referralCode: userReferralCode,
         position: waitlistPosition || null,
+        pointsEarned: initialPoints,
+        tier: userTier,
         firstName: newUser.first_name,
+        referredBy: referrerData ? {
+          name: referrerData.first_name || 'A friend',
+          email: maskEmail(referrerData.email)
+        } : null,
       },
     });
 
@@ -240,44 +279,129 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// Handle GET requests for referral code validation
+// Handle GET requests for referral code validation and user data
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const referralCode = searchParams.get('referral');
+    const email = searchParams.get('email');
+    const action = searchParams.get('action') || 'validate-referral';
     
-    if (!referralCode) {
-      return NextResponse.json(
-        { valid: false, error: 'Referral code is required' },
-        { status: 400 }
-      );
+    if (action === 'validate-referral') {
+      if (!referralCode) {
+        return NextResponse.json(
+          { valid: false, error: 'Referral code is required' },
+          { status: 400 }
+        );
+      }
+
+      // Validate referral code format
+      if (!/^[A-Z0-9]{6}$/.test(referralCode.toUpperCase())) {
+        return NextResponse.json({ valid: false, error: 'Invalid format' });
+      }
+
+      // Check if referral code exists
+      const { data: referrer, error } = await supabase
+        .from('waitlist_signups')
+        .select('id, first_name, email')
+        .eq('referral_code', referralCode.toUpperCase())
+        .single();
+
+      if (error || !referrer) {
+        return NextResponse.json({ valid: false, error: 'Code not found' });
+      }
+
+      return NextResponse.json({ 
+        valid: true, 
+        referrer: referrer.first_name || 'A friend',
+        referrerEmail: maskEmail(referrer.email)
+      });
     }
 
-    // Validate referral code format
-    if (!/^[A-Z0-9]{6}$/.test(referralCode.toUpperCase())) {
-      return NextResponse.json({ valid: false, error: 'Invalid format' });
+    if (action === 'user-status' && email) {
+      // Get user's current waitlist status
+      const { data: user, error } = await supabase
+        .from('waitlist_signups')
+        .select('*')
+        .eq('email', email)
+        .single();
+
+      if (error || !user) {
+        return NextResponse.json(
+          { found: false, error: 'User not found' },
+          { status: 404 }
+        );
+      }
+
+      // Calculate current position (approximate)
+      const { count: position } = await supabase
+        .from('waitlist_signups')
+        .select('*', { count: 'exact', head: true })
+        .lte('created_at', user.created_at);
+
+      // Get total waitlist count
+      const { count: totalUsers } = await supabase
+        .from('waitlist_signups')
+        .select('*', { count: 'exact', head: true });
+
+      const currentTier = calculateUserTier(user.referral_count || 0, user.points_earned || 0);
+      
+      return NextResponse.json({
+        found: true,
+        user: {
+          id: user.id,
+          email: user.email,
+          firstName: user.first_name,
+          position: position || null,
+          totalUsers: totalUsers || null,
+          referralCode: user.referral_code,
+          referralCount: user.referral_count || 0,
+          pointsEarned: user.points_earned || 0,
+          tier: currentTier,
+          joinedAt: user.created_at,
+        }
+      });
     }
 
-    // Check if referral code exists
-    const { data: referrer, error } = await supabase
-      .from('waitlist_signups')
-      .select('id, first_name')
-      .eq('referral_code', referralCode.toUpperCase())
-      .single();
+    if (action === 'leaderboard') {
+      // Get top performers for leaderboard
+      const { data: topUsers, error } = await supabase
+        .from('waitlist_signups')
+        .select('first_name, email, referral_count, points_earned')
+        .order('referral_count', { ascending: false })
+        .order('points_earned', { ascending: false })
+        .limit(20);
 
-    if (error || !referrer) {
-      return NextResponse.json({ valid: false, error: 'Code not found' });
+      if (error) {
+        return NextResponse.json(
+          { success: false, error: 'Failed to fetch leaderboard' },
+          { status: 500 }
+        );
+      }
+
+      const leaderboard = topUsers?.map((user, index) => ({
+        rank: index + 1,
+        user: {
+          firstName: user.first_name || 'Anonymous',
+          email: maskEmail(user.email),
+          tier: calculateUserTier(user.referral_count || 0, user.points_earned || 0),
+        },
+        referrals: user.referral_count || 0,
+        points: user.points_earned || 0,
+      })) || [];
+
+      return NextResponse.json({ success: true, leaderboard });
     }
 
-    return NextResponse.json({ 
-      valid: true, 
-      referrer: referrer.first_name || 'A friend' 
-    });
+    return NextResponse.json(
+      { error: 'Invalid action' },
+      { status: 400 }
+    );
 
   } catch (error) {
-    console.error('Referral validation error:', error);
+    console.error('Waitlist GET error:', error);
     return NextResponse.json(
-      { valid: false, error: 'Validation failed' },
+      { error: 'An unexpected error occurred' },
       { status: 500 }
     );
   }

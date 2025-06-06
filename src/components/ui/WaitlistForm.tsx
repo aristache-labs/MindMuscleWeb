@@ -28,6 +28,17 @@ import {
 interface SuccessData {
   position?: number;
   referralCode?: string;
+  pointsEarned?: number;
+  tier?: {
+    name: string;
+    icon: string;
+    color: string;
+  };
+  isReturning?: boolean;
+  referredBy?: {
+    name: string;
+    email: string;
+  };
 }
 
 interface WaitlistFormProps {
@@ -228,6 +239,9 @@ export function WaitlistForm({ className, onSuccess, referralCode }: WaitlistFor
         trackEvent('waitlist_form_success', {
           position: result.data.position,
           referral_code: result.data.referralCode,
+          tier: result.data.tier?.name,
+          points_earned: result.data.pointsEarned,
+          is_returning: result.data.isReturning,
         });
         
         onSuccess?.(result.data);
@@ -533,12 +547,48 @@ export function WaitlistForm({ className, onSuccess, referralCode }: WaitlistFor
         >
           <div className="flex items-center gap-2 mb-3">
             <Gift className="h-5 w-5 text-primary-400" />
-            <span className="font-semibold text-white">Earn Early Access</span>
+            <span className="font-semibold text-white">
+              {formState.successData?.isReturning ? 'Welcome Back!' : 'Earn Early Access'}
+            </span>
           </div>
           
           <p className="text-sm text-gray-300 mb-4">
-            Share your referral code and move up the waitlist faster!
+            {formState.successData?.isReturning 
+              ? 'Your waitlist position and tier details:'
+              : 'Share your referral code and move up the waitlist faster!'
+            }
           </p>
+          
+          {/* Position & Tier Info */}
+          <div className="grid grid-cols-2 gap-4 mb-4">
+            <div className="bg-dark-900/50 rounded-lg p-3">
+              <div className="text-xs text-gray-400 mb-1">Position</div>
+              <div className="text-xl font-bold text-white">
+                #{formState.successData?.position?.toLocaleString() || 'TBD'}
+              </div>
+            </div>
+            <div className="bg-dark-900/50 rounded-lg p-3">
+              <div className="text-xs text-gray-400 mb-1">Points</div>
+              <div className="text-xl font-bold text-primary-400">
+                {formState.successData?.pointsEarned || 0}
+              </div>
+            </div>
+          </div>
+          
+          {/* Tier Badge */}
+          {formState.successData?.tier && (
+            <div className="flex items-center justify-center gap-2 mb-4 p-3 bg-dark-900/50 rounded-lg">
+              <span className="text-2xl">{formState.successData.tier.icon}</span>
+              <div>
+                <div className="text-sm font-semibold text-white">
+                  {formState.successData.tier.name} Tier
+                </div>
+                <div className="text-xs text-gray-400">
+                  Your current access level
+                </div>
+              </div>
+            </div>
+          )}
           
           <div className="bg-dark-900/50 rounded-lg p-3 mb-4">
             <div className="text-xs text-gray-400 mb-1">Your Referral Code</div>
@@ -593,16 +643,16 @@ export function WaitlistForm({ className, onSuccess, referralCode }: WaitlistFor
           className="grid grid-cols-3 gap-4 mb-6"
         >
           <div className="text-center">
-            <div className="text-xl font-bold text-white">3</div>
-            <div className="text-xs text-gray-400">Referrals = VIP</div>
+            <div className="text-xl font-bold text-white">1</div>
+            <div className="text-xs text-gray-400">Referral = ⭐ Enthusiast</div>
           </div>
           <div className="text-center">
-            <div className="text-xl font-bold text-white">5</div>
-            <div className="text-xs text-gray-400">Referrals = Beta</div>
+            <div className="text-xl font-bold text-white">3</div>
+            <div className="text-xs text-gray-400">Referrals = 💎 VIP</div>
           </div>
           <div className="text-center">
             <div className="text-xl font-bold text-white">10</div>
-            <div className="text-xs text-gray-400">Referrals = Founder</div>
+            <div className="text-xs text-gray-400">Referrals = 👑 Founder</div>
           </div>
         </motion.div>
 
