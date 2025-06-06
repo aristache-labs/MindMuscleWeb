@@ -4,32 +4,90 @@ import { motion } from 'framer-motion';
 import { Star, Quote, ArrowLeft, ArrowRight } from 'lucide-react';
 import { useState } from 'react';
 import { TESTIMONIALS } from '@/lib/constants';
+import { useScrollAnimation, useStaggerAnimation, SCROLL_VARIANTS } from '@/hooks/useScrollAnimation';
 
 const containerVariants = {
   initial: { opacity: 0 },
   animate: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2,
+      staggerChildren: 0.15,
+      delayChildren: 0.3,
     },
   },
 };
 
 const testimonialVariants = {
-  initial: { opacity: 0, y: 30 },
+  initial: { opacity: 0, y: 50, scale: 0.9, rotateX: 10 },
   animate: {
     opacity: 1,
     y: 0,
+    scale: 1,
+    rotateX: 0,
     transition: {
-      duration: 0.6,
+      duration: 0.8,
+      ease: 'backOut',
+    },
+  },
+  hover: {
+    y: -8,
+    scale: 1.02,
+    rotateX: -2,
+    transition: {
+      duration: 0.3,
       ease: 'easeOut',
+    },
+  },
+};
+
+const featuredTestimonialVariants = {
+  initial: { opacity: 0, scale: 0.9, y: 40 },
+  animate: {
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    transition: {
+      duration: 1,
+      ease: 'backOut',
+    },
+  },
+};
+
+const quoteIconVariants = {
+  initial: { scale: 0, rotate: -180 },
+  animate: {
+    scale: 1,
+    rotate: 0,
+    transition: {
+      duration: 0.8,
+      ease: 'backOut',
+      delay: 0.5,
     },
   },
 };
 
 export function TestimonialsSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  const { ref: headerRef, controls: headerControls } = useScrollAnimation({
+    threshold: 0.3,
+    delay: 0.1,
+  });
+
+  const { ref: featuredRef, controls: featuredControls } = useScrollAnimation({
+    threshold: 0.2,
+    delay: 0.3,
+  });
+
+  const { ref: gridRef, controls: gridControls } = useStaggerAnimation(
+    3,
+    {
+      threshold: 0.1,
+      staggerDelay: 0.2,
+      variant: 'scaleIn',
+      delay: 0.5,
+    }
+  );
   
   const nextTestimonial = () => {
     setCurrentIndex((prev) => (prev + 1) % TESTIMONIALS.length);
@@ -42,7 +100,7 @@ export function TestimonialsSection() {
   const currentTestimonial = TESTIMONIALS[currentIndex];
 
   return (
-    <section id="testimonials" className="py-24 bg-dark-950 relative overflow-hidden">
+    <section className="py-24 bg-dark-950 relative overflow-hidden">
       {/* Background Effects */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-b from-dark-900/30 to-transparent" />
@@ -63,11 +121,11 @@ export function TestimonialsSection() {
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
+          ref={headerRef}
           className="text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
+          variants={SCROLL_VARIANTS.slideUp}
+          initial="initial"
+          animate={headerControls}
         >
           <div className="inline-flex items-center gap-2 bg-primary-500/10 border border-primary-500/20 rounded-full px-4 py-2 text-sm font-medium text-primary-300 mb-6">
             <Star className="w-4 h-4 fill-primary-400" />
@@ -83,16 +141,17 @@ export function TestimonialsSection() {
 
         {/* Featured Testimonial */}
         <motion.div
+          ref={featuredRef}
           className="mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+          variants={featuredTestimonialVariants}
+          initial="initial"
+          animate={featuredControls}
         >
           <div className="relative max-w-4xl mx-auto">
             {/* Quote Icon */}
             <motion.div
               className="absolute -top-4 -left-4 w-16 h-16 bg-primary-500/10 rounded-full flex items-center justify-center"
+              variants={quoteIconVariants}
               animate={{ rotate: [0, 5, -5, 0] }}
               transition={{ duration: 4, repeat: Infinity }}
             >
@@ -179,19 +238,20 @@ export function TestimonialsSection() {
 
         {/* Testimonial Grid */}
         <motion.div
+          ref={gridRef}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           variants={containerVariants}
           initial="initial"
-          whileInView="animate"
-          viewport={{ once: true }}
+          animate={gridControls}
         >
-          {TESTIMONIALS.slice(0, 3).map((testimonial) => (
+          {TESTIMONIALS.slice(0, 3).map((testimonial, index) => (
             <motion.div
               key={testimonial.id}
-              className="group relative"
+              className="group relative perspective-1000"
               variants={testimonialVariants}
-              whileHover={{ y: -5 }}
-              transition={{ duration: 0.2 }}
+              custom={index}
+              whileHover="hover"
+              style={{ transformStyle: 'preserve-3d' }}
             >
               <div className="relative h-full bg-dark-800/30 backdrop-blur-sm border border-gray-800/30 rounded-2xl p-6 transition-all duration-300 hover:border-primary-500/30 hover:shadow-lg hover:shadow-primary-500/10 group-hover:bg-dark-800/50">
                 {/* Stars */}

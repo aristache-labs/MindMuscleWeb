@@ -22,6 +22,8 @@ export function Navigation() {
   }, []);
 
   const handleNavClick = (href: string, label: string) => {
+    console.log('Navigation clicked:', { href, label });
+    
     trackEvent('navigation_click', {
       section: 'header',
       link: label.toLowerCase().replace(' ', '_'),
@@ -29,8 +31,10 @@ export function Navigation() {
     
     if (href.startsWith('#')) {
       const elementId = href.substring(1);
+      console.log('Scrolling to element:', elementId);
       scrollToElement(elementId, 80);
     } else {
+      console.log('Opening external link:', href);
       window.open(href, '_blank');
     }
     
@@ -38,10 +42,13 @@ export function Navigation() {
   };
 
   const handleWaitlistClick = () => {
+    console.log('Waitlist button clicked');
+    
     trackEvent('navigation_waitlist_click', {
       section: 'header',
       button_type: 'waitlist',
     });
+    
     scrollToElement('waitlist', 80);
   };
 
@@ -88,11 +95,12 @@ export function Navigation() {
                 <motion.button
                   key={item.href}
                   onClick={() => handleNavClick(item.href, item.label)}
-                  className="group relative text-sm font-medium text-gray-300 transition-colors hover:text-white"
+                  className="group relative text-sm font-medium text-gray-300 transition-colors hover:text-white cursor-pointer"
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 + 0.5 }}
                   whileHover={{ y: -2 }}
+                  style={{ pointerEvents: 'auto' }}
                 >
                   {item.label}
                   <motion.div
@@ -184,11 +192,12 @@ export function Navigation() {
                     <motion.button
                       key={item.href}
                       onClick={() => handleNavClick(item.href, item.label)}
-                      className="group flex w-full items-center justify-between rounded-lg p-4 text-left font-medium text-gray-300 transition-all hover:bg-gray-800/50 hover:text-white"
+                      className="group flex w-full items-center justify-between rounded-lg p-4 text-left font-medium text-gray-300 transition-all hover:bg-gray-800/50 hover:text-white cursor-pointer"
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 }}
                       whileTap={{ scale: 0.98 }}
+                      style={{ pointerEvents: 'auto' }}
                     >
                       {item.label}
                       <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />

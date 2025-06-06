@@ -68,7 +68,10 @@ export function MagneticButton({
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onMouseEnter={handleMouseEnter}
-      onClick={onClick}
+      onClick={(e) => {
+        console.log('MagneticButton clicked', e);
+        onClick?.();
+      }}
       disabled={disabled}
       whileTap={{ scale: 0.98 }}
       whileHover={{ scale: 1.02 }}

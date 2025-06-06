@@ -11,6 +11,7 @@ import {
   ArrowRight,
   Sparkles
 } from 'lucide-react';
+import { useScrollAnimation, useStaggerAnimation, SCROLL_VARIANTS } from '@/hooks/useScrollAnimation';
 
 const features = [
   {
@@ -68,25 +69,89 @@ const containerVariants = {
   animate: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2,
+      staggerChildren: 0.15,
+      delayChildren: 0.3,
     },
   },
 };
 
 const featureVariants = {
-  initial: { opacity: 0, y: 30 },
+  initial: { opacity: 0, y: 50, scale: 0.9 },
   animate: {
     opacity: 1,
     y: 0,
+    scale: 1,
     transition: {
-      duration: 0.6,
+      duration: 0.8,
+      ease: 'backOut',
+    },
+  },
+};
+
+const iconVariants = {
+  initial: { scale: 0, rotate: -180 },
+  animate: {
+    scale: 1,
+    rotate: 0,
+    transition: {
+      duration: 0.8,
+      ease: 'backOut',
+      delay: 0.2,
+    },
+  },
+  hover: {
+    scale: 1.1,
+    rotate: 5,
+    transition: {
+      duration: 0.3,
+      ease: 'easeInOut',
+    },
+  },
+};
+
+const cardVariants = {
+  initial: { 
+    opacity: 0, 
+    y: 60, 
+    rotateX: 15,
+    scale: 0.9 
+  },
+  animate: {
+    opacity: 1,
+    y: 0,
+    rotateX: 0,
+    scale: 1,
+    transition: {
+      duration: 0.8,
+      ease: 'easeOut',
+    },
+  },
+  hover: {
+    y: -10,
+    scale: 1.02,
+    rotateX: -2,
+    transition: {
+      duration: 0.3,
       ease: 'easeOut',
     },
   },
 };
 
 export function FeaturesSection() {
+  const { ref: headerRef, controls: headerControls } = useScrollAnimation({
+    threshold: 0.3,
+    delay: 0.2,
+  });
+
+  const { ref: gridRef, controls: gridControls } = useStaggerAnimation(
+    features.length,
+    {
+      threshold: 0.1,
+      staggerDelay: 0.15,
+      variant: 'scaleIn',
+      delay: 0.4,
+    }
+  );
   return (
     <section id="features" className="py-24 bg-dark-950 relative overflow-hidden">
       {/* Background Effects */}
@@ -109,11 +174,11 @@ export function FeaturesSection() {
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
+          ref={headerRef}
           className="text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
+          variants={SCROLL_VARIANTS.slideUp}
+          initial="initial"
+          animate={headerControls}
         >
           <div className="inline-flex items-center gap-2 bg-primary-500/10 border border-primary-500/20 rounded-full px-4 py-2 text-sm font-medium text-primary-300 mb-6">
             <Sparkles className="w-4 h-4" />
@@ -129,23 +194,24 @@ export function FeaturesSection() {
 
         {/* Features Grid */}
         <motion.div
+          ref={gridRef}
           className="mt-20"
           variants={containerVariants}
           initial="initial"
-          whileInView="animate"
-          viewport={{ once: true }}
+          animate={gridControls}
         >
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {features.map((feature) => {
+            {features.map((feature, index) => {
               const IconComponent = feature.icon;
               
               return (
                 <motion.div
                   key={feature.id}
-                  className="group relative"
-                  variants={featureVariants}
-                  whileHover={{ y: -5 }}
-                  transition={{ duration: 0.2 }}
+                  className="group relative perspective-1000"
+                  variants={cardVariants}
+                  custom={index}
+                  whileHover="hover"
+                  style={{ transformStyle: 'preserve-3d' }}
                 >
                   {/* Feature Card */}
                   <div className="relative h-full bg-dark-800/50 backdrop-blur-sm border border-gray-800/50 rounded-2xl p-8 transition-all duration-300 hover:border-primary-500/30 hover:shadow-2xl hover:shadow-primary-500/10 group-hover:bg-dark-800/70">
@@ -154,10 +220,29 @@ export function FeaturesSection() {
                     
                     {/* Icon */}
                     <motion.div
-                      className={`w-14 h-14 bg-gradient-to-br ${feature.gradient} bg-opacity-20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}
-                      whileHover={{ rotate: 5 }}
+                      className={`w-14 h-14 bg-gradient-to-br ${feature.gradient} bg-opacity-20 rounded-2xl flex items-center justify-center mb-6 relative overflow-hidden`}
+                      variants={iconVariants}
+                      whileHover="hover"
                     >
-                      <IconComponent className="w-7 h-7 text-white" />
+                      {/* Icon background glow */}
+                      <motion.div
+                        className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-20 rounded-2xl`}
+                        initial={{ scale: 0 }}
+                        whileHover={{ scale: 1 }}
+                        transition={{ duration: 0.3 }}
+                      />
+                      <IconComponent className="w-7 h-7 text-white relative z-10" />
+                      
+                      {/* Sparkle effect */}
+                      <motion.div
+                        className="absolute top-1 right-1 w-2 h-2 bg-white rounded-full opacity-0 group-hover:opacity-100"
+                        initial={{ scale: 0, rotate: 0 }}
+                        whileHover={{ 
+                          scale: [0, 1, 0], 
+                          rotate: [0, 180, 360],
+                          transition: { duration: 0.6, delay: 0.2 }
+                        }}
+                      />
                     </motion.div>
 
                     {/* Content */}

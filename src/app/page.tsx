@@ -38,6 +38,8 @@ export default function HomePage() {
         <FeaturesSection />
       </LazySection>
 
+      {/* Navigation anchor for App Preview */}
+      <div id="showcase" className="h-0" />
       <LazySection 
         animation="fadeIn" 
         delay={0.1}
@@ -47,6 +49,8 @@ export default function HomePage() {
         <AppShowcaseSection />
       </LazySection>
 
+      {/* Navigation anchor for Reviews */}
+      <div id="testimonials" className="h-0" />
       <LazySection 
         animation="slideUp" 
         delay={0.2}
@@ -56,11 +60,13 @@ export default function HomePage() {
         <TestimonialsSection />
       </LazySection>
 
+      {/* Navigation anchor for Waitlist */}
+      <div id="waitlist" className="h-0" />
       <LazySection 
         animation="scale" 
         delay={0.1}
-        threshold={0.3}
-        rootMargin="100px"
+        threshold={0.1}
+        rootMargin="300px"
       >
         <WaitlistSection />
       </LazySection>

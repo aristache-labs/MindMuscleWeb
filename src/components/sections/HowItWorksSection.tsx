@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { Download, Brain, Dumbbell, TrendingUp, ArrowRight } from 'lucide-react';
+import { useScrollAnimation, useStaggerAnimation, SCROLL_VARIANTS } from '@/hooks/useScrollAnimation';
 
 const steps = [
   {
@@ -39,32 +40,79 @@ const containerVariants = {
   animate: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.2,
-      delayChildren: 0.1,
+      staggerChildren: 0.25,
+      delayChildren: 0.2,
     },
   },
 };
 
 const stepVariants = {
-  initial: { opacity: 0, y: 30 },
+  initial: { opacity: 0, y: 60, scale: 0.8, rotateY: 15 },
   animate: {
     opacity: 1,
     y: 0,
+    scale: 1,
+    rotateY: 0,
     transition: {
-      duration: 0.6,
+      duration: 0.8,
+      ease: 'backOut',
+    },
+  },
+  hover: {
+    y: -8,
+    scale: 1.03,
+    rotateY: -2,
+    transition: {
+      duration: 0.3,
       ease: 'easeOut',
     },
   },
 };
 
 const iconVariants = {
-  initial: { scale: 0.8, opacity: 0 },
+  initial: { scale: 0, opacity: 0, rotate: -90 },
   animate: {
     scale: 1,
     opacity: 1,
+    rotate: 0,
     transition: {
-      duration: 0.5,
+      duration: 0.8,
       ease: 'backOut',
+      delay: 0.3,
+    },
+  },
+  hover: {
+    scale: 1.2,
+    rotate: 10,
+    transition: {
+      duration: 0.3,
+      ease: 'easeInOut',
+    },
+  },
+};
+
+const connectionLineVariants = {
+  initial: { scaleX: 0, opacity: 0 },
+  animate: {
+    scaleX: 1,
+    opacity: 1,
+    transition: {
+      duration: 0.8,
+      ease: 'easeOut',
+      delay: 0.5,
+    },
+  },
+};
+
+const numberBadgeVariants = {
+  initial: { scale: 0, rotate: -180 },
+  animate: {
+    scale: 1,
+    rotate: 0,
+    transition: {
+      duration: 0.6,
+      ease: 'backOut',
+      delay: 0.4,
     },
   },
   hover: {
@@ -72,12 +120,25 @@ const iconVariants = {
     rotate: 5,
     transition: {
       duration: 0.2,
-      ease: 'easeInOut',
     },
   },
 };
 
 export function HowItWorksSection() {
+  const { ref: headerRef, controls: headerControls } = useScrollAnimation({
+    threshold: 0.3,
+    delay: 0.1,
+  });
+
+  const { ref: stepsRef, controls: stepsControls } = useStaggerAnimation(
+    steps.length,
+    {
+      threshold: 0.1,
+      staggerDelay: 0.2,
+      variant: 'slideUp',
+      delay: 0.3,
+    }
+  );
   return (
     <section id="how-it-works" className="py-24 bg-dark-900 relative overflow-hidden">
       {/* Background Elements */}
@@ -100,11 +161,11 @@ export function HowItWorksSection() {
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
+          ref={headerRef}
           className="text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
+          variants={SCROLL_VARIANTS.slideUp}
+          initial="initial"
+          animate={headerControls}
         >
           <h2 className="text-3xl font-bold text-white sm:text-4xl lg:text-5xl">
             How <span className="bg-gradient-to-r from-primary-400 to-primary-600 bg-clip-text text-transparent">AI Fitness</span> Works
@@ -116,11 +177,11 @@ export function HowItWorksSection() {
 
         {/* Steps Grid */}
         <motion.div
+          ref={stepsRef}
           className="mt-20"
           variants={containerVariants}
           initial="initial"
-          whileInView="animate"
-          viewport={{ once: true }}
+          animate={stepsControls}
         >
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
             {steps.map((step, index) => {
@@ -129,20 +190,32 @@ export function HowItWorksSection() {
               return (
                 <motion.div
                   key={step.id}
-                  className="relative group"
+                  className="relative group perspective-1000"
                   variants={stepVariants}
+                  custom={index}
+                  whileHover="hover"
+                  style={{ transformStyle: 'preserve-3d' }}
                 >
                   {/* Connection Line (Desktop) */}
                   {index < steps.length - 1 && (
-                    <div className="hidden lg:block absolute top-8 left-full w-full h-0.5 bg-gradient-to-r from-primary-500/50 to-transparent z-0" />
+                    <motion.div 
+                      className="hidden lg:block absolute top-8 left-full w-full h-0.5 bg-gradient-to-r from-primary-500/50 to-transparent z-0 origin-left"
+                      variants={connectionLineVariants}
+                      initial="initial"
+                      animate="animate"
+                    />
                   )}
                   
                   {/* Step Card */}
                   <div className="relative bg-dark-800/50 backdrop-blur-sm border border-gray-800/50 rounded-2xl p-6 h-full transition-all duration-300 hover:border-primary-500/30 hover:shadow-lg hover:shadow-primary-500/10 group-hover:bg-dark-800/70">
                     {/* Step Number Badge */}
-                    <div className="absolute -top-3 -right-3 w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg">
+                    <motion.div 
+                      className="absolute -top-3 -right-3 w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg"
+                      variants={numberBadgeVariants}
+                      whileHover="hover"
+                    >
                       {step.id}
-                    </div>
+                    </motion.div>
 
                     {/* Icon */}
                     <motion.div

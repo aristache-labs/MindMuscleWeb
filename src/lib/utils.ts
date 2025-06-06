@@ -51,13 +51,37 @@ export function generateId(): string {
 
 // Scroll to element with smooth behavior
 export function scrollToElement(elementId: string, offset = 0): void {
+  console.log(`Attempting to scroll to: ${elementId}`);
+  
   const element = document.getElementById(elementId);
   if (element) {
     const elementPosition = element.offsetTop - offset;
+    
     window.scrollTo({
       top: elementPosition,
       behavior: 'smooth',
     });
+    
+    console.log(`Successfully scrolled to element: ${elementId}`);
+  } else {
+    console.warn(`Element with id "${elementId}" not found`);
+    
+    // Fallback: try with querySelector and scrollIntoView
+    setTimeout(() => {
+      const fallbackElement = document.querySelector(`#${elementId}`);
+      if (fallbackElement) {
+        fallbackElement.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'start',
+          inline: 'nearest'
+        });
+        console.log(`Fallback scroll successful for: ${elementId}`);
+      } else {
+        console.error(`Element "${elementId}" not found with any method`);
+        const allIds = Array.from(document.querySelectorAll('[id]')).map(el => el.id);
+        console.log('Available element IDs:', allIds);
+      }
+    }, 100);
   }
 }
 

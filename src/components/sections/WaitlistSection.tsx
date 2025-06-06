@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { WaitlistForm } from '@/components/ui/WaitlistForm';
 import { trackEvent } from '@/lib/utils';
 import { Sparkles, Users, Trophy } from 'lucide-react';
+import { useScrollAnimation, useStaggerAnimation, SCROLL_VARIANTS } from '@/hooks/useScrollAnimation';
 
 interface SuccessData {
   position?: number;
@@ -12,6 +13,36 @@ interface SuccessData {
 }
 
 export function WaitlistSection() {
+  const { ref: headerRef, controls: headerControls } = useScrollAnimation({
+    threshold: 0.3,
+    delay: 0.1,
+  });
+
+  const { ref: statsRef, controls: statsControls } = useStaggerAnimation(
+    3,
+    {
+      threshold: 0.2,
+      staggerDelay: 0.1,
+      variant: 'scaleInBounce',
+      delay: 0.3,
+    }
+  );
+
+  const { ref: formRef, controls: formControls } = useScrollAnimation({
+    threshold: 0.2,
+    delay: 0.4,
+  });
+
+  const { ref: benefitsRef, controls: benefitsControls } = useStaggerAnimation(
+    3,
+    {
+      threshold: 0.1,
+      staggerDelay: 0.15,
+      variant: 'slideUp',
+      delay: 0.5,
+    }
+  );
+
   const handleWaitlistSuccess = (data: SuccessData) => {
     trackEvent('waitlist_section_success', {
       position: data.position,
@@ -21,7 +52,7 @@ export function WaitlistSection() {
   };
 
   return (
-    <section id="waitlist" className="relative py-24 bg-dark-900 overflow-hidden">
+    <section className="relative py-24 bg-dark-900 overflow-hidden">
       {/* Background Effects */}
       <div className="absolute inset-0">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary-500/5 rounded-full blur-3xl" />
@@ -31,11 +62,11 @@ export function WaitlistSection() {
       <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div 
+          ref={headerRef}
           className="text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
+          variants={SCROLL_VARIANTS.slideUp}
+          initial="initial"
+          animate={headerControls}
         >
           <motion.div
             className="inline-flex items-center gap-2 bg-primary-500/10 border border-primary-500/20 rounded-full px-4 py-2 mb-6"
@@ -62,11 +93,10 @@ export function WaitlistSection() {
 
           {/* Stats */}
           <motion.div
+            ref={statsRef}
             className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-2xl mx-auto mb-12"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true }}
+            initial="initial"
+            animate={statsControls}
           >
             <div className="bg-dark-800/50 backdrop-blur-sm border border-gray-700/50 rounded-xl p-4">
               <div className="flex items-center justify-center gap-2 mb-2">
@@ -96,10 +126,10 @@ export function WaitlistSection() {
         
         {/* Waitlist Form */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          viewport={{ once: true }}
+          ref={formRef}
+          variants={SCROLL_VARIANTS.scaleIn}
+          initial="initial"
+          animate={formControls}
         >
           <WaitlistForm onSuccess={handleWaitlistSuccess} />
         </motion.div>
@@ -107,12 +137,16 @@ export function WaitlistSection() {
         {/* Benefits */}
         <motion.div
           className="mt-16 text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          viewport={{ once: true }}
+          variants={SCROLL_VARIANTS.fadeIn}
+          initial="initial"
+          animate={headerControls}
         >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
+          <motion.div 
+            ref={benefitsRef}
+            className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto"
+            initial="initial"
+            animate={benefitsControls}
+          >
             <div className="flex flex-col items-center text-center">
               <div className="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center mb-3">
                 <span className="text-2xl">🚀</span>
@@ -142,7 +176,7 @@ export function WaitlistSection() {
                 Your feedback will directly influence the final product
               </p>
             </div>
-          </div>
+          </motion.div>
 
           <p className="mt-8 text-xs text-gray-500 max-w-md mx-auto">
             🔒 We take privacy seriously. Your email will only be used for launch notifications and early access. 

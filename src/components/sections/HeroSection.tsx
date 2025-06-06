@@ -7,6 +7,7 @@ import { PhoneMockup } from '@/components/ui/PhoneMockup';
 import { STORE_LINKS, APP_SCREENSHOTS, ANIMATION_TIMING } from '@/lib/constants';
 import { trackEvent } from '@/lib/utils';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
+import { useTextReveal, useCounterAnimation } from '@/hooks/useScrollAnimation';
 import { Download, PlayCircle, ChevronRight, Sparkles } from 'lucide-react';
 
 const heroVariants = {
@@ -64,6 +65,26 @@ export function HeroSection() {
   const [isCarouselPaused, setIsCarouselPaused] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const prefersReducedMotion = useReducedMotion();
+
+  // Text reveal animations
+  const mainHeadline = useTextReveal('The Future of AI-Powered Fitness is Here', {
+    threshold: 0.3,
+    delay: 0.5,
+    staggerDelay: 0.08,
+  });
+
+  const subHeadline = useTextReveal('Experience personalized workouts that adapt and evolve with every rep', {
+    threshold: 0.3,
+    delay: 1.2,
+    staggerDelay: 0.04,
+  });
+
+  // Counter animation for coming soon
+  const { ref: counterRef, count } = useCounterAnimation(2025, {
+    threshold: 0.3,
+    duration: 2,
+    delay: 0.8,
+  });
 
   // Auto-advance carousel logic
   useEffect(() => {
@@ -173,30 +194,63 @@ export function HeroSection() {
                 variants={textVariants}
               >
                 <Sparkles className="h-4 w-4" />
-                Coming Summer 2025
+                <span>Coming Summer </span>
+                <motion.span
+                  ref={counterRef}
+                  className="font-bold text-primary-200"
+                >
+                  {count}
+                </motion.span>
               </motion.div>
 
               {/* Main Headline */}
-              <motion.h1
+              <motion.div
+                ref={mainHeadline.ref}
                 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl xl:text-7xl"
-                variants={textVariants}
+                variants={mainHeadline.containerVariants}
+                initial="initial"
+                animate={mainHeadline.controls}
               >
-                The Future of{' '}
-                <span className="bg-gradient-to-r from-primary-400 via-primary-500 to-primary-600 bg-clip-text text-transparent">
-                  AI-Powered
-                </span>
-                <br />
-                Fitness is Here
-              </motion.h1>
+                {mainHeadline.words.map((word, index) => (
+                  <motion.span
+                    key={index}
+                    className={`inline-block mr-3 ${
+                      word === 'AI-Powered' 
+                        ? 'bg-gradient-to-r from-primary-400 via-primary-500 to-primary-600 bg-clip-text text-transparent' 
+                        : ''
+                    }`}
+                    variants={mainHeadline.wordVariants}
+                  >
+                    {word}
+                    {index === 2 && <br />} {/* Line break after "of" */}
+                  </motion.span>
+                ))}
+              </motion.div>
 
               {/* Subheadline */}
-              <motion.p
+              <motion.div
+                ref={subHeadline.ref}
                 className="mx-auto max-w-lg text-lg text-gray-300 lg:mx-0 lg:text-xl"
-                variants={textVariants}
+                variants={subHeadline.containerVariants}
+                initial="initial"
+                animate={subHeadline.controls}
               >
-                Experience personalized workouts that adapt and evolve with every rep. 
-                Your AI fitness coach learns from your progress to deliver results like never before.
-              </motion.p>
+                {subHeadline.words.map((word, index) => (
+                  <motion.span
+                    key={index}
+                    className="inline-block mr-2"
+                    variants={subHeadline.wordVariants}
+                  >
+                    {word}
+                  </motion.span>
+                ))}
+                <motion.span
+                  className="block mt-2 text-primary-300 font-medium"
+                  variants={subHeadline.wordVariants}
+                >
+                  Your AI fitness coach learns from your progress to deliver results like never before.
+                </motion.span>
+              </motion.div>
 
               {/* CTA Buttons */}
               <motion.div

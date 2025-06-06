@@ -4,15 +4,25 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Smartphone, Play, Download } from 'lucide-react';
 import { APP_SCREENSHOTS, ANIMATION_TIMING } from '@/lib/constants';
+import { useScrollAnimation, SCROLL_VARIANTS } from '@/hooks/useScrollAnimation';
 
 const mockupVariants = {
-  initial: { opacity: 0, scale: 0.9, y: 50 },
+  initial: { opacity: 0, scale: 0.8, y: 80, rotateY: 15 },
   animate: {
     opacity: 1,
     scale: 1,
     y: 0,
+    rotateY: 0,
     transition: {
-      duration: 0.8,
+      duration: 1.2,
+      ease: 'backOut',
+    },
+  },
+  hover: {
+    scale: 1.05,
+    rotateY: -5,
+    transition: {
+      duration: 0.3,
       ease: 'easeOut',
     },
   },
@@ -47,6 +57,21 @@ export function AppShowcaseSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
+  const { ref: headerRef, controls: headerControls } = useScrollAnimation({
+    threshold: 0.3,
+    delay: 0.1,
+  });
+
+  const { ref: mockupRef, controls: mockupControls } = useScrollAnimation({
+    threshold: 0.2,
+    delay: 0.3,
+  });
+
+  const { ref: featuresRef, controls: featuresControls } = useScrollAnimation({
+    threshold: 0.2,
+    delay: 0.5,
+  });
+
   // Auto-advance carousel
   useEffect(() => {
     if (!isAutoPlaying) return;
@@ -80,7 +105,6 @@ export function AppShowcaseSection() {
 
   return (
     <section 
-      id="showcase" 
       className="py-24 bg-dark-900 relative overflow-hidden"
       onMouseEnter={() => setIsAutoPlaying(false)}
       onMouseLeave={() => setIsAutoPlaying(true)}
@@ -105,11 +129,11 @@ export function AppShowcaseSection() {
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
+          ref={headerRef}
           className="text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
+          variants={SCROLL_VARIANTS.slideUp}
+          initial="initial"
+          animate={headerControls}
         >
           <div className="inline-flex items-center gap-2 bg-primary-500/10 border border-primary-500/20 rounded-full px-4 py-2 text-sm font-medium text-primary-300 mb-6">
             <Smartphone className="w-4 h-4" />
@@ -129,11 +153,13 @@ export function AppShowcaseSection() {
           
           {/* Phone Mockup */}
           <motion.div
-            className="relative mx-auto max-w-sm lg:max-w-none lg:mx-0"
+            ref={mockupRef}
+            className="relative mx-auto max-w-sm lg:max-w-none lg:mx-0 perspective-1000"
             variants={mockupVariants}
             initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
+            animate={mockupControls}
+            whileHover="hover"
+            style={{ transformStyle: 'preserve-3d' }}
           >
             {/* Phone Frame */}
             <div className="relative">
