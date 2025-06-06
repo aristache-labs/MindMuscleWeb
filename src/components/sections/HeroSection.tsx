@@ -8,8 +8,9 @@ import { STORE_LINKS, APP_SCREENSHOTS, ANIMATION_TIMING } from '@/lib/constants'
 import { trackEvent } from '@/lib/utils';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { useTextReveal, useCounterAnimation } from '@/hooks/useScrollAnimation';
-import { PlayCircle, ChevronRight } from 'lucide-react';
-import { AISparklesIcon, AIDownloadIcon } from '@/components/ui/CustomIcons';
+import { ChevronRight } from 'lucide-react';
+import { AISparklesIcon } from '@/components/ui/CustomIcons';
+import { StoreBadges } from '@/components/ui/StoreBadges';
 import { AIBrainAnimation, FloatingElementsAnimation } from '@/components/ui/LottieAnimations';
 
 const heroVariants = {
@@ -101,21 +102,7 @@ export function HeroSection() {
     return () => clearInterval(interval);
   }, [isCarouselPaused]);
 
-  const handleAppStoreClick = () => {
-    trackEvent('hero_appstore_click', {
-      section: 'hero',
-      button_type: 'primary',
-    });
-    window.open(STORE_LINKS.appStore, '_blank');
-  };
 
-  const handlePlayStoreClick = () => {
-    trackEvent('hero_playstore_click', {
-      section: 'hero',
-      button_type: 'secondary',
-    });
-    window.open(STORE_LINKS.playStore, '_blank');
-  };
 
   const handleWaitlistClick = () => {
     trackEvent('hero_waitlist_click', {
@@ -265,28 +252,13 @@ export function HeroSection() {
 
               {/* CTA Buttons */}
               <motion.div
-                className="flex flex-col gap-4 sm:flex-row sm:justify-center lg:justify-start"
                 variants={buttonVariants}
               >
-                <motion.button
-                  onClick={handleAppStoreClick}
-                  className="group inline-flex items-center justify-center gap-3 rounded-lg bg-primary-600 px-8 py-4 text-base font-semibold text-white shadow-lg transition-all duration-200 hover:bg-primary-500 hover:shadow-xl hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-dark-900"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <AIDownloadIcon size={20} className="transition-transform group-hover:scale-110" />
-                  Download on App Store
-                </motion.button>
-
-                <motion.button
-                  onClick={handlePlayStoreClick}
-                  className="group inline-flex items-center justify-center gap-3 rounded-lg border-2 border-gray-600 px-8 py-4 text-base font-semibold text-white transition-all duration-200 hover:border-primary-500 hover:bg-primary-500/10 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-dark-900"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <PlayCircle className="h-5 w-5 transition-transform group-hover:scale-110" />
-                  Get on Google Play
-                </motion.button>
+                <StoreBadges 
+                  direction="horizontal" 
+                  appStoreFirst={true}
+                  size="large"
+                />
               </motion.div>
 
               {/* Waitlist Link */}
