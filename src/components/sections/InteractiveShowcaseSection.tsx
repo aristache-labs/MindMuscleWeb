@@ -59,7 +59,7 @@ export function InteractiveShowcaseSection() {
   return (
     <section 
       id="showcase"
-      className="py-24 bg-dark-900 relative overflow-hidden"
+      className="py-16 sm:py-20 lg:py-24 bg-dark-900 relative overflow-hidden"
     >
       {/* Background Effects */}
       <div className="absolute inset-0">
@@ -82,7 +82,7 @@ export function InteractiveShowcaseSection() {
         {/* Header */}
         <motion.div
           ref={headerRef}
-          className="text-center mb-16"
+          className="text-center mb-12 sm:mb-16"
           variants={SCROLL_VARIANTS.slideUp}
           initial="initial"
           animate={headerControls}
@@ -102,12 +102,12 @@ export function InteractiveShowcaseSection() {
         </motion.div>
 
         {/* Main Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center">
           
           {/* Interactive App Preview */}
           <motion.div
             ref={previewRef}
-            className="relative"
+            className="relative order-2 lg:order-1 flex justify-center lg:justify-start"
             variants={SCROLL_VARIANTS.slideRight}
             initial="initial"
             animate={previewControls}
@@ -115,7 +115,7 @@ export function InteractiveShowcaseSection() {
             <div className="relative">
               {/* Floating Labels */}
               <motion.div
-                className="absolute -top-8 -left-8 bg-primary-500/20 border border-primary-500/30 rounded-xl px-3 py-2 text-sm text-primary-300 backdrop-blur-sm"
+                className="absolute -top-6 sm:-top-8 -left-4 sm:-left-8 bg-primary-500/20 border border-primary-500/30 rounded-xl px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm text-primary-300 backdrop-blur-sm"
                 animate={{
                   y: [0, -10, 0],
                   opacity: [0.7, 1, 0.7],
@@ -130,7 +130,7 @@ export function InteractiveShowcaseSection() {
               </motion.div>
 
               <motion.div
-                className="absolute -bottom-8 -right-8 bg-green-500/20 border border-green-500/30 rounded-xl px-3 py-2 text-sm text-green-300 backdrop-blur-sm"
+                className="absolute -bottom-6 sm:-bottom-8 -right-4 sm:-right-8 bg-green-500/20 border border-green-500/30 rounded-xl px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm text-green-300 backdrop-blur-sm"
                 animate={{
                   y: [0, 10, 0],
                   opacity: [0.7, 1, 0.7],
@@ -153,22 +153,22 @@ export function InteractiveShowcaseSection() {
           {/* Feature Highlights */}
           <motion.div
             ref={featuresRef}
-            className="space-y-6"
+            className="space-y-4 sm:space-y-6 order-1 lg:order-2"
             variants={SCROLL_VARIANTS.slideLeft}
             initial="initial"
             animate={featuresControls}
           >
-            <div className="mb-8">
-              <h3 className="text-2xl font-bold text-white mb-4">
+            <div className="mb-6 sm:mb-8">
+              <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 sm:mb-4">
                 What Makes It Special
               </h3>
-              <p className="text-gray-300">
+              <p className="text-gray-300 text-sm sm:text-base">
                 Every element is designed to provide the most intuitive and effective 
                 fitness experience powered by cutting-edge AI technology.
               </p>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {features.map((feature, index) => (
                 <MagneticElement 
                   key={feature.id} 
@@ -176,7 +176,7 @@ export function InteractiveShowcaseSection() {
                   distance={30}
                 >
                   <motion.div
-                    className={`relative bg-gray-800/30 border border-gray-700/50 rounded-2xl p-6 cursor-pointer transition-all duration-300 ${
+                    className={`relative bg-gray-800/30 border border-gray-700/50 rounded-2xl p-4 sm:p-6 cursor-pointer transition-all duration-300 ${
                       selectedFeature === index 
                         ? 'bg-gray-800/50 border-primary-500/30' 
                         : 'hover:bg-gray-800/40 hover:border-gray-600/50'
@@ -194,15 +194,15 @@ export function InteractiveShowcaseSection() {
                       />
                     )}
 
-                    <div className="relative flex items-start gap-4">
-                      <div className={`p-3 rounded-xl bg-gradient-to-r ${feature.color} bg-opacity-20`}>
-                        <feature.icon className="w-6 h-6 text-white" />
+                    <div className="relative flex items-start gap-3 sm:gap-4">
+                      <div className={`p-2.5 sm:p-3 rounded-xl bg-gradient-to-r ${feature.color} bg-opacity-20 flex-shrink-0`}>
+                        <feature.icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                       </div>
-                      <div className="flex-1">
-                        <h4 className="text-lg font-semibold text-white mb-2">
+                      <div className="flex-1 min-w-0">
+                        <h4 className="text-base sm:text-lg font-semibold text-white mb-1.5 sm:mb-2">
                           {feature.title}
                         </h4>
-                        <p className="text-gray-400 text-sm leading-relaxed">
+                        <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
                           {feature.description}
                         </p>
                       </div>
@@ -223,7 +223,7 @@ export function InteractiveShowcaseSection() {
 
             {/* Call to Action */}
             <motion.div
-              className="pt-8"
+              className="pt-6 sm:pt-8 flex flex-col items-center"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.6 }}
@@ -235,7 +235,7 @@ export function InteractiveShowcaseSection() {
                 data-magnetic-color="primary"
               >
                 <motion.button
-                  className="w-full bg-gradient-to-r from-primary-500 to-primary-600 rounded-2xl px-8 py-4 text-white font-semibold transition-all duration-300 hover:from-primary-600 hover:to-primary-700"
+                  className="bg-gradient-to-r from-primary-500 to-primary-600 rounded-2xl px-6 sm:px-8 py-3 sm:py-4 text-white font-semibold transition-all duration-300 hover:from-primary-600 hover:to-primary-700"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => {
@@ -248,14 +248,14 @@ export function InteractiveShowcaseSection() {
                     }
                   }}
                 >
-                  <div className="flex items-center justify-center gap-3">
-                    <Play className="w-5 h-5" />
-                    <span>Join the Revolution</span>
+                  <div className="flex items-center justify-center gap-2 sm:gap-3">
+                    <Play className="w-4 h-4 sm:w-5 sm:h-5" />
+                    <span className="text-sm items-center justify-center sm:text-base">Join the Revolution</span>
                   </div>
                 </motion.button>
               </MagneticElement>
               
-              <p className="text-center text-gray-400 text-sm mt-4">
+              <p className="text-center text-gray-400 text-xs sm:text-sm mt-3 sm:mt-4">
                 Be among the first to experience the future of fitness
               </p>
             </motion.div>
@@ -264,7 +264,7 @@ export function InteractiveShowcaseSection() {
 
         {/* Bottom Stats */}
         <motion.div
-          className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8"
+          className="mt-16 sm:mt-20 grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-8"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1, duration: 0.8 }}
@@ -275,11 +275,11 @@ export function InteractiveShowcaseSection() {
             { value: '2x', label: 'Faster Results', color: 'text-accent-cyan' },
           ].map((stat, index) => (
             <MagneticElement key={index} strength={0.2}>
-              <div className="text-center bg-gray-800/30 border border-gray-700/50 rounded-2xl p-6">
-                <div className={`text-3xl font-bold mb-2 ${stat.color}`}>
+              <div className="text-center bg-gray-800/30 border border-gray-700/50 rounded-2xl p-4 sm:p-6">
+                <div className={`text-2xl sm:text-3xl font-bold mb-1 sm:mb-2 ${stat.color}`}>
                   {stat.value}
                 </div>
-                <div className="text-gray-400 text-sm">
+                <div className="text-gray-400 text-xs sm:text-sm">
                   {stat.label}
                 </div>
               </div>

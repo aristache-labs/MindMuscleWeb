@@ -72,27 +72,27 @@ export function InteractiveAppPreview({ className }: InteractiveAppPreviewProps)
   ];
 
   const renderDashboard = () => (
-    <div className="p-6 h-full bg-gradient-to-br from-gray-900 to-gray-800">
+    <div className="p-4 sm:p-6 h-full bg-gradient-to-br from-gray-900 to-gray-800">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center justify-between mb-4 sm:mb-6">
         <div>
-          <h1 className="text-xl font-bold text-white">Good morning, Alex!</h1>
-          <p className="text-gray-400 text-sm">Ready for today&apos;s challenge?</p>
+          <h1 className="text-lg sm:text-xl font-bold text-white">Good morning, Alex!</h1>
+          <p className="text-gray-400 text-xs sm:text-sm">Ready for today&apos;s challenge?</p>
         </div>
-        <div className="w-10 h-10 rounded-full bg-gradient-to-r from-primary-500 to-primary-600" />
+        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-r from-primary-500 to-primary-600" />
       </div>
 
       {/* AI Insight Card */}
       <MagneticElement strength={0.3} distance={40}>
         <motion.div
-          className="bg-gradient-to-r from-primary-500/20 to-accent-cyan/20 border border-primary-500/30 rounded-2xl p-4 mb-6"
+          className="bg-gradient-to-r from-primary-500/20 to-accent-cyan/20 border border-primary-500/30 rounded-2xl p-3 sm:p-4 mb-4 sm:mb-6"
           whileTap={{ scale: 0.98 }}
         >
-          <div className="flex items-center gap-3 mb-2">
-            <Zap className="w-5 h-5 text-primary-400" />
-            <span className="text-primary-300 font-medium">AI Insight</span>
+          <div className="flex items-center gap-2 sm:gap-3 mb-1.5 sm:mb-2">
+            <Zap className="w-4 h-4 sm:w-5 sm:h-5 text-primary-400" />
+            <span className="text-primary-300 font-medium text-sm sm:text-base">AI Insight</span>
           </div>
-          <p className="text-white text-sm leading-relaxed">
+          <p className="text-white text-xs sm:text-sm leading-relaxed">
             Based on your progress, I recommend focusing on chest and triceps today. 
             Your strength has increased 12% this week!
           </p>
@@ -161,7 +161,7 @@ export function InteractiveAppPreview({ className }: InteractiveAppPreviewProps)
   );
 
   const renderWorkoutPlan = () => (
-    <div className="p-6 h-full bg-gradient-to-br from-gray-900 to-gray-800">
+    <div className="p-4 sm:p-6 h-full bg-gradient-to-br from-gray-900 to-gray-800">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
@@ -230,7 +230,7 @@ export function InteractiveAppPreview({ className }: InteractiveAppPreviewProps)
   );
 
   const renderActiveWorkout = () => (
-    <div className="p-6 h-full bg-gradient-to-br from-red-900/30 to-gray-900">
+    <div className="p-4 sm:p-6 h-full bg-gradient-to-br from-red-900/30 to-gray-900">
       {/* Header */}
       <div className="text-center mb-6">
         <h1 className="text-2xl font-bold text-white mb-1">Bench Press</h1>
@@ -322,7 +322,7 @@ export function InteractiveAppPreview({ className }: InteractiveAppPreviewProps)
   );
 
   const renderProgress = () => (
-    <div className="p-6 h-full bg-gradient-to-br from-gray-900 to-gray-800">
+    <div className="p-4 sm:p-6 h-full bg-gradient-to-br from-gray-900 to-gray-800">
       {/* Header */}
       <div className="text-center mb-6">
         <h1 className="text-xl font-bold text-white">Your Progress</h1>
@@ -403,14 +403,14 @@ export function InteractiveAppPreview({ className }: InteractiveAppPreviewProps)
   return (
     <div className={`relative mx-auto max-w-sm ${className}`}>
       {/* Phone Frame */}
-      <div className="relative h-[600px] w-[300px] bg-gradient-to-br from-gray-800 via-gray-900 to-black rounded-[2.5rem] p-2 shadow-2xl">
+      <div className="relative h-[500px] w-[250px] sm:h-[600px] sm:w-[300px] bg-gradient-to-br from-gray-800 via-gray-900 to-black rounded-[2rem] sm:rounded-[2.5rem] p-1.5 sm:p-2 shadow-2xl">
         {/* Inner Frame */}
-        <div className="w-full h-full bg-black rounded-[2rem] overflow-hidden">
+        <div className="w-full h-full bg-black rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden">
           {/* Dynamic Island */}
-          <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-20 h-6 bg-black rounded-full z-20" />
+          <div className="absolute top-3 sm:top-4 left-1/2 transform -translate-x-1/2 w-16 h-5 sm:w-20 sm:h-6 bg-black rounded-full z-20" />
           
           {/* Status Bar */}
-          <div className="absolute top-2 left-4 right-4 flex justify-between items-center text-white text-xs z-10">
+          <div className="absolute top-1.5 sm:top-2 left-3 sm:left-4 right-3 sm:right-4 flex justify-between items-center text-white text-xs z-10">
             <span>9:41</span>
             <div className="flex items-center gap-1">
               <div className="w-1 h-1 bg-white rounded-full" />
@@ -421,7 +421,7 @@ export function InteractiveAppPreview({ className }: InteractiveAppPreviewProps)
           </div>
 
           {/* Screen Content */}
-          <div className="pt-12 pb-20 h-full">
+          <div className="pt-10 sm:pt-12 pb-16 sm:pb-20 h-full">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentScreen}
@@ -439,11 +439,11 @@ export function InteractiveAppPreview({ className }: InteractiveAppPreviewProps)
 
           {/* Bottom Navigation */}
           <div className="absolute bottom-0 left-0 right-0 bg-gray-900/95 backdrop-blur-sm border-t border-gray-700/50">
-            <div className="flex justify-around items-center py-2">
+            <div className="flex justify-around items-center py-1.5 sm:py-2">
               {navigationItems.map((item) => (
                 <MagneticElement key={item.screen} strength={0.3} distance={25}>
                   <motion.button
-                    className={`p-3 rounded-xl transition-colors ${
+                    className={`p-2.5 sm:p-3 rounded-xl transition-colors ${
                       currentScreen === item.screen
                         ? 'bg-primary-500/20 text-primary-400'
                         : 'text-gray-500'
@@ -451,7 +451,7 @@ export function InteractiveAppPreview({ className }: InteractiveAppPreviewProps)
                     whileTap={{ scale: 0.9 }}
                     onClick={() => setCurrentScreen(item.screen)}
                   >
-                    <item.icon className="w-5 h-5" />
+                    <item.icon className="w-4 h-4 sm:w-5 sm:h-5" />
                   </motion.button>
                 </MagneticElement>
               ))}
@@ -459,7 +459,7 @@ export function InteractiveAppPreview({ className }: InteractiveAppPreviewProps)
           </div>
 
           {/* Home Indicator */}
-          <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-white/20 rounded-full" />
+          <div className="absolute bottom-0.5 sm:bottom-1 left-1/2 transform -translate-x-1/2 w-24 sm:w-32 h-0.5 sm:h-1 bg-white/20 rounded-full" />
         </div>
       </div>
     </div>

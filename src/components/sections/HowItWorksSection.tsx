@@ -227,7 +227,7 @@ export function HowItWorksSection() {
                     </motion.div>
 
                     {/* Content */}
-                    <div className="text-center">
+                    <div>
                       <h3 className="text-xl font-bold text-white mb-3 group-hover:text-primary-300 transition-colors duration-300">
                         {step.title}
                       </h3>
@@ -238,7 +238,7 @@ export function HowItWorksSection() {
                       {/* Details List */}
                       <ul className="space-y-2">
                         {step.details.map((detail, detailIndex) => (
-                          <li key={detailIndex} className="flex items-center justify-center text-xs text-gray-400">
+                          <li key={detailIndex} className="flex items-center text-xs text-gray-400">
                             <div className="w-1.5 h-1.5 bg-primary-500 rounded-full mr-2 opacity-60" />
                             {detail}
                           </li>

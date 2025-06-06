@@ -181,7 +181,7 @@ export function HeroSection() {
 
       {/* Content Container */}
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex min-h-screen items-center">
+        <div className="flex min-h-screen items-center pt-24">
           <div className="grid w-full grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
             
             {/* Left Content */}

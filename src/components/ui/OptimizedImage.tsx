@@ -34,13 +34,15 @@ const OptimizedImage = forwardRef<HTMLImageElement, OptimizedImageProps>(({
   const prefersReducedMotion = useReducedMotion();
   const shouldAnimate = !prefersReducedMotion && loadingAnimation !== 'none';
   
-  // Preload critical images
-  useImagePreload(
-    typeof src === 'string' ? src : '',
-    { priority: preload }
-  );
+  // Preload critical images (skip for data URIs)
+  const shouldPreload = typeof src === 'string' && !src.startsWith('data:');
+  const preloadSrc = shouldPreload ? src : '';
+  useImagePreload(preloadSrc, { priority: preload && shouldPreload });
 
   const imageSrc = imageError && fallbackSrc ? fallbackSrc : src;
+  
+  // Determine if we should skip optimization for data URIs
+  const isDataUri = typeof imageSrc === 'string' && imageSrc.startsWith('data:');
   
   const handleLoad = () => {
     setIsLoaded(true);
@@ -78,6 +80,22 @@ const OptimizedImage = forwardRef<HTMLImageElement, OptimizedImageProps>(({
     }
   };
 
+  const placeholderValue = lowQualityPlaceholder ? 'blur' as const : 'empty' as const;
+  
+  const imageProps = {
+    ref,
+    src: imageSrc,
+    alt,
+    onLoad: handleLoad,
+    onError: handleError,
+    priority: priority || preload,
+    quality: 90,
+    placeholder: placeholderValue,
+    blurDataURL: lowQualityPlaceholder,
+    unoptimized: isDataUri,
+    ...props,
+  };
+
   if (shouldAnimate && loadingAnimation === 'fade') {
     return (
       <motion.div className={`relative overflow-hidden ${className}`}>
@@ -92,18 +110,7 @@ const OptimizedImage = forwardRef<HTMLImageElement, OptimizedImageProps>(({
           animate={{ opacity: isLoaded ? 1 : 0 }}
           transition={{ duration: 0.3, ease: 'easeOut' }}
         >
-          <Image
-            ref={ref}
-            src={imageSrc}
-            alt={alt}
-            onLoad={handleLoad}
-            onError={handleError}
-            priority={priority || preload}
-            quality={90}
-            placeholder={lowQualityPlaceholder ? 'blur' : 'empty'}
-            blurDataURL={lowQualityPlaceholder}
-            {...props}
-          />
+          <Image {...imageProps} />
         </motion.div>
       </motion.div>
     );
@@ -118,19 +125,10 @@ const OptimizedImage = forwardRef<HTMLImageElement, OptimizedImageProps>(({
         />
       )}
       <Image
-        ref={ref}
-        src={imageSrc}
-        alt={alt}
-        onLoad={handleLoad}
-        onError={handleError}
+        {...imageProps}
         className={`transition-all duration-300 ${getLoadingAnimationClass()} ${
           isLoaded ? getLoadedAnimationClass() : ''
         }`}
-        priority={priority || preload}
-        quality={90}
-        placeholder={lowQualityPlaceholder ? 'blur' : 'empty'}
-        blurDataURL={lowQualityPlaceholder}
-        {...props}
       />
     </div>
   );

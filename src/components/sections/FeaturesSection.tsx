@@ -140,7 +140,7 @@ export function FeaturesSection() {
     }
   );
   return (
-    <section className="py-24 bg-dark-950 relative overflow-hidden">
+    <section className="py-16 sm:py-20 lg:py-24 bg-dark-950 relative overflow-hidden">
       {/* Background Effects */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-t from-dark-900/50 to-transparent" />
@@ -182,12 +182,12 @@ export function FeaturesSection() {
         {/* Features Grid */}
         <motion.div
           ref={gridRef}
-          className="mt-20"
+          className="mt-16 sm:mt-20"
           variants={containerVariants}
           initial="initial"
           animate={gridControls}
         >
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
             {features.map((feature, index) => {
               const IconComponent = feature.icon;
               
@@ -201,13 +201,13 @@ export function FeaturesSection() {
                   style={{ transformStyle: 'preserve-3d' }}
                 >
                   {/* Feature Card */}
-                  <div className="relative h-full bg-dark-800/50 backdrop-blur-sm border border-gray-800/50 rounded-2xl p-8 transition-all duration-300 hover:border-primary-500/30 hover:shadow-2xl hover:shadow-primary-500/10 group-hover:bg-dark-800/70">
+                  <div className="relative h-full bg-dark-800/50 backdrop-blur-sm border border-gray-800/50 rounded-2xl p-6 sm:p-8 transition-all duration-300 hover:border-primary-500/30 hover:shadow-2xl hover:shadow-primary-500/10 group-hover:bg-dark-800/70">
                     {/* Gradient Overlay on Hover */}
                     <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-5 rounded-2xl transition-opacity duration-300`} />
                     
                     {/* Icon */}
                     <motion.div
-                      className={`w-14 h-14 bg-gradient-to-br ${feature.gradient} bg-opacity-20 rounded-2xl flex items-center justify-center mb-6 relative overflow-hidden`}
+                      className={`w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br ${feature.gradient} bg-opacity-20 rounded-2xl flex items-center justify-center mb-4 sm:mb-6 relative overflow-hidden mx-auto`}
                       variants={iconVariants}
                       whileHover="hover"
                     >
@@ -218,7 +218,7 @@ export function FeaturesSection() {
                         whileHover={{ scale: 1 }}
                         transition={{ duration: 0.3 }}
                       />
-                      <IconComponent className="w-7 h-7 text-white relative z-10" />
+                      <IconComponent className="w-6 h-6 sm:w-7 sm:h-7 text-white relative z-10" />
                       
                       {/* Sparkle effect */}
                       <motion.div
@@ -234,15 +234,15 @@ export function FeaturesSection() {
 
                     {/* Content */}
                     <div className="relative z-10">
-                      <h3 className="text-xl font-bold text-white mb-3 group-hover:text-primary-300 transition-colors duration-300">
+                      <h3 className="text-lg sm:text-xl font-bold text-white mb-2 sm:mb-3 group-hover:text-primary-300 transition-colors duration-300">
                         {feature.title}
                       </h3>
-                      <p className="text-gray-300 text-sm leading-relaxed mb-6">
+                      <p className="text-gray-300 text-sm leading-relaxed mb-4 sm:mb-6 text-left">
                         {feature.description}
                       </p>
 
                       {/* Benefits List */}
-                      <ul className="space-y-2 mb-6">
+                      <ul className="space-y-1.5 sm:space-y-2 mb-4 sm:mb-6 text-left">
                         {feature.benefits.map((benefit, index) => (
                           <li key={index} className="flex items-center text-xs text-gray-400">
                             <div className="w-1.5 h-1.5 bg-primary-500 rounded-full mr-3 opacity-60" />
@@ -253,7 +253,7 @@ export function FeaturesSection() {
 
                       {/* Learn More Link */}
                       <motion.div
-                        className="flex items-center gap-2 text-primary-400 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer"
+                        className="flex items-center justify-start gap-2 text-primary-400 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer"
                         whileHover={{ x: 5 }}
                       >
                         Learn More
@@ -272,21 +272,21 @@ export function FeaturesSection() {
 
         {/* Bottom CTA */}
         <motion.div
-          className="mt-20 text-center"
+          className="mt-16 sm:mt-20 text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
           viewport={{ once: true }}
         >
-          <div className="bg-dark-800/50 backdrop-blur-sm border border-gray-800/50 rounded-2xl p-8 max-w-2xl mx-auto">
-            <h3 className="text-2xl font-bold text-white mb-4">
+          <div className="bg-dark-800/50 backdrop-blur-sm border border-gray-800/50 rounded-2xl p-6 sm:p-8 max-w-2xl mx-auto">
+            <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 sm:mb-4">
               Ready to Experience AI-Powered Fitness?
             </h3>
-            <p className="text-gray-300 mb-6">
+            <p className="text-gray-300 text-sm sm:text-base mb-4 sm:mb-6">
               Join thousands of early adopters who are already transforming their fitness journey with our revolutionary AI technology.
             </p>
             <motion.button
-              className="inline-flex items-center gap-3 bg-gradient-to-r from-primary-500 to-primary-600 text-white font-semibold px-8 py-4 rounded-xl shadow-lg hover:shadow-2xl hover:shadow-primary-500/25 transition-all duration-300"
+              className="inline-flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-primary-500 to-primary-600 text-white font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-xl shadow-lg hover:shadow-2xl hover:shadow-primary-500/25 transition-all duration-300"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => document.getElementById('waitlist')?.scrollIntoView({ behavior: 'smooth' })}
