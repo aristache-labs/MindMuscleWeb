@@ -128,6 +128,4 @@ export interface Demographics {
   gender?: string;
   location?: string;
   fitnessLevel?: 'beginner' | 'intermediate' | 'advanced';
-}
-
-export type { DemoItem } from './demo'; 
+} 
