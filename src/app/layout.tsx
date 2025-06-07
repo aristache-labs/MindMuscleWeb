@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import { PerformanceMonitor } from '@/components/ui/PerformanceMonitor';
 import { ScrollProgressAnimation } from '@/components/ui/LottieAnimations';
+import { CookieConsentBar } from '@/components/ui/CookieConsentBar';
 import './globals.css';
 
 const inter = Inter({
@@ -121,14 +122,15 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased" suppressHydrationWarning>
-        <PerformanceMonitor 
+        <PerformanceMonitor
           enableCWV={true}
           enableResourceTiming={process.env.NODE_ENV === 'development'}
           enableNavigationTiming={process.env.NODE_ENV === 'development'}
         />
         <ScrollProgressAnimation />
+        <CookieConsentBar />
         {children}
       </body>
     </html>
   );
-} 
+}

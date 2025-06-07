@@ -15,4 +15,5 @@ export * from './LottieAnimations';
 
 export { WaitlistDashboard } from './WaitlistDashboard';
 export { PositionIndicator } from './PositionIndicator';
-export { SocialSharingPanel, type ShareData } from './SocialSharingPanel'; 
+export { SocialSharingPanel, type ShareData } from './SocialSharingPanel';
+export { CookieConsentBar } from './CookieConsentBar';
