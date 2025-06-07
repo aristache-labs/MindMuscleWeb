@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindMuscle Marketing Assets Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0A0A10;
+            color: #FFFFFF;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #8B5CF6, #22D3EE);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .header p {
+            color: #9CA3AF;
+            font-size: 1.1rem;
+        }
+
+        .assets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .asset-card {
+            background: #1A1A23;
+            border: 1px solid #2D2D3A;
+            border-radius: 16px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .asset-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #8B5CF6, #22D3EE, #E11D48);
+        }
+
+        .asset-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #FFFFFF;
+        }
+
+        .asset-preview {
+            width: 100%;
+            height: 300px;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .asset-preview:hover {
+            transform: scale(1.02);
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, #8B5CF6, #22D3EE);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
+        }
+
+        /* Social Media Graphics Styles */
+        .instagram-post {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0A0A10 0%, #1A1A23 50%, #2D2D3A 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .instagram-post::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23ffffff" stroke-width="0.5" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .logo-placeholder {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #8B5CF6, #22D3EE);
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            position: relative;
+            z-index: 2;
+        }
+
+        .main-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #FFFFFF, #9CA3AF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            z-index: 2;
+        }
+
+        .sub-text {
+            font-size: 1rem;
+            color: #9CA3AF;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .coming-soon-badge {
+            background: linear-gradient(135deg, #8B5CF6, #22D3EE);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            position: relative;
+            z-index: 2;
+        }
+
+        .twitter-post {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #1A1A23, #0A0A10);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .twitter-post::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, #22D3EE20, transparent);
+            border-radius: 50%;
+        }
+
+        .linkedin-post {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0A0A10, #1A1A23, #8B5CF6);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .under-development {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0A0A10 0%, #1A1A23 50%, #E11D48 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .under-development::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255, 255, 255, 0.05) 10px,
+                rgba(255, 255, 255, 0.05) 20px
+            );
+            animation: slide 20s linear infinite;
+        }
+
+        @keyframes slide {
+            0% { transform: translateX(-50px) translateY(-50px); }
+            100% { transform: translateX(0px) translateY(0px); }
+        }
+
+        .pulse-animation {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .floating-element {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #8B5CF6, #22D3EE);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-element:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+        .floating-element:nth-child(2) { top: 60%; left: 80%; animation-delay: 2s; }
+        .floating-element:nth-child(3) { top: 80%; left: 20%; animation-delay: 4s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .controls {
+            background: #1A1A23;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .controls h3 {
+            margin-bottom: 1rem;
+            color: #FFFFFF;
+        }
+
+        .control-group {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .control-group label {
+            color: #9CA3AF;
+            font-size: 0.9rem;
+        }
+
+        .control-group input, .control-group select {
+            background: #0A0A10;
+            border: 1px solid #2D2D3A;
+            border-radius: 6px;
+            padding: 0.5rem;
+            color: #FFFFFF;
+            font-size: 0.9rem;
+        }
+
+        .ai-brain-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1rem;
+            background: linear-gradient(135deg, #8B5CF6, #22D3EE);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .ai-brain-icon::before {
+            content: '🧠';
+            font-size: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .assets-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .main-text {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 MindMuscle Marketing Assets</h1>
+            <p>Professional pre-launch marketing materials for social media and web</p>
+        </div>
+
+        <div class="controls">
+            <h3>🎨 Customize Your Assets</h3>
+            <div class="control-group">
+                <div>
+                    <label for="mainText">Main Text:</label>
+                    <input type="text" id="mainText" value="Coming Soon" onchange="updateAssets()">
+                </div>
+                <div>
+                    <label for="subText">Sub Text:</label>
+                    <input type="text" id="subText" value="AI-Powered Fitness Revolution" onchange="updateAssets()">
+                </div>
+                <div>
+                    <label for="launchDate">Launch Date:</label>
+                    <input type="text" id="launchDate" value="Summer 2025" onchange="updateAssets()">
+                </div>
+            </div>
+        </div>
+
+        <div class="assets-grid">
+            <!-- Instagram Post -->
+            <div class="asset-card">
+                <h3 class="asset-title">📱 Instagram Post (1080x1080)</h3>
+                <div class="asset-preview" id="instagram-preview">
+                    <div class="instagram-post">
+                        <div class="floating-elements">
+                            <div class="floating-element"></div>
+                            <div class="floating-element"></div>
+                            <div class="floating-element"></div>
+                        </div>
+                        <div class="logo-placeholder">MM</div>
+                        <div class="main-text" id="ig-main-text">Coming Soon</div>
+                        <div class="sub-text" id="ig-sub-text">AI-Powered Fitness Revolution</div>
+                        <div class="coming-soon-badge pulse-animation" id="ig-date">Summer 2025</div>
+                    </div>
+                </div>
+                <button class="download-btn" onclick="downloadAsset('instagram-preview', 'mindmuscle-instagram-post.png')">
+                    📥 Download Instagram Post
+                </button>
+            </div>
+
+            <!-- Twitter/X Post -->
+            <div class="asset-card">
+                <h3 class="asset-title">🐦 Twitter/X Post (1200x675)</h3>
+                <div class="asset-preview" id="twitter-preview" style="height: 250px;">
+                    <div class="twitter-post">
+                        <div>
+                            <div class="logo-placeholder" style="width: 60px; height: 60px; font-size: 1.5rem;">MM</div>
+                            <div class="main-text" id="tw-main-text" style="font-size: 1.5rem;">Coming Soon</div>
+                            <div class="sub-text" id="tw-sub-text">AI-Powered Fitness Revolution</div>
+                        </div>
+                        <div class="coming-soon-badge" id="tw-date" style="align-self: flex-start;">Summer 2025</div>
+                    </div>
+                </div>
+                <button class="download-btn" onclick="downloadAsset('twitter-preview', 'mindmuscle-twitter-post.png')">
+                    📥 Download Twitter Post
+                </button>
+            </div>
+
+            <!-- LinkedIn Post -->
+            <div class="asset-card">
+                <h3 class="asset-title">💼 LinkedIn Post (1200x627)</h3>
+                <div class="asset-preview" id="linkedin-preview" style="height: 250px;">
+                    <div class="linkedin-post">
+                        <div class="ai-brain-icon"></div>
+                        <div class="main-text" id="li-main-text" style="font-size: 1.6rem;">Coming Soon</div>
+                        <div class="sub-text" id="li-sub-text">The future of AI-powered fitness is almost here</div>
+                        <div class="coming-soon-badge" id="li-date">Summer 2025</div>
+                    </div>
+                </div>
+                <button class="download-btn" onclick="downloadAsset('linkedin-preview', 'mindmuscle-linkedin-post.png')">
+                    📥 Download LinkedIn Post
+                </button>
+            </div>
+
+            <!-- Under Development Banner -->
+            <div class="asset-card">
+                <h3 class="asset-title">🚧 Under Development Banner (1200x400)</h3>
+                <div class="asset-preview" id="development-preview" style="height: 200px;">
+                    <div class="under-development">
+                        <div class="floating-elements">
+                            <div class="floating-element"></div>
+                            <div class="floating-element"></div>
+                            <div class="floating-element"></div>
+                        </div>
+                        <div class="main-text" id="dev-main-text" style="font-size: 2rem;">🚧 Under Development</div>
+                        <div class="sub-text" id="dev-sub-text">Building the future of AI-powered fitness</div>
+                        <div class="coming-soon-badge pulse-animation" id="dev-date">Launching Summer 2025</div>
+                    </div>
+                </div>
+                <button class="download-btn" onclick="downloadAsset('development-preview', 'mindmuscle-under-development.png')">
+                    📥 Download Development Banner
+                </button>
+            </div>
+
+            <!-- Instagram Story -->
+            <div class="asset-card">
+                <h3 class="asset-title">📱 Instagram Story (1080x1920)</h3>
+                <div class="asset-preview" id="story-preview" style="height: 400px;">
+                    <div class="instagram-post" style="background: linear-gradient(180deg, #0A0A10, #8B5CF6, #22D3EE);">
+                        <div class="floating-elements">
+                            <div class="floating-element"></div>
+                            <div class="floating-element"></div>
+                            <div class="floating-element"></div>
+                        </div>
+                        <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+                            <div class="logo-placeholder">MM</div>
+                            <div class="main-text" id="story-main-text">Coming Soon</div>
+                            <div class="sub-text" id="story-sub-text">AI-Powered Fitness Revolution</div>
+                        </div>
+                        <div class="coming-soon-badge pulse-animation" id="story-date">Summer 2025</div>
+                    </div>
+                </div>
+                <button class="download-btn" onclick="downloadAsset('story-preview', 'mindmuscle-instagram-story.png')">
+                    📥 Download Instagram Story
+                </button>
+            </div>
+
+            <!-- Website Hero Banner -->
+            <div class="asset-card">
+                <h3 class="asset-title">🌐 Website Hero Banner (1920x600)</h3>
+                <div class="asset-preview" id="hero-preview" style="height: 200px;">
+                    <div class="under-development" style="background: linear-gradient(135deg, #0A0A10, #1A1A23, #8B5CF6, #22D3EE);">
+                        <div class="floating-elements">
+                            <div class="floating-element"></div>
+                            <div class="floating-element"></div>
+                            <div class="floating-element"></div>
+                        </div>
+                        <div class="ai-brain-icon" style="margin-bottom: 1rem;"></div>
+                        <div class="main-text" id="hero-main-text" style="font-size: 2.5rem;">MindMuscle</div>
+                        <div class="sub-text" id="hero-sub-text" style="font-size: 1.2rem;">The Future of AI-Powered Fitness</div>
+                        <div class="coming-soon-badge pulse-animation" id="hero-date">Coming Summer 2025</div>
+                    </div>
+                </div>
+                <button class="download-btn" onclick="downloadAsset('hero-preview', 'mindmuscle-hero-banner.png')">
+                    📥 Download Hero Banner
+                </button>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: #1A1A23; border-radius: 12px;">
+            <h3 style="margin-bottom: 1rem;">🎯 Marketing Impact</h3>
+            <p style="color: #9CA3AF; margin-bottom: 1rem;">
+                These professional marketing assets will help you:
+            </p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                <div style="padding: 1rem; background: #0A0A10; border-radius: 8px;">
+                    <strong style="color: #8B5CF6;">📈 Build Anticipation</strong><br>
+                    <small style="color: #9CA3AF;">Create buzz before launch</small>
+                </div>
+                <div style="padding: 1rem; background: #0A0A10; border-radius: 8px;">
+                    <strong style="color: #22D3EE;">🎨 Professional Brand</strong><br>
+                    <small style="color: #9CA3AF;">Consistent visual identity</small>
+                </div>
+                <div style="padding: 1rem; background: #0A0A10; border-radius: 8px;">
+                    <strong style="color: #E11D48;">🚀 Early Adoption</strong><br>
+                    <small style="color: #9CA3AF;">Drive waitlist signups</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateAssets() {
+            const mainText = document.getElementById('mainText').value;
+            const subText = document.getElementById('subText').value;
+            const launchDate = document.getElementById('launchDate').value;
+
+            // Update all text elements
+            const mainTextElements = ['ig-main-text', 'tw-main-text', 'li-main-text', 'story-main-text'];
+            const subTextElements = ['ig-sub-text', 'tw-sub-text', 'li-sub-text', 'story-sub-text'];
+            const dateElements = ['ig-date', 'tw-date', 'li-date', 'story-date', 'dev-date', 'hero-date'];
+
+            mainTextElements.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) element.textContent = mainText;
+            });
+
+            subTextElements.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) element.textContent = subText;
+            });
+
+            dateElements.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) element.textContent = launchDate;
+            });
+
+            // Special cases
+            document.getElementById('dev-main-text').textContent = '🚧 Under Development';
+            document.getElementById('dev-sub-text').textContent = `Building ${subText.toLowerCase()}`;
+            document.getElementById('hero-main-text').textContent = 'MindMuscle';
+            document.getElementById('hero-sub-text').textContent = `The Future of ${subText}`;
+            document.getElementById('hero-date').textContent = `Coming ${launchDate}`;
+        }
+
+        function downloadAsset(elementId, filename) {
+            const element = document.getElementById(elementId);
+            
+            // Create a canvas
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas dimensions based on asset type
+            const dimensions = {
+                'instagram-preview': { width: 1080, height: 1080 },
+                'twitter-preview': { width: 1200, height: 675 },
+                'linkedin-preview': { width: 1200, height: 627 },
+                'development-preview': { width: 1200, height: 400 },
+                'story-preview': { width: 1080, height: 1920 },
+                'hero-preview': { width: 1920, height: 600 }
+            };
+            
+            const dim = dimensions[elementId] || { width: 1200, height: 600 };
+            canvas.width = dim.width;
+            canvas.height = dim.height;
+            
+            // Use html2canvas library for better rendering
+            // For now, we'll show a message to the user
+            alert(`📥 Asset ready for download!\n\nTo download high-quality versions:\n1. Right-click on the preview\n2. Select "Save image as..."\n3. Or use browser developer tools to capture the element\n\nRecommended dimensions: ${dim.width}x${dim.height}px`);
+        }
+
+        // Initialize with default values
+        updateAssets();
+
+        // Add some interactive animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const previews = document.querySelectorAll('.asset-preview');
+            previews.forEach(preview => {
+                preview.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.02)';
+                });
+                preview.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
