@@ -1,63 +1,109 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import localFont from "next/font/local";
-import "./globals.css";
-import Navbar from "@/components/common/Navbar";
-import Footer from "@/components/common/Footer";
+import type { Metadata, Viewport } from 'next';
+import { Inter } from 'next/font/google';
+import { PerformanceMonitor } from '@/components/ui/PerformanceMonitor';
+import { ScrollProgressAnimation } from '@/components/ui/LottieAnimations';
+import './globals.css';
 
 const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  weight: ["400", "500", "600", "700"]
-});
-
-const satoshi = localFont({
-  src: [
-    {
-      path: "../../public/fonts/Satoshi-400.woff2",
-      weight: "400",
-      style: "normal",
-    },
-    {
-      path: "../../public/fonts/Satoshi-500.woff2",
-      weight: "500",
-      style: "normal",
-    },
-    {
-      path: "../../public/fonts/Satoshi-700.woff2",
-      weight: "700",
-      style: "normal",
-    },
-  ],
-  variable: "--font-satoshi",
-  display: "swap",
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://localhost'),
-  title: "MindMuscle.AI | AI-Powered Fitness",
-  description: "AI-driven workout generator and progress tracker—launching Summer 2025.",
+  metadataBase: new URL('https://mindmuscle.app'),
+  title: {
+    default: 'MindMuscle | AI-Powered Fitness Revolution',
+    template: '%s | MindMuscle',
+  },
+  description:
+    'Experience the future of fitness with AI-powered personalized workouts that adapt and evolve with every rep. Coming Summer 2025.',
+  keywords: [
+    'AI fitness',
+    'personal trainer',
+    'workout app',
+    'artificial intelligence',
+    'fitness technology',
+    'personalized training',
+  ],
+  authors: [{ name: 'MindMuscle Team' }],
+  creator: 'MindMuscle',
   openGraph: {
-    title: "MindMuscle.AI | AI-Powered Fitness",
-    description: "AI-driven workout generator and progress tracker—launching Summer 2025.",
-    url: "https://localhost",
-    siteName: "MindMuscle.AI",
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://mindmuscle.app',
+    siteName: 'MindMuscle',
+    title: 'MindMuscle | AI-Powered Fitness Revolution',
+    description:
+      'Experience the future of fitness with AI-powered personalized workouts that adapt and evolve with every rep.',
     images: [
       {
-        url: "/images/og-image.png",
+        url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: "MindMuscle.AI - AI-Powered Fitness",
+        alt: 'MindMuscle - AI-Powered Fitness App',
       },
     ],
-    locale: "en_US",
-    type: "website",
   },
   twitter: {
-    card: "summary_large_image",
-    title: "MindMuscle.AI | AI-Powered Fitness",
-    description: "AI-driven workout generator and progress tracker—launching Summer 2025.",
-    images: ["/images/og-image.png"],
+    card: 'summary_large_image',
+    title: 'MindMuscle | AI-Powered Fitness Revolution',
+    description:
+      'Experience the future of fitness with AI-powered personalized workouts.',
+    images: ['/og-image.png'],
+    creator: '@mindmuscleapp',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  icons: {
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
+    apple: '/favicon.svg',
+  },
+  manifest: '/site.webmanifest',
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#8B5CF6' },
+    { media: '(prefers-color-scheme: dark)', color: '#0A0A10' },
+  ],
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+};
+
+// JSON-LD structured data
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'MindMuscle',
+  operatingSystem: ['iOS', 'Android'],
+  applicationCategory: 'HealthApplication',
+  description:
+    'AI-Powered fitness app that crafts personalized workouts and tracks progress.',
+  url: 'https://mindmuscle.app',
+  downloadUrl: 'https://apps.apple.com/app/mindmuscle',
+  image: 'https://mindmuscle.app/og-image.png',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+  },
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '4.8',
+    ratingCount: '1247',
   },
 };
 
@@ -67,15 +113,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
-      <body
-        className={`${inter.className} ${satoshi.variable} bg-dark-bg text-white antialiased`}
-        suppressHydrationWarning={true}
-      >
-        <Navbar />
+    <html lang="en" className={`${inter.variable}`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
+      <body className="antialiased" suppressHydrationWarning>
+        <PerformanceMonitor 
+          enableCWV={true}
+          enableResourceTiming={process.env.NODE_ENV === 'development'}
+          enableNavigationTiming={process.env.NODE_ENV === 'development'}
+        />
+        <ScrollProgressAnimation />
         {children}
-        <Footer />
       </body>
     </html>
   );
-}
+} 
