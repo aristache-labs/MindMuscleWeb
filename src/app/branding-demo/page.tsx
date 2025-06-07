@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowLeft, Copy, Check } from 'lucide-react';
+import { ArrowLeft, Copy, Check, Palette } from 'lucide-react';
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -78,7 +78,13 @@ export default function BrandingDemoPage() {
               <h1 className="text-xl font-bold text-white">MindMuscle Branding Kit</h1>
               <p className="text-sm text-gray-400">Custom Icons & Animations</p>
             </div>
-            <div className="w-20" /> {/* Spacer for centering */}
+            <Link
+              href="/brand-moodboard"
+              className="flex items-center gap-2 px-4 py-2 bg-primary-500/10 border border-primary-500/20 rounded-lg text-primary-300 hover:bg-primary-500/20 transition-colors"
+            >
+              <Palette className="w-4 h-4" />
+              <span className="hidden sm:inline">Moodboard</span>
+            </Link>
           </div>
         </div>
       </header>
