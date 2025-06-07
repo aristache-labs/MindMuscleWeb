@@ -23,8 +23,8 @@ const eslintConfig = [
           skipBlankLines: true,
           skipComments: true,
         },
-        complexity, ['warn', { max: 15 }], // Increased from 10 to 15 for mobile UI logic
       ],
+      complexity: ['warn', { max: 15 }], // Increased from 10 to 15 for mobile UI logic
     },
   },
 ];
