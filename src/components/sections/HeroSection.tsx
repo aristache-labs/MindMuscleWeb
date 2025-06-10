@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 
 import { PhoneMockup } from '@/components/ui/PhoneMockup';
 import { APP_SCREENSHOTS, ANIMATION_TIMING } from '@/lib/constants';
-import { trackEvent } from '@/lib/utils';
+import { trackEvent, MindMuscleEvents } from '@/lib/analytics';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { useTextReveal, useCounterAnimation } from '@/hooks/useScrollAnimation';
 import { ChevronRight } from 'lucide-react';
@@ -105,11 +105,37 @@ export function HeroSection() {
 
 
   const handleWaitlistClick = () => {
-    trackEvent('hero_waitlist_click', {
+    trackEvent(MindMuscleEvents.HERO_WAITLIST_CLICK, {
       section: 'hero',
       button_type: 'waitlist',
+      current_screenshot: currentScreenshot,
+      carousel_paused: isCarouselPaused,
     });
     document.getElementById('waitlist')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleAppStoreClick = () => {
+    trackEvent(MindMuscleEvents.HERO_APP_STORE_CLICK, {
+      section: 'hero',
+      button_type: 'app_store',
+      current_screenshot: currentScreenshot,
+    });
+  };
+
+  const handleGooglePlayClick = () => {
+    trackEvent(MindMuscleEvents.HERO_GOOGLE_PLAY_CLICK, {
+      section: 'hero',
+      button_type: 'google_play',
+      current_screenshot: currentScreenshot,
+    });
+  };
+
+  const handlePhoneInteraction = (interactionType: 'hover' | 'click') => {
+    trackEvent(MindMuscleEvents.HERO_PHONE_INTERACTION, {
+      interaction_type: interactionType,
+      current_screenshot: currentScreenshot,
+      screenshot_title: APP_SCREENSHOTS[currentScreenshot]?.title || 'unknown',
+    });
   };
 
   return (
@@ -258,6 +284,8 @@ export function HeroSection() {
                   direction="horizontal" 
                   appStoreFirst={true}
                   size="large"
+                  onAppStoreClick={handleAppStoreClick}
+                  onGooglePlayClick={handleGooglePlayClick}
                 />
               </motion.div>
 
@@ -282,9 +310,15 @@ export function HeroSection() {
             >
               <PhoneMockup
                 currentScreenshot={currentScreenshot}
-                onMouseEnter={() => setIsCarouselPaused(true)}
+                onMouseEnter={() => {
+                  setIsCarouselPaused(true);
+                  handlePhoneInteraction('hover');
+                }}
                 onMouseLeave={() => setIsCarouselPaused(false)}
-                onTouchStart={() => setIsCarouselPaused(true)}
+                onTouchStart={() => {
+                  setIsCarouselPaused(true);
+                  handlePhoneInteraction('click');
+                }}
                 onTouchEnd={() => setIsCarouselPaused(false)}
               />
             </motion.div>
