@@ -4,7 +4,7 @@ import { PerformanceMonitor } from '@/components/ui/PerformanceMonitor';
 import { ScrollProgressAnimation } from '@/components/ui/LottieAnimations';
 import { CookieConsentBar } from '@/components/ui/CookieConsentBar';
 import PlausibleProvider from 'next-plausible';
-import { Analytics } from '@vercel/analytics/react';
+import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 import { AnalyticsProvider } from '@/components/providers/AnalyticsProvider';
 
