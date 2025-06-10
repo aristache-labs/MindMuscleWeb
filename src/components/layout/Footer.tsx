@@ -43,41 +43,49 @@ export function Footer() {
               href={SOCIAL_LINKS.twitter}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Follow MindMuscle on Twitter"
               className="text-gray-400 hover:text-primary-400 transition-colors"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
             >
               <Twitter className="h-5 w-5" />
+              <span className="sr-only">Follow us on Twitter</span>
             </motion.a>
             <motion.a
               href={SOCIAL_LINKS.instagram}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Follow MindMuscle on Instagram"
               className="text-gray-400 hover:text-primary-400 transition-colors"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
             >
               <Instagram className="h-5 w-5" />
+              <span className="sr-only">Follow us on Instagram</span>
             </motion.a>
             <motion.a
               href={SOCIAL_LINKS.linkedin}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Follow MindMuscle on LinkedIn"
               className="text-gray-400 hover:text-primary-400 transition-colors"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
             >
               <Linkedin className="h-5 w-5" />
+              <span className="sr-only">Follow us on LinkedIn</span>
             </motion.a>
             <motion.a
               href={SOCIAL_LINKS.youtube}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Subscribe to MindMuscle on YouTube"
               className="text-gray-400 hover:text-primary-400 transition-colors"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
             >
               <Youtube className="h-5 w-5" />
+              <span className="sr-only">Subscribe to our YouTube channel</span>
             </motion.a>
           </div>
         </div>
