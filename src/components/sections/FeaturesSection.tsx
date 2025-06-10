@@ -15,6 +15,7 @@ import {
   AISleepIcon 
 } from '@/components/ui/CustomIcons';
 import { useScrollAnimation, useStaggerAnimation, SCROLL_VARIANTS } from '@/hooks/useScrollAnimation';
+import { trackEvent, MindMuscleEvents } from '@/lib/analytics';
 
 const features = [
   {
@@ -202,6 +203,13 @@ export function FeaturesSection() {
                   custom={index}
                   whileHover="hover"
                   style={{ transformStyle: 'preserve-3d' }}
+                  onMouseEnter={() => {
+                    trackEvent(MindMuscleEvents.FEATURES_CARD_HOVER, {
+                      feature_id: feature.id,
+                      feature_title: feature.title,
+                      card_index: index,
+                    });
+                  }}
                 >
                   {/* Feature Card */}
                   <div className="relative h-full bg-dark-800/50 backdrop-blur-sm border border-gray-800/50 rounded-2xl p-6 sm:p-8 transition-all duration-300 hover:border-primary-500/30 hover:shadow-2xl hover:shadow-primary-500/10 group-hover:bg-dark-800/70">

@@ -158,18 +158,19 @@ export const storage = {
   },
 };
 
-// Event tracking helper (placeholder for future analytics integration)
+// Event tracking helper - enhanced with proper analytics integration
 export function trackEvent(eventName: string, properties?: Record<string, unknown>) {
-  if (typeof window === 'undefined') return;
-  
-  // Future: Integrate with analytics service (PostHog, Plausible, etc.)
-  // if (typeof window.plausible === 'function') {
-  //   window.plausible(eventName, { props: properties });
-  // }
-  
-  // Log in development for debugging
-  if (process.env.NODE_ENV === 'development') {
-    console.log('Event:', eventName, properties);
+  // Import and re-export from analytics module to maintain backward compatibility
+  // This will be dynamically imported to avoid circular dependencies
+  if (typeof window !== 'undefined') {
+    import('./analytics').then(({ trackEvent: track }) => {
+      track(eventName, properties);
+    }).catch(() => {
+      // Fallback to simple logging if analytics fails to load
+      if (process.env.NODE_ENV === 'development') {
+        console.log('📊 Event (fallback):', eventName, properties);
+      }
+    });
   }
 }
 

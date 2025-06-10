@@ -3,7 +3,10 @@ import { Inter } from 'next/font/google';
 import { PerformanceMonitor } from '@/components/ui/PerformanceMonitor';
 import { ScrollProgressAnimation } from '@/components/ui/LottieAnimations';
 import { CookieConsentBar } from '@/components/ui/CookieConsentBar';
+import PlausibleProvider from 'next-plausible';
+import { Analytics } from '@vercel/analytics/react';
 import './globals.css';
+import { AnalyticsProvider } from '@/components/providers/AnalyticsProvider';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -114,11 +117,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable}`}>
+    <html lang="en" className={`${inter.variable} font-body antialiased bg-dark-950 text-dark-50`}>
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        {/* Plausible Analytics Script */}
+        <script 
+          defer 
+          data-domain="mindmuscle.app" 
+          src="https://plausible.io/js/script.js"
         />
       </head>
       <body className="antialiased" suppressHydrationWarning>
@@ -129,7 +138,21 @@ export default function RootLayout({
         />
         <ScrollProgressAnimation />
         <CookieConsentBar />
-        {children}
+        <PlausibleProvider 
+          domain="mindmuscle.app" 
+          customDomain="https://plausible.io"
+          selfHosted={false}
+          enabled={process.env.NODE_ENV === 'production'}
+          trackOutboundLinks={true}
+          trackFileDownloads={true}
+        >
+          <AnalyticsProvider>
+            {children}
+            
+            {/* Vercel Analytics */}
+            <Analytics />
+          </AnalyticsProvider>
+        </PlausibleProvider>
       </body>
     </html>
   );

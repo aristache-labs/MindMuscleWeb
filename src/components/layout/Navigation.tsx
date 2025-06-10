@@ -6,7 +6,8 @@ import { Menu, X, ChevronRight } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 
 import { NAVIGATION_ITEMS } from '@/lib/constants';
-import { cn, scrollToElement, trackEvent } from '@/lib/utils';
+import { cn, scrollToElement } from '@/lib/utils';
+import { trackEvent, MindMuscleEvents } from '@/lib/analytics';
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -26,9 +27,11 @@ export function Navigation() {
   const handleNavClick = (href: string, label: string) => {
     console.log('Navigation clicked:', { href, label, currentPath: pathname });
     
-    trackEvent('navigation_click', {
+    trackEvent(MindMuscleEvents.NAV_SECTION_CLICK, {
       section: 'header',
       link: label.toLowerCase().replace(' ', '_'),
+      target_section: href,
+      current_path: pathname,
     });
     
     if (href.startsWith('#')) {
@@ -53,9 +56,10 @@ export function Navigation() {
   const handleWaitlistClick = () => {
     console.log('Waitlist button clicked', { currentPath: pathname });
     
-    trackEvent('navigation_waitlist_click', {
+    trackEvent(MindMuscleEvents.NAV_LOGO_CLICK, {
       section: 'header',
       button_type: 'waitlist',
+      current_path: pathname,
     });
     
     // If we're not on the homepage, navigate to homepage first
@@ -86,7 +90,14 @@ export function Navigation() {
             
             {/* Logo */}
             <motion.button
-              onClick={() => router.push('/')}
+              onClick={() => {
+                trackEvent(MindMuscleEvents.NAV_LOGO_CLICK, {
+                  section: 'header',
+                  action: 'logo_click',
+                  current_path: pathname,
+                });
+                router.push('/');
+              }}
               className="flex items-center gap-2 cursor-pointer group"
               whileHover={{ scale: 1.05 }}
               transition={{ type: 'spring', stiffness: 400, damping: 25 }}

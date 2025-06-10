@@ -6,16 +6,22 @@ import { STORE_LINKS } from '@/lib/constants';
 
 interface StoreBadgeProps {
   className?: string;
+  onClick?: () => void;
 }
 
 // Official Apple App Store Badge Component
-export const AppStoreBadge: React.FC<StoreBadgeProps> = ({ className = '' }) => {
+export const AppStoreBadge: React.FC<StoreBadgeProps> = ({ className = '', onClick }) => {
   return (
     <motion.a
       href={STORE_LINKS.appStore}
       target="_blank"
       rel="noopener noreferrer"
       className={`inline-block transition-all duration-300 hover:scale-[1.05] active:scale-[0.95] group hover:brightness-110 ${className}`}
+      onClick={(e) => {
+        if (onClick) {
+          onClick();
+        }
+      }}
       whileHover={{ 
         scale: 1.05,
         filter: "brightness(1.15) saturate(1.1)"
@@ -86,13 +92,18 @@ export const AppStoreBadge: React.FC<StoreBadgeProps> = ({ className = '' }) => 
 };
 
 // Official Google Play Store Badge Component
-export const GooglePlayBadge: React.FC<StoreBadgeProps> = ({ className = '' }) => {
+export const GooglePlayBadge: React.FC<StoreBadgeProps> = ({ className = '', onClick }) => {
   return (
     <motion.a
       href={STORE_LINKS.playStore}
       target="_blank"
       rel="noopener noreferrer"
       className={`inline-block transition-all duration-300 hover:scale-[1.05] active:scale-[0.95] group hover:brightness-110 ${className}`}
+      onClick={(e) => {
+        if (onClick) {
+          onClick();
+        }
+      }}
       whileHover={{ 
         scale: 1.05,
         filter: "brightness(1.15) saturate(1.1)"
@@ -180,13 +191,17 @@ interface StoreBadgesProps {
   direction?: 'horizontal' | 'vertical';
   appStoreFirst?: boolean;
   size?: 'default' | 'large';
+  onAppStoreClick?: () => void;
+  onGooglePlayClick?: () => void;
 }
 
 export const StoreBadges: React.FC<StoreBadgesProps> = ({ 
   className = '', 
   direction = 'horizontal',
   appStoreFirst = true,
-  size = 'default'
+  size = 'default',
+  onAppStoreClick,
+  onGooglePlayClick
 }) => {
   // Improved responsive layout logic
   const containerClass = direction === 'vertical' 
@@ -197,11 +212,11 @@ export const StoreBadges: React.FC<StoreBadgesProps> = ({
   const sizeClass = size === 'large' ? 'scale-110' : '';
   
   const badges = appStoreFirst ? [
-    <AppStoreBadge key="app-store" className={sizeClass} />,
-    <GooglePlayBadge key="google-play" className={sizeClass} />
+    <AppStoreBadge key="app-store" className={sizeClass} onClick={onAppStoreClick} />,
+    <GooglePlayBadge key="google-play" className={sizeClass} onClick={onGooglePlayClick} />
   ] : [
-    <GooglePlayBadge key="google-play" className={sizeClass} />,
-    <AppStoreBadge key="app-store" className={sizeClass} />
+    <GooglePlayBadge key="google-play" className={sizeClass} onClick={onGooglePlayClick} />,
+    <AppStoreBadge key="app-store" className={sizeClass} onClick={onAppStoreClick} />
   ];
 
   return (
