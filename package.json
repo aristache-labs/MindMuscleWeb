@@ -22,6 +22,7 @@
     "@studio-freight/lenis": "^1.0.42",
     "@supabase/supabase-js": "^2.49.10",
     "@vercel/analytics": "^1.4.1",
+    "@vercel/speed-insights": "^1.2.0",
     "clsx": "^2.1.1",
     "embla-carousel-autoplay": "^8.5.1",
     "embla-carousel-react": "^8.5.1",

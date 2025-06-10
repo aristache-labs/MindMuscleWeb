@@ -5,6 +5,7 @@ import { ScrollProgressAnimation } from '@/components/ui/LottieAnimations';
 import { CookieConsentBar } from '@/components/ui/CookieConsentBar';
 import PlausibleProvider from 'next-plausible';
 import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
 import { AnalyticsProvider } from '@/components/providers/AnalyticsProvider';
 
@@ -151,6 +152,7 @@ export default function RootLayout({
             
             {/* Vercel Analytics */}
             <Analytics />
+            <SpeedInsights />
           </AnalyticsProvider>
         </PlausibleProvider>
       </body>
