@@ -16,6 +16,7 @@ export const AppStoreBadge: React.FC<StoreBadgeProps> = ({ className = '', onCli
       href={STORE_LINKS.appStore}
       target="_blank"
       rel="noopener noreferrer"
+      aria-label="Download MindMuscle app on the App Store"
       className={`inline-block transition-all duration-300 hover:scale-[1.05] active:scale-[0.95] group hover:brightness-110 ${className}`}
       onClick={(e) => {
         if (onClick) {
@@ -98,6 +99,7 @@ export const GooglePlayBadge: React.FC<StoreBadgeProps> = ({ className = '', onC
       href={STORE_LINKS.playStore}
       target="_blank"
       rel="noopener noreferrer"
+      aria-label="Download MindMuscle app on Google Play"
       className={`inline-block transition-all duration-300 hover:scale-[1.05] active:scale-[0.95] group hover:brightness-110 ${className}`}
       onClick={(e) => {
         if (onClick) {
