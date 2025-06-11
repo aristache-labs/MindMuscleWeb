@@ -107,7 +107,7 @@ export default function TermsPage() {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <main className="min-h-screen bg-dark-950">
+    <>
       <Navigation />
       
       {/* Hero Section */}
@@ -350,6 +350,6 @@ export default function TermsPage() {
       </div>
 
       <Footer />
-    </main>
+    </>
   );
 } 

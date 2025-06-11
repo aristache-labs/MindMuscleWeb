@@ -8,6 +8,8 @@ import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
 import { AnalyticsProvider } from '@/components/providers/AnalyticsProvider';
+import { WaitlistModalProvider } from '@/components/providers/WaitlistModalProvider';
+import { WaitlistModal } from '@/components/ui/WaitlistModal';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -148,11 +150,19 @@ export default function RootLayout({
           trackFileDownloads={true}
         >
           <AnalyticsProvider>
-            {children}
-            
-            {/* Vercel Analytics */}
-            <Analytics />
-            <SpeedInsights />
+            <WaitlistModalProvider>
+              {/* Main landmark wrapper for all page content */}
+              <main className="min-h-screen bg-dark-950">
+                {children}
+              </main>
+              
+              {/* Global Modal */}
+              <WaitlistModal />
+              
+              {/* Vercel Analytics */}
+              <Analytics />
+              <SpeedInsights />
+            </WaitlistModalProvider>
           </AnalyticsProvider>
         </PlausibleProvider>
       </body>

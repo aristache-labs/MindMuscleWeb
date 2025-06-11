@@ -15,7 +15,7 @@ const WaitlistSection = lazy(() => import('@/components/sections/WaitlistSection
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-dark-950">
+    <>
       <Navigation />
       
       {/* Hero section loads immediately - critical above-the-fold content */}
@@ -78,6 +78,6 @@ export default function HomePage() {
       </LazySection>
 
       <Footer />
-    </main>
+    </>
   );
 } 

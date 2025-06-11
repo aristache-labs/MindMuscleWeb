@@ -4,11 +4,14 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, Smartphone, Play, Zap } from 'lucide-react';
 import Link from 'next/link';
 import { InteractiveAppPreview } from '@/components/ui/InteractiveAppPreview';
+import { WaitlistModalProvider } from '@/components/providers/WaitlistModalProvider';
+import { WaitlistModal } from '@/components/ui/WaitlistModal';
+import { useWaitlistModal } from '@/components/providers/WaitlistModalProvider';
 
-
-export default function InteractiveDemoPage() {
+function InteractiveDemoContent() {
+  const { openModal } = useWaitlistModal();
   return (
-    <main className="min-h-screen bg-dark-950">
+    <>
       {/* Header */}
       <div className="relative z-50 border-b border-gray-800/50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -226,10 +229,7 @@ export default function InteractiveDemoPage() {
                   className="w-full bg-gradient-to-r from-primary-500 to-primary-600 rounded-2xl px-8 py-4 text-white font-semibold transition-all duration-300 hover:from-primary-600 hover:to-primary-700"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  onClick={() => {
-                    // Navigate back to home page and scroll to waitlist
-                    window.location.href = '/#waitlist';
-                  }}
+                  onClick={() => openModal()}
                 >
                   <div className="flex items-center justify-center gap-3">
                     <Play className="w-5 h-5" />
@@ -258,6 +258,15 @@ export default function InteractiveDemoPage() {
           </motion.div>
         </div>
       </div>
-    </main>
+    </>
   );
-} 
+}
+
+export default function InteractiveDemoPage() {
+  return (
+    <WaitlistModalProvider>
+      <InteractiveDemoContent />
+      <WaitlistModal />
+    </WaitlistModalProvider>
+  );
+}
