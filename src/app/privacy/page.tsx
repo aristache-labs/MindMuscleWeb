@@ -157,7 +157,7 @@ export default function PrivacyPage() {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <main className="min-h-screen bg-dark-950">
+    <>
       <Navigation />
       
       {/* Hero Section */}
@@ -533,6 +533,6 @@ export default function PrivacyPage() {
       </div>
 
       <Footer />
-    </main>
+    </>
   );
 } 

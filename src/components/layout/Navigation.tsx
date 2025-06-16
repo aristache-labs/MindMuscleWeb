@@ -8,12 +8,14 @@ import { usePathname, useRouter } from 'next/navigation';
 import { NAVIGATION_ITEMS } from '@/lib/constants';
 import { cn, scrollToElement } from '@/lib/utils';
 import { trackEvent, MindMuscleEvents } from '@/lib/analytics';
+import { useWaitlistModal } from '@/components/providers/WaitlistModalProvider';
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
+  const { openModal } = useWaitlistModal();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -62,14 +64,11 @@ export function Navigation() {
       current_path: pathname,
     });
     
-    // If we're not on the homepage, navigate to homepage first
-    if (pathname !== '/') {
-      console.log('Navigating to homepage and then scrolling to waitlist');
-      router.push('/#waitlist');
-    } else {
-      console.log('Scrolling to waitlist on current page');
-      scrollToElement('waitlist', 80);
-    }
+    // Close mobile menu if open
+    setIsMobileMenuOpen(false);
+    
+    // Open the waitlist modal instead of scrolling
+    openModal();
   };
 
   return (

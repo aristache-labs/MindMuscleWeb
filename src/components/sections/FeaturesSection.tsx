@@ -16,6 +16,7 @@ import {
 } from '@/components/ui/CustomIcons';
 import { useScrollAnimation, useStaggerAnimation, SCROLL_VARIANTS } from '@/hooks/useScrollAnimation';
 import { trackEvent, MindMuscleEvents } from '@/lib/analytics';
+import { useWaitlistModal } from '@/components/providers/WaitlistModalProvider';
 
 const features = [
   {
@@ -129,6 +130,8 @@ const cardVariants = {
 };
 
 export function FeaturesSection() {
+  const { openModal } = useWaitlistModal();
+  
   const { ref: headerRef, controls: headerControls } = useScrollAnimation({
     threshold: 0.3,
     delay: 0.2,
@@ -300,7 +303,7 @@ export function FeaturesSection() {
               className="inline-flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-primary-500 to-primary-600 text-white font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-xl shadow-lg hover:shadow-2xl hover:shadow-primary-500/25 transition-all duration-300"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => document.getElementById('waitlist')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => openModal()}
             >
               <Bot className="w-5 h-5" />
               Get Early Access

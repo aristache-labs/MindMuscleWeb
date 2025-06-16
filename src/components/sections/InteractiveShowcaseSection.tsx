@@ -7,6 +7,7 @@ import { AIPowerIcon, AITargetIcon, AIAnalyticsIcon, AICommunityIcon } from '@/c
 import { InteractiveAppPreview } from '@/components/ui/InteractiveAppPreview';
 
 import { useScrollAnimation, SCROLL_VARIANTS } from '@/hooks/useScrollAnimation';
+import { useWaitlistModal } from '@/components/providers/WaitlistModalProvider';
 
 const features = [
   {
@@ -46,6 +47,7 @@ const features = [
 export function InteractiveShowcaseSection() {
   const [selectedFeature, setSelectedFeature] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const { openModal } = useWaitlistModal();
 
   // Auto-advance through features
   useEffect(() => {
@@ -324,15 +326,7 @@ export function InteractiveShowcaseSection() {
                 className="bg-gradient-to-r from-primary-500 to-primary-600 rounded-2xl px-8 py-4 text-white font-semibold transition-all duration-300 hover:from-primary-600 hover:to-primary-700 shadow-lg hover:shadow-primary-500/25 mt-8 sm:mt-6 lg:mt-0"
                 whileHover={{ scale: 1.02, y: -2 }}
                 whileTap={{ scale: 0.98 }}
-                onClick={() => {
-                  const waitlistElement = document.getElementById('waitlist');
-                  if (waitlistElement) {
-                    waitlistElement.scrollIntoView({ 
-                      behavior: 'smooth',
-                      block: 'start'
-                    });
-                  }
-                }}
+                onClick={() => openModal()}
               >
                 <div className="flex items-center justify-center gap-3">
                   <Play className="w-5 h-5" />

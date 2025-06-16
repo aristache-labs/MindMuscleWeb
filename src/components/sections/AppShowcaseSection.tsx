@@ -7,6 +7,7 @@ import { ChevronLeft, ChevronRight, Smartphone, Play } from 'lucide-react';
 import { AIDownloadIcon } from '@/components/ui/CustomIcons';
 import { APP_SCREENSHOTS, ANIMATION_TIMING } from '@/lib/constants';
 import { useScrollAnimation, SCROLL_VARIANTS } from '@/hooks/useScrollAnimation';
+import { useWaitlistModal } from '@/components/providers/WaitlistModalProvider';
 
 const mockupVariants = {
   initial: { opacity: 0, scale: 0.8, y: 80, rotateY: 15 },
@@ -58,6 +59,7 @@ const screenshotVariants = {
 export function AppShowcaseSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const { openModal } = useWaitlistModal();
 
   const { ref: headerRef, controls: headerControls } = useScrollAnimation({
     threshold: 0.3,
@@ -356,7 +358,7 @@ export function AppShowcaseSection() {
                 className="inline-flex items-center gap-3 bg-gradient-to-r from-primary-500 to-primary-600 text-white font-semibold px-8 py-4 rounded-xl shadow-lg hover:shadow-2xl hover:shadow-primary-500/25 transition-all duration-300"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => document.getElementById('waitlist')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={() => openModal()}
               >
                 <AIDownloadIcon className="w-5 h-5" />
                 Get Early Access

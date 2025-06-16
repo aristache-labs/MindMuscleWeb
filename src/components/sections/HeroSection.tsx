@@ -12,6 +12,7 @@ import { ChevronRight } from 'lucide-react';
 import { AISparklesIcon } from '@/components/ui/CustomIcons';
 import { StoreBadges } from '@/components/ui/StoreBadges';
 import { AIBrainAnimation, FloatingElementsAnimation } from '@/components/ui/LottieAnimations';
+import { useWaitlistModal } from '@/components/providers/WaitlistModalProvider';
 
 const heroVariants = {
   initial: { opacity: 0 },
@@ -68,6 +69,7 @@ export function HeroSection() {
   const [isCarouselPaused, setIsCarouselPaused] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const prefersReducedMotion = useReducedMotion();
+  const { openModal } = useWaitlistModal();
 
   // Text reveal animations
   const mainHeadline = useTextReveal('The Future of AI-Powered Fitness is Here', {
@@ -111,7 +113,7 @@ export function HeroSection() {
       current_screenshot: currentScreenshot,
       carousel_paused: isCarouselPaused,
     });
-    document.getElementById('waitlist')?.scrollIntoView({ behavior: 'smooth' });
+    openModal();
   };
 
   const handleAppStoreClick = () => {

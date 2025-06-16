@@ -65,6 +65,7 @@ export function LazySection({
   const variants = shouldAnimate ? animationVariants[animation] : animationVariants.none;
 
   // Don't render children until in viewport for performance
+  // Use a simple loading placeholder without any focusable elements
   if (!isIntersecting) {
     return (
       <div 
@@ -72,7 +73,12 @@ export function LazySection({
         className={`min-h-[200px] ${className}`}
         aria-hidden="true"
       >
-        {fallback}
+        {/* Only render non-interactive fallback content when aria-hidden */}
+        {fallback && typeof fallback === 'string' ? (
+          <div className="flex items-center justify-center h-full text-gray-500">
+            {fallback}
+          </div>
+        ) : null}
       </div>
     );
   }
