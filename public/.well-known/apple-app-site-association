@@ -1,5 +1,18 @@
 {
   "webcredentials": {
     "apps": ["4ADSMP2XD8.com.mindmuscle.ai"]
+  },
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["4ADSMP2XD8.com.mindmuscle.ai"],
+        "components": [
+          {
+            "/": "*",
+            "comment": "Matches any URL"
+          }
+        ]
+      }
+    ]
   }
 }
