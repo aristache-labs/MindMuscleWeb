@@ -99,6 +99,25 @@ const nextConfig: NextConfig = {
     return config
   },
 
+  // Headers configuration for apple-app-site-association
+  async headers() {
+    return [
+      {
+        source: '/.well-known/apple-app-site-association',
+        headers: [
+          {
+            key: 'Content-Type',
+            value: 'application/json',
+          },
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=3600',
+          },
+        ],
+      },
+    ]
+  },
+
   // Compression and caching
   compress: true,
   poweredByHeader: false,
